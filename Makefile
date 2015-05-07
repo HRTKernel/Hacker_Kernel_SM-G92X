@@ -160,6 +160,8 @@ export srctree objtree VPATH
 
 TOOLCHAIN_DIR = /home/$USER/android/toolchains/aarch64_linaro/bin/aarch64-linux-android-
 
+ccache := ccache
+
 # SUBARCH tells the usermode build what the underlying arch is.  That is set
 # first, and if a usermode build is happening, the "ARCH=um" on the command
 # line overrides the setting of ARCH below.  If a native build is happening,
@@ -195,8 +197,8 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 #ARCH		?= $(SUBARCH)
 #CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
-ARCH		= arm64
-CROSS_COMPILE = $(TOOLCHAIN_DIR)
+ARCH		= $(SUBARCH)
+CROSS_COMPILE = $(CCACHE) $(TOOLCHAIN_DIR)
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -242,8 +244,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else if [ -x /bin/bash ]; then echo /bin/bash; \
 	  else echo sh; fi ; fi)
 
-HOSTCC       = gcc
-HOSTCXX      = g++
+HOSTCC       = $(CCACHE) gcc
+HOSTCXX      = $(CCACHE) g++
 HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
 HOSTCXXFLAGS = -O2
 
@@ -329,7 +331,7 @@ include $(srctree)/scripts/Kbuild.include
 
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
-CC		= $(CROSS_COMPILE)gcc
+CC		= $(CCACHE) $(CROSS_COMPILE)gcc
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
@@ -383,10 +385,10 @@ LINUXINCLUDE    := \
 KBUILD_CPPFLAGS := -D__KERNEL__
 
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
-		   -fno-strict-aliasing -fno-common \
-		   -Werror-implicit-function-declaration \
-		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks \
+		   -fno-strict-aliasing -fno-common -Wno-unused-value \
+		   -Werror-implicit-function-declaration -Wno-uninitialized \
+		   -Wno-format-security -Wno-array-bounds -Wno-unused-variable -Wno-unused-function \
+		   -fno-delete-null-pointer-checks -Wno-maybe-uninitialized \
 		   -fdiagnostics-show-option -Werror
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
