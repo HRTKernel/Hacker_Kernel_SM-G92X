@@ -9,7 +9,6 @@ static int fb_state_change(struct notifier_block *nb,
 	struct fb_event *evdata = data;
 	struct fb_info *info = evdata->info;
 	unsigned int blank;
-	char buf[NAME_MAX];
 	
 	if (val != FB_EVENT_BLANK &&
 		val != FB_R_EARLY_EVENT_BLANK)
@@ -41,11 +40,6 @@ static int fb_state_change(struct notifier_block *nb,
 			ktoonservative_screen_is_on(true, 0);
 			//pr_alert("KT GOT SCREEN ON-4\n");
 			//ktoonservative_screen_is_on(true, 4);
-			//if (vfreq_lock)
-			//{
-			//	snprintf(buf, sizeof(buf), "/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq");
-			//	sys_chmod(buf, 0444);
-			//}
 		}
 		screen_is_on = true;
 		break;
