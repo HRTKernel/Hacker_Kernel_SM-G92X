@@ -385,11 +385,13 @@ LINUXINCLUDE    := \
 KBUILD_CPPFLAGS := -D__KERNEL__
 
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
-		   -fno-strict-aliasing -fno-common -Wno-unused-value \
-		   -Werror-implicit-function-declaration -Wno-uninitialized \
-		   -Wno-format-security -Wno-array-bounds -Wno-unused-variable -Wno-unused-function \
-		   -fno-delete-null-pointer-checks -Wno-maybe-uninitialized \
-		   -fdiagnostics-show-option -Werror
+		   -fno-strict-aliasing -fno-common \
+		   -Werror-implicit-function-declaration \
+		   -Wno-format-security \
+		   -fno-delete-null-pointer-checks \
+		   -fdiagnostics-show-option -Werror \
+		   -march=armv8-a+crc \
+		   -mtune=cortex-a57.cortex-a53
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -589,7 +591,7 @@ all: vmlinux
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
 else
-KBUILD_CFLAGS	+= -O2
+KBUILD_CFLAGS	+= -O3
 endif
 
 include $(srctree)/arch/$(SRCARCH)/Makefile
