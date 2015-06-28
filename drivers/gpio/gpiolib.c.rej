@@ -1,0 +1,19 @@
+--- drivers/gpio/gpiolib.c
++++ drivers/gpio/gpiolib.c
+@@ -874,6 +874,7 @@
+ 		if (tdev != NULL) {
+ 			status = sysfs_create_link(&dev->kobj, &tdev->kobj,
+ 						name);
++			put_device(tdev);
+ 		} else {
+ 			status = -ENODEV;
+ 		}
+@@ -927,7 +928,7 @@
+ 	}
+ 
+ 	status = sysfs_set_active_low(desc, dev, value);
+-
++	put_device(dev);
+ unlock:
+ 	mutex_unlock(&sysfs_lock);
+ 

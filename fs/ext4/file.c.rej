@@ -1,0 +1,45 @@
+--- fs/ext4/file.c
++++ fs/ext4/file.c
+@@ -100,7 +100,7 @@
+ 	struct blk_plug plug;
+ 	int unaligned_aio = 0;
+ 	ssize_t ret;
+-	int overwrite = 0;
++	int *overwrite = iocb->private;
+ 	size_t length = iov_length(iov, nr_segs);
+ 
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS) &&
+@@ -118,8 +118,6 @@
+ 	mutex_lock(&inode->i_mutex);
+ 	blk_start_plug(&plug);
+ 
+-	iocb->private = &overwrite;
+-
+ 	/* check whether we do a DIO overwrite or not */
+ 	if (ext4_should_dioread_nolock(inode) && !unaligned_aio &&
+ 	    !file->f_mapping->nrpages && pos + length <= i_size_read(inode)) {
+@@ -143,7 +141,7 @@
+ 		 * So we should check these two conditions.
+ 		 */
+ 		if (err == len && (map.m_flags & EXT4_MAP_MAPPED))
+-			overwrite = 1;
++			*overwrite = 1;
+ 	}
+ 
+ 	ret = __generic_file_aio_write(iocb, iov, nr_segs, &iocb->ki_pos);
+@@ -170,6 +168,7 @@
+ {
+ 	struct inode *inode = file_inode(iocb->ki_filp);
+ 	ssize_t ret;
++	int overwrite = 0;
+ 
+ 	/*
+ 	 * If we have encountered a bitmap-format file, the size limit
+@@ -190,6 +189,7 @@
+ 		}
+ 	}
+ 
++	iocb->private = &overwrite;
+ 	if (unlikely(iocb->ki_filp->f_flags & O_DIRECT))
+ 		ret = ext4_file_dio_write(iocb, iov, nr_segs, pos);
+ 	else

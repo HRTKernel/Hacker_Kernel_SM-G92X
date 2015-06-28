@@ -1,0 +1,23 @@
+--- include/linux/user_namespace.h
++++ include/linux/user_namespace.h
+@@ -64,6 +69,9 @@
+ extern ssize_t proc_uid_map_write(struct file *, const char __user *, size_t, loff_t *);
+ extern ssize_t proc_gid_map_write(struct file *, const char __user *, size_t, loff_t *);
+ extern ssize_t proc_projid_map_write(struct file *, const char __user *, size_t, loff_t *);
++extern ssize_t proc_setgroups_write(struct file *, const char __user *, size_t, loff_t *);
++extern int proc_setgroups_show(struct seq_file *m, void *v);
++extern bool userns_may_setgroups(const struct user_namespace *ns);
+ #else
+ 
+ static inline struct user_namespace *get_user_ns(struct user_namespace *ns)
+@@ -88,6 +96,10 @@
+ {
+ }
+ 
++static inline bool userns_may_setgroups(const struct user_namespace *ns)
++{
++	return true;
++}
+ #endif
+ 
+ void update_mnt_policy(struct user_namespace *userns);
