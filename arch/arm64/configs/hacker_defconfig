@@ -949,7 +949,7 @@ CONFIG_BQL=y
 CONFIG_BT=y
 # CONFIG_BT_RFCOMM is not set
 # CONFIG_BT_BNEP is not set
-CONFIG_BT_HIDP=y
+# CONFIG_BT_HIDP is not set
 
 #
 # Bluetooth device drivers
