@@ -51,11 +51,6 @@
 #include <mach/tmu.h>
 #endif
 #include <plat/cpu.h>
-#ifdef CONFIG_PMU_COREMEM_RATIO
-#include "pmu_func.h"
-#endif
-
-#include <mach/devfreq.h>
 
 #ifdef CONFIG_SOC_EXYNOS5422_REV_0
 #define POWER_COEFF_15P		57 /* percore param */
@@ -128,15 +123,11 @@ static struct pm_qos_request core_min_qos[CL_END];
 static struct pm_qos_request core_max_qos[CL_END];
 static struct pm_qos_request core_min_qos_real[CL_END];
 static struct pm_qos_request core_max_qos_real[CL_END];
+static struct pm_qos_request exynos_mif_qos[CL_END];
 static struct pm_qos_request ipa_max_qos[CL_END];
 static struct pm_qos_request reboot_max_qos[CL_END];
 #ifdef CONFIG_SEC_PM
 static struct pm_qos_request jig_boot_max_qos[CL_END];
-#endif
-#if defined(CONFIG_PMU_COREMEM_RATIO)
-static struct pm_qos_request exynos_region_mif_qos[CL_END];
-#else
-static struct pm_qos_request exynos_mif_qos[CL_END];
 #endif
 
 static struct workqueue_struct *cluster_monitor_wq;
@@ -249,29 +240,6 @@ static void cluster_onoff_monitor(struct work_struct *work)
 		if (exynos_info[cl]->is_alive)
 			cluster_on[cl] = exynos_info[cl]->is_alive();
 
-#if defined(CONFIG_PMU_COREMEM_RATIO)
-		if (exynos_info[cl]->region_bus_table && exynos_info[cl]->is_alive) {
-			if (!exynos_info[cl]->is_alive() && cluster_status[cl]) {
-				pm_qos_update_request(&exynos_region_mif_qos[cl], 0);
-				cluster_status[cl] = false;
-			} else if (exynos_info[cl]->is_alive() && !cluster_status[cl]) {
-				freq_table = exynos_info[cl]->freq_table;
-				for (i = 0; (freq_table[i].frequency != CPUFREQ_TABLE_END); i++) {
-					freq = freq_table[i].frequency;
-					if (freq == CPUFREQ_ENTRY_INVALID)
-						continue;
-					if (freqs[cl]->old == freq) {
-						old_index = i;
-						break;
-					}
-				}
-
-				pm_qos_update_request(&exynos_region_mif_qos[cl],
-					exynos_info[cl]->region_bus_table[old_index][exynos_info[cl]->region]);
-				cluster_status[cl] = true;
-			}
-		}
-#else
 		if (exynos_info[cl]->bus_table && exynos_info[cl]->is_alive) {
 			if (!exynos_info[cl]->is_alive() && cluster_status[cl]) {
 				pm_qos_update_request(&exynos_mif_qos[cl], 0);
@@ -293,7 +261,6 @@ static void cluster_onoff_monitor(struct work_struct *work)
 				cluster_status[cl] = true;
 			}
 		}
-#endif
 	}
 
 	queue_delayed_work_on(0, cluster_monitor_wq, &monitor_cluster_on, msecs_to_jiffies(100));
@@ -548,32 +515,18 @@ static int exynos_cpufreq_scale(unsigned int target_freq,
 			exynos_info[cur]->set_ema(safe_volt);
 	}
 
-	exynos7_devfreq_mif_thermal_set_polling_period(target_freq, cur, exynos_info[CL_ONE]->is_alive());
-
 	if (old_index > new_index) {
-#if defined(CONFIG_PMU_COREMEM_RATIO)
-		if (pm_qos_request_active(&exynos_region_mif_qos[cur]))
-			pm_qos_update_request(&exynos_region_mif_qos[cur],
-				exynos_info[cur]->region_bus_table[new_index][exynos_info[cur]->region]);
-#else
 		if (pm_qos_request_active(&exynos_mif_qos[cur]))
 			pm_qos_update_request(&exynos_mif_qos[cur],
 					exynos_info[cur]->bus_table[new_index]);
-#endif
 	}
 
 	exynos_info[cur]->set_freq(old_index, new_index);
 
 	if (old_index < new_index) {
-#if defined(CONFIG_PMU_COREMEM_RATIO)
-		if (pm_qos_request_active(&exynos_region_mif_qos[cur]))
-			pm_qos_update_request(&exynos_region_mif_qos[cur],
-				exynos_info[cur]->region_bus_table[new_index][exynos_info[cur]->region]);
-#else
 		if (pm_qos_request_active(&exynos_mif_qos[cur]))
 			pm_qos_update_request(&exynos_mif_qos[cur],
 					exynos_info[cur]->bus_table[new_index]);
-#endif
 	}
 
 #ifdef CONFIG_SMP
@@ -620,32 +573,6 @@ out:
 no_policy:
 	return ret;
 }
-
-#ifdef CONFIG_PMU_COREMEM_RATIO
-void coremem_region_bus_lock(int region, struct cpufreq_policy *policy)
-{
-	unsigned int cur = get_cur_cluster(policy->cpu);
-	unsigned int index;
-
-	if (region > REGION_C020_M080_C000_M100)
-		return;
-
-	exynos_info[cur]->region = region;
-
-	if (exynos5_frequency_table_target(policy, exynos_info[cur]->freq_table,
-					policy->cur, CPUFREQ_RELATION_L, &index))
-		return;
-
-	if (exynos_info[cur]->region_bus_table) {
-		if (pm_qos_request_active(&exynos_region_mif_qos[cur]))
-			pm_qos_update_request(&exynos_region_mif_qos[cur],
-				exynos_info[cur]->region_bus_table[index][exynos_info[cur]->region]);
-	}
-
-	pr_debug("cur:%u, region:%u, index:%u, mif_lock:%u\n", cur, region, index,
-			exynos_info[cur]->region_bus_table[index][exynos_info[cur]->region]);
-}
-#endif
 
 void exynos_set_max_freq(int max_freq, unsigned int cpu)
 {
@@ -1585,12 +1512,6 @@ static ssize_t show_cluster0_max_freq(struct kobject *kobj,
 	return show_core_freq(buf, CL_ZERO, true);
 }
 
-static ssize_t show_boot_low_freq(struct kobject *kobj,
-			     struct attribute *attr, char *buf)
-{
-	return 0;
-}
-
 static ssize_t store_cluster0_min_freq(struct kobject *kobj, struct attribute *attr,
 					const char *buf, size_t count)
 {
@@ -2106,13 +2027,8 @@ static int __init exynos_cpufreq_init(void)
 						exynos_info[cluster]->boot_cpu_max_qos_timeout);
 		}
 
-#if defined(CONFIG_PMU_COREMEM_RATIO)
-		if (exynos_info[cluster]->region_bus_table)
-			pm_qos_add_request(&exynos_region_mif_qos[cluster], PM_QOS_BUS_THROUGHPUT, 0);
-#else
 		if (exynos_info[cluster]->bus_table)
 			pm_qos_add_request(&exynos_mif_qos[cluster], PM_QOS_BUS_THROUGHPUT, 0);
-#endif
 	}
 
 	/* unblock frequency scale */
@@ -2170,11 +2086,7 @@ static int __init exynos_cpufreq_init(void)
 	}
 #endif
 
-#if defined(CONFIG_PMU_COREMEM_RATIO)
-	if (exynos_info[CL_ZERO]->region_bus_table || exynos_info[CL_ONE]->region_bus_table) {
-#else
 	if (exynos_info[CL_ZERO]->bus_table || exynos_info[CL_ONE]->bus_table) {
-#endif
 		INIT_DELAYED_WORK(&monitor_cluster_on, cluster_onoff_monitor);
 
 		cluster_monitor_wq = create_workqueue("cluster_monitor");
@@ -2206,15 +2118,9 @@ err_policy:
 err_mp_attr:
 	for (cluster = 0; cluster < CL_END; cluster++) {
 		if (exynos_info[cluster]) {
-#if defined(CONFIG_PMU_COREMEM_RATIO)
-			if (exynos_info[cluster]->region_bus_table &&
-				pm_qos_request_active(&exynos_region_mif_qos[cluster]))
-				pm_qos_remove_request(&exynos_region_mif_qos[cluster]);
-#else
 			if (exynos_info[cluster]->bus_table &&
 				pm_qos_request_active(&exynos_mif_qos[cluster]))
 				pm_qos_remove_request(&exynos_mif_qos[cluster]);
-#endif
 
 			if (pm_qos_request_active(&boot_max_qos[cluster]))
 				pm_qos_remove_request(&boot_max_qos[cluster]);
