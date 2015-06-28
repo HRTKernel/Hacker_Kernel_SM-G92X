@@ -158,9 +158,7 @@ VPATH		:= $(srctree)$(if $(KBUILD_EXTMOD),:$(KBUILD_EXTMOD))
 
 export srctree objtree VPATH
 
-TOOLCHAIN_DIR = /home/$USER/android/toolchains/aarch64_linaro/bin/aarch64-linux-android-
-
-ccache := ccache
+TOOLCHAIN_DIR = /home/maik/android/toolchains/aarch64-linaro/bin/aarch64-linux-android-
 
 # SUBARCH tells the usermode build what the underlying arch is.  That is set
 # first, and if a usermode build is happening, the "ARCH=um" on the command
@@ -198,7 +196,7 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 #ARCH		?= $(SUBARCH)
 #CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 ARCH		= $(SUBARCH)
-CROSS_COMPILE = $(CCACHE) $(TOOLCHAIN_DIR)
+CROSS_COMPILE = $(TOOLCHAIN_DIR)
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -244,8 +242,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else if [ -x /bin/bash ]; then echo /bin/bash; \
 	  else echo sh; fi ; fi)
 
-HOSTCC       = $(CCACHE) gcc
-HOSTCXX      = $(CCACHE) g++
+HOSTCC       = gcc
+HOSTCXX      = g++
 HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
 HOSTCXXFLAGS = -O2
 
@@ -331,7 +329,7 @@ include $(srctree)/scripts/Kbuild.include
 
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
-CC		= $(CCACHE) $(CROSS_COMPILE)gcc
+CC		= $(CROSS_COMPILE)gcc
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
