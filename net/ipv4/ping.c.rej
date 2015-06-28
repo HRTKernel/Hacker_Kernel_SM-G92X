@@ -1,0 +1,10 @@
+--- net/ipv4/ping.c
++++ net/ipv4/ping.c
+@@ -139,6 +139,7 @@
+ 	if (sk_hashed(sk)) {
+ 		write_lock_bh(&ping_table.lock);
+ 		hlist_nulls_del(&sk->sk_nulls_node);
++		sk_nulls_node_init(&sk->sk_nulls_node);
+ 		sock_put(sk);
+ 		isk->inet_num = 0;
+ 		isk->inet_sport = 0;
