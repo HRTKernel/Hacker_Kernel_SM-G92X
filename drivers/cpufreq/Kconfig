@@ -341,12 +341,6 @@ config CPU_FREQ_GOV_CONSERVATIVEX
 	help
 	  'conservativex' - less aggressive version of conservative
 
-config CPU_FREQ_GOV_BLUACTIVE
-	tristate "'bluactive' cpufreq governor"
-	depends on CPU_FREQ
-	help
-	  'bluactive' - less aggressive version of conservative
-
 config CPU_FREQ_GOV_ONDEMANDPLUS
 	tristate "'ondemandplus' cpufreq policy governor"
 	depends on CPU_FREQ
@@ -383,10 +377,6 @@ config CPU_FREQ_GOV_ALUCARD
 	tristate "'alucard' cpufreq governor"
 	depends on CPU_FREQ
 
-config CPU_FREQ_GOV_INTELLIACTIVE
-	tristate "'intelliactive' cpufreq policy governor"
-	depends on CPU_FREQ
-
 config CPU_FREQ_GOV_BIOSHOCK
 	tristate "'bioshock' cpufreq bioshock"
 	depends on CPU_FREQ
@@ -403,23 +393,6 @@ config CPU_FREQ_GOV_PRESERVATIVE
 
 config CPU_FREQ_GOV_SHAMUACTIVE
 	tristate "'shamuactive' cpufreq policy governor"
-
-config CPU_FREQ_GOV_BARRY_ALLEN
-	tristate "'barry_allen' cpufreq policy governor"
-	help
-	  'barry_allen' - This driver adds a dynamic cpufreq policy governor
-	  designed for latency-sensitive workloads.
-
-	  This governor attempts to reduce the latency of clock
-	  increases so that the system is more responsive to
-	  barry_allen workloads.
-
-	  To compile this driver as a module, choose M here: the
-	  module will be called cpufreq_barry_allen.
-
-	  For details, take a look at linux/Documentation/cpu-freq.
-
-	  If in doubt, say N.
 
 config CPU_FREQ_GOV_HYPER
 	tristate "'hyper' cpufreq governor"
