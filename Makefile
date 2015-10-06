@@ -158,7 +158,7 @@ VPATH		:= $(srctree)$(if $(KBUILD_EXTMOD),:$(KBUILD_EXTMOD))
 
 export srctree objtree VPATH
 
-TOOLCHAIN_DIR = /home/maik/android/toolchains/stock_aarch64/bin/aarch64-linux-android-
+TOOLCHAIN_DIR = /home/maik/android/toolchains/aarch64-UBERTC/bin/aarch64-linux-android-
 
 # SUBARCH tells the usermode build what the underlying arch is.  That is set
 # first, and if a usermode build is happening, the "ARCH=um" on the command
@@ -393,9 +393,7 @@ KBUILD_CFLAGS   := $(GRAPHITE) -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs 
 		   -ftree-loop-distribution -ftree-loop-if-convert -fivopts -fipa-pta -fira-hoist-pressure \
 		   -fmodulo-sched -fmodulo-sched-allow-regmoves \
 		   -fbranch-target-load-optimize -fsingle-precision-constant \
-		   -Werror -Wno-error=unused-variable -Wno-error=unused-function \
-		   -march=armv8-a+crc \
-		   -mtune=cortex-a57.cortex-a53
+		   -Werror -Wno-error=unused-variable -Wno-error=unused-function 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
