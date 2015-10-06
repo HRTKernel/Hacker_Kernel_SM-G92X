@@ -383,7 +383,7 @@ LINUXINCLUDE    := \
 
 KBUILD_CPPFLAGS := -D__KERNEL__
 
-KBUILD_CFLAGS   := $(GRAPHITE) -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+KBUILD_CFLAGS   := $(GRAPHITE) -w -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -finline-functions -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security -ffast-math \
@@ -393,7 +393,9 @@ KBUILD_CFLAGS   := $(GRAPHITE) -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs 
 		   -ftree-loop-distribution -ftree-loop-if-convert -fivopts -fipa-pta -fira-hoist-pressure \
 		   -fmodulo-sched -fmodulo-sched-allow-regmoves \
 		   -fbranch-target-load-optimize -fsingle-precision-constant \
-		   -Werror -Wno-error=unused-variable -Wno-error=unused-function 
+		   -Werror -Wno-error=unused-variable -Wno-error=unused-function \
+		   -std=gnu89 -Wno-discarded-array-qualifiers -Wno-logical-not-parentheses -Wno-array-bounds -Wno-switch -Wno-unused-variable \
+		   -march=armv8-a+crc -mtune=cortex-a57.cortex-a53 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -593,7 +595,7 @@ all: vmlinux
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
 else
-KBUILD_CFLAGS	+= -O3
+KBUILD_CFLAGS	+= -O3 $(call cc-disable-warning,maybe-uninitialized,)
 endif
 
 include $(srctree)/arch/$(SRCARCH)/Makefile
