@@ -1,0 +1,9 @@
+#Added_By_UniKernel
+# This script created by glewarne@xda
+#dha
+ro.config.dha_cached_max=16
+ro.config.dha_empty_max=23
+ro.config.dha_th_rate=1
+ro.config.dha_lmk_scale=1
+
+

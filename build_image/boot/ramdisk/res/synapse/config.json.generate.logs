@@ -1,0 +1,43 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:"LOGS",
+    elements:[
+	{ SDescription:{
+	description:" "
+	}},
+	{ SPane:{
+		title:"Synapse Data",
+		description:" If you have some issues with Synapse just clear data. This will fix some issues."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SButton:{
+		label:"Clear Synapse Data",
+		action:"devtools cleardata"
+	}},
+	{ SPane:{
+		title:"Log Creation"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SButton:{
+		label:"Save logcat",
+		action:"log logcat"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SButton:{
+		label:"Save dmesg",
+		action:"log dmesg"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+    ]
+}
+CTAG

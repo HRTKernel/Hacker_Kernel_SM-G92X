@@ -1,0 +1,24 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:SECURITY,
+    elements:[
+	{ SPane:{
+		title:"Enable or Disable KNOX",
+		description:" Disabling will prevent Samsung security feature and allow some apps to run outside the secure container. KEEP DISABLED !!"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SOptionList:{
+		default:`echo $(/res/synapse/actions/security knox_security)`,
+		action:"security knox_security",
+		values:[Disabled, Enabled,]
+	}},
+	{ SDescription:{
+		description:""
+	}},
+    ]
+}
+CTAG

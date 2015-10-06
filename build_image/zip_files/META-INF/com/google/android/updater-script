@@ -1,0 +1,57 @@
+ui_print("Hacker Kernel");
+ui_print("by thehacker911");
+ui_print("Device= Galaxy S6 SM-G920-F");
+ui_print("");
+ui_print("Mounting /system.....");
+run_program("/sbin/busybox", "mount", "/system");
+run_program("/sbin/busybox", "mount", "/cache");
+
+ui_print("Cleaning.....");
+delete("/data/dalvik-cache/data@app@com.af.synapse-1.apk@classes.dex");
+delete("/data/dalvik-cache/data@app@com.af.synapse-2.apk@classes.dex");
+delete("/data/dalvik-cache/data@app@com.af.synapse-3.apk@classes.dex");
+delete("/system/etc/init.d/11ENTROPY");
+
+delete_recursive("/data/data/com.af.synapse");
+delete_recursive("/res");
+delete_recursive("/data/.ael");
+delete_recursive("/data/.simplkernel");
+delete_recursive("/data/simpltest.log");
+delete_recursive("/data/.hackerkernel");
+delete_recursive("/data/hackertest.log");
+delete_recursive("/cache");
+delete_recursive("/storage/sdcard0/KTweaker");
+delete_recursive("/system/app/BBCAgent");
+delete_recursive("/system/app/Bridge");
+delete_recursive("/system/app/com.ktoonsez.KTweaker.apk");
+delete_recursive("/system/app/com.ktoonsez.KTmonitor.apk");
+delete_recursive("/system/app/KNOXAgent");
+delete_recursive("/system/app/KnoxAttestationAgent");
+delete_recursive("/system/app/KnoxSetupWizardClient");
+delete_recursive("/system/app/SwitchKnoxI");
+delete_recursive("/system/app/SwitchKnoxII");
+delete_recursive("/system/priv-app/KLMSAgent");
+delete_recursive("/system/priv-app/SPDClient");
+delete_recursive("/system/priv-app/KnoxShortcuts");
+delete_recursive("/system/container/ContainerAgent2");
+delete_recursive("/system/container/KnoxPackageVerifier");
+delete_recursive("/system/container/KnoxSecureHandler");
+delete_recursive("/system/container/KnoxSwitcher");
+package_extract_dir("system", "/system");
+set_perm_recursive(0, 2000, 0777, 0777, "/system/etc/init.d");
+ui_print("Installing Synapse");
+ui_print("Flashing kernel");
+package_extract_dir("kernel", "/tmp");
+set_perm(0, 0, 0755, "/tmp/intelliflash.sh");
+ui_print("Starting Intelliflash...");
+run_program("/tmp/intelliflash.sh");
+delete_recursive("/tmp");
+run_program("/sbin/rm", "-rf", "/system/app/SecurityLogAgent");
+ui_print("Unmounting /system........");
+run_program("/sbin/busybox", "umount", "/system");
+run_program("/sbin/busybox", "umount", "/data");
+run_program("/sbin/busybox", "umount", "/cache");
+
+
+ui_print("All done!");
+show_progress(1.000000,0);
