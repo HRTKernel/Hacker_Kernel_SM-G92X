@@ -355,6 +355,9 @@ on post-fs-data
     # hatp
     mkdir /data/misc/radio/hatp 0755 radio system
 
+    # Samsung Pay
+    mkdir /efs/pfw_data 0760 spay spay
+
     # NFC
     mkdir /data/nfc 0700 nfc nfc
     mkdir /data/nfc/param 0700 nfc nfc
@@ -635,6 +638,14 @@ on boot
     chown system system /dev/knox_kap
     chmod 0660 /dev/knox_kap
 
+    # MST/NFC Switch
+    chown spay system /dev/mst_ctrl
+    chmod 0660 /dev/mst_ctrl
+
+    #MST Factory Test
+    chown system system /sys/class/mstldo/mst_drv/transmit
+    chmod 0770 /sys/class/mstldo/mst_drv/transmit
+
     # mobicore
     chmod 0660 /dev/s5p-smem
     chown system system /dev/s5p-smem
@@ -735,6 +746,21 @@ on boot
    chown system radio /sys/class/power_supply/battery/battery_cycle
    chown system radio /sys/class/power_supply/otg/online
    chmod 0664 /sys/class/power_supply/otg/online
+   chown system radio /sys/class/power_supply/max77833-charger/charge_otg_control
+   chown system radio /sys/class/power_supply/battery/batt_wireless_firmware_update
+   chown system radio /sys/class/power_supply/battery/otp_firmware_result
+   chown system radio /sys/class/power_supply/battery/wc_ic_grade
+   chown system radio /sys/class/power_supply/battery/otp_firmware_ver_bin
+   chown system radio /sys/class/power_supply/battery/otp_firmware_ver
+   chown system radio /sys/class/power_supply/battery/tx_firmware_result
+   chmod 0664 /sys/class/power_supply/max77833-charger/charge_otg_control
+   chmod 0664 /sys/class/power_supply/battery/batt_wireless_firmware_update
+   chmod 0664 /sys/class/power_supply/battery/otp_firmware_result
+   chmod 0664 /sys/class/power_supply/battery/wc_ic_grade
+   chmod 0664 /sys/class/power_supply/battery/otp_firmware_ver_bin
+   chmod 0664 /sys/class/power_supply/battery/otp_firmware_ver
+   chmod 0664 /sys/class/power_supply/battery/tx_firmware_result
+   chmod 0664 /sys/class/power_supply/battery/tx_firmware_ver
 
 # Sensors permissions
 # Accelerometer_sensor
@@ -855,6 +881,7 @@ on property:selinux.reload_policy=0
 # SEC_SELINUX to support spota
 on property:selinux.sec.restorecon=1
     restorecon_recursive /data/security/spota
+    restorecon_recursive /data/security/aasa
 
 on property:sys.powerctl=*
     powerctl ${sys.powerctl}
@@ -1225,7 +1252,7 @@ service charon /system/bin/charon
     class main
     socket charon stream 600 system system
     # charon will setuid to vpn after getting necessary resources.
-    group vpn net_admin inet
+    group vpn net_admin inet shell
     disabled
     oneshot
 
@@ -1240,7 +1267,7 @@ on property:persist.security.tlc.otp=1
   setprop persist.security.tlc.otp 0
 
 # ccm
-  service ccm /system/bin/tlc_server
+  service ccm /system/bin/tlc_server CCM
   user system
   group system 
   disabled
@@ -1248,6 +1275,16 @@ on property:persist.security.tlc.otp=1
 on property:persist.security.tlc.ccm=1  
   start ccm
   setprop persist.security.tlc.ccm 0
+
+# dcm
+  service dcm /system/bin/tlc_server DCM
+  user system
+  group system 
+  disabled
+
+on property:persist.security.tlc.dcm=1  
+  start dcm
+  setprop persist.security.tlc.dcm 0
 
 # tui
   service tui /system/bin/tlc_server TUI

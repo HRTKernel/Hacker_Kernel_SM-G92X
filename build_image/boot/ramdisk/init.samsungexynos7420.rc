@@ -65,8 +65,8 @@ on init
     mkdir /storage/Private 0000 system system
 
 on post-fs
-    # Increase max readahead size to 128 KB
-    write /sys/block/sda/queue/read_ahead_kb 128
+    # Increase max readahead size to 256 KB
+    write /sys/block/sda/queue/read_ahead_kb 256
 
 on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
@@ -702,7 +702,9 @@ on fs
     chown system radio /sys/class/sensors/ssp_sensor/step_cnt_poll_delay
     chown system radio /sys/class/sensors/ssp_sensor/uncal_gyro_poll_delay
     chown system radio /sys/class/sensors/ssp_sensor/interrupt_gyro_poll_delay
+    chown system radio /sys/class/sensors/ssp_sensor/tilt_poll_delay
     chown system radio /sys/class/sensors/ssp_sensor/ssp_flush
+    chown system radio /sys/class/sensors/ssp_sensor/int_gyro_enable
     chmod 0600 /dev/batch_io
     chown system system /dev/batch_io
 

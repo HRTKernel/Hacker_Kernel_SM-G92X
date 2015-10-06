@@ -452,6 +452,7 @@
 /system/bin/usf_pairing                         u:object_r:usf_exec:s0
 /system/bin/usf_tester                          u:object_r:usf_exec:s0
 /system/bin/mcStarter                           u:object_r:mcStarter_exec:s0
+/system/bin/tbaseLoader                         u:object_r:tbaseLoader_exec:s0
 
 ###################################
 # sysfs files
@@ -578,7 +579,8 @@
 #
 # com.sec.android.preloadinstaller write currentlyFactoryReset
 # path was changed /efs/recovery/currentlyFactoryReset" by recovery team.
-#/efs/.currentlyFactoryReset            u:object_r:app_efs_file:s0
+#/efs/\.currentlyFactoryReset            u:object_r:app_efs_file:s0
+/efs/Battery/fg_full_voltage		 u:object_r:app_efs_file:s0
 # com.sec.imsservice write silent_redial
 /efs/silent_redial                     u:object_r:app_efs_file:s0
 # HDCP and Widevine key. support r/w for radio and system app
@@ -642,6 +644,8 @@
 /dev/icdr               u:object_r:icd_device:s0
 /dev/ionfd2phys         u:object_r:ion_device:s0
 /dev/isdbt                      u:object_r:mmb_device:s0
+/dev/mmtunerspi                      u:object_r:mmb_device:s0
+/dev/mmtuneri2c                      u:object_r:mmb_device:s0
 # conflict with Qcom BSP, /dev/media[0-3]*	u:object_r:camera_device:s0
 /dev/mobicore	u:object_r:mobicore_device:s0
 /dev/mobicore-user	u:object_r:mobicore-user_device:s0
@@ -662,6 +666,7 @@
 /dev/socket/drsd        u:object_r:drsd_socket:s0
 /dev/socket/epm     u:object_r:epm_socket:s0
 /dev/socket/frigate		u:object_r:frigate_socket:s0
+/dev/socket/imsd	u:object_r:imsd_socket:s0
 /dev/socket/ipsec_socket        u:object_r:ipsec_socket:s0
 /dev/socket/jack(/.*)?          u:object_r:jack_socket:s0
 /dev/socket/msockets(/.*)?	u:object_r:msockets_socket:s0
@@ -670,6 +675,7 @@
 /dev/socket/rild[0-9]*	u:object_r:rild_socket:s0
 /dev/socket/rild-debug[0-9]* u:object_r:rild_debug_socket:s0
 /dev/socket/ss_conn_daemon      u:object_r:ss_conn_daemon_socket:s0
+/dev/socket/taa                  u:object_r:tz_socket:s0
 /dev/socket/tz                  u:object_r:tz_socket:s0
 /dev/socket/uibc(/.*)?          u:object_r:uibc_socket:s0
 /dev/socket/vpnclientd          u:object_r:vpnclientd_socket:s0
@@ -679,6 +685,7 @@
 /dev/ttyGS[0-9]*	u:object_r:usb_serial_device:s0
 /dev/ttyUSB[0-9]*	u:object_r:usb_device:s0
 /dev/t-base-tui                    u:object_r:tui_device:s0
+/dev/tuihw	u:object_r:tz_device:s0
 /dev/tzdev	u:object_r:tz_device:s0
 /dev/tzic	u:object_r:tz_device:s0
 /dev/url	u:object_r:url_device:s0
@@ -701,6 +708,10 @@
 /dev/knox_kap	u:object_r:knox_kap_device:s0
 
 ############################# 
+# Device node of mobile_payments
+/dev/mst_ctrl	u:object_r:mst_ctrl_device:s0
+
+############################# 
 # Device node of qcom_common
 #
 /dev/adnc[0-9]*		u:object_r:adnc_device:s0
@@ -719,6 +730,7 @@
 /dev/coresight-.*                                u:object_r:coresight_device:s0
 /dev/dbd[0-9]*		u:object_r:adnc_device:s0
 /dev/dun	u:object_r:dun_device:s0
+/dev/dvb(/.*)?  u:object_r:dvb_device:s0
 # conflict with Qcom BSP, /dev/efs_bridge	u:object_r:radio_device:s0
 # conflict with Qcom BSP, /dev/efs_hsic_bridge u:object_r:radio_device:s0
 # conflict with Qcom BSP, /dev/esoc-[0-9]*       u:object_r:esoc_device:s0
@@ -796,6 +808,7 @@
 /dev/dir_enc_report	u:object_r:report_device:s0
 /dev/ecryptfs		u:object_r:ecryptfs_device:s0
 /dev/ehci_power         u:object_r:mif_device:s0
+/dev/exynos-mem		u:object_r:graphics_device:s0
 /dev/fimg2d(/.*)?     	u:object_r:fimg2d_video_device:s0
 /dev/gps_geofence_wake			u:object_r:gps_device:s0
 /dev/invensense			u:object_r:sensors_device:s0
@@ -820,6 +833,7 @@
 /dev/sw_sync	u:object_r:sync_device:s0
 /dev/ttyBCM[0-9]*   u:object_r:bbd_device:s0
 /dev/ttySAC[0-9]*	u:object_r:uart_device:s0
+/dev/ump            u:object_r:gpu_device:s0
 /dev/umts.*			u:object_r:mif_device:s0 
 
 
@@ -851,6 +865,7 @@
 /sys/class/android_usb/android0(/.*)?          --     u:object_r:sysfs_ss_writable:s0
 /sys/class/backlight(/.*)?                     --     u:object_r:sysfs_ss_writable:s0 
 /sys/class/dsm/maxdsm_cal(/.*)?                --     u:object_r:sysfs_ss_writable:s0
+/sys/class/earsmart/control/always_stream_fs_on       u:object_r:sysfs_ss_writable:s0
 /sys/class/host_notify(/.*)?                   --     u:object_r:sysfs_ss_writable:s0   
 /sys/class/timed_output/vibrator/enable               u:object_r:sysfs_ss_writable:s0   
 /sys/class/ultrasonic/ultrasonic/data                 u:object_r:sysfs_ss_writable:s0 
@@ -905,6 +920,7 @@
 /system/bin/icd	u:object_r:icd_exec:s0
 /system/bin/immvibed	u:object_r:immvibed_exec:s0
 /system/bin/insthk	u:object_r:insthk_exec:s0
+/system/bin/imsd	u:object_r:imsd_exec:s0
 /system/bin/ipruleset	u:object_r:ipruleset_exec:s0
 /system/bin/IPSecService	u:object_r:IPSecService_exec:s0
 /system/bin/jackservice		u:object_r:jackservice_exec:s0
@@ -1063,6 +1079,9 @@
 /data/misc/tima(/.*)?		u:object_r:tima_log:s0
 /data/misc/vpnclientd(/.*)?     u:object_r:vpnclientd_data_file:s0
 /data/one-seg(/.*)? u:object_r:oneseg_data_file:s0
+# For DCM
+/data/misc/tz_dcm(/.*)?		u:object_r:dcm_data_file:s0
+
 # personalpage path is not used  by (hyojin45.son)
 # /data/personalpage(/.*)?	u:object_r:personal_page_file:s0
 # new path for personalpage is privatemode.K is first model for personalpage.
@@ -1072,6 +1091,7 @@
 /data/system/users(/.*)?                u:object_r:users_system_data_file:s0
 /data/system/users/service(/.*)?	u:object_r:reset_reason_service_file:s0
 /data/system/users(/.*)/wallpaper	u:object_r:wallpaper_file:s0
+/data/system/users(/.*)/wallpaper2	u:object_r:wallpaper_file:s0
 /data/tee(/.*)?	                        u:object_r:tee_data_file:s0
 
 ############################# 
@@ -1083,11 +1103,19 @@
 /data/container(/.*)?	u:object_r:container_app_data_backend:s0
 /data/knox(/.*)?	u:object_r:container_app_data_backend:s0
 /mnt/shell/emulated/([1-9])?[0-9](/.*)?  u:object_r:media_rw_data_file:s0
+/mnt/shell/enc_emulated/([1-9])?[0-9](/.*)?  u:object_r:media_rw_data_file:s0
+/mnt/shell/enc_media/([1-9])?[0-9](/.*)?  u:object_r:media_rw_data_file:s0
+/mnt/shell/emulated/1[0-8][0-9](/.*)?           u:object_r:container_app_data_backend:s0
+/mnt/shell/emulated/19[0-4](/.*)?               u:object_r:container_app_data_backend:s0
+/mnt/shell/emulated/1[0-9][0-9]/\.irm(/.*)?     u:object_r:irm_media_data_file:s0
 /mnt/shell/knox-emulated/1[0-8][0-9](/.*)?  u:object_r:container_app_data_backend:s0
 /mnt/shell/knox-emulated/19[0-4](/.*)?  u:object_r:container_app_data_backend:s0
 /data/knox/data/19[5-9](/.*)?	        u:object_r:bbccontainer_app_data_backend:s0
+/data/knox/secure_fs/enc_media(/.*)?	        u:object_r:media_rw_data_file:s0
+/data/knox/secure_fs/enc_user(/.*)?	        u:object_r:media_rw_data_file:s0
 /data/knox/sdcard/19[5-9](/.*)?	        u:object_r:bbccontainer_app_data_backend:s0
 /mnt/shell/knox-emulated/19[5-9](/.*)?  u:object_r:bbccontainer_app_data_backend:s0
+/data/security/aasa(/.*)?               u:object_r:security_spota_file:s0
 /data/security/spota(/.*)?              u:object_r:security_spota_file:s0
 /data/system/container(/.*)?	u:object_r:container_system_file:s0
 
@@ -1113,8 +1141,10 @@
 /efs/logguard(/.*)?	                         u:object_r:iss_efs_file:s0
 /efs/maxim(/.*)?	                         u:object_r:sec_efs_file:s0
 /efs/mc(/.*)?	                                 u:object_r:prov_efs_file:s0
+/efs/\.nv_core\.bak(.*)                            u:object_r:nv_core_efs_file:s0
 /efs/otadm(/.*)?	                         u:object_r:otadm_efs_file:s0
 /efs/otadm_sw_version                            u:object_r:otadm_efs_file:s0
+/efs/pfw_data(/.*)?	                         u:object_r:pfw_efs_file:s0
 /efs/prov(/.*)?	                                 u:object_r:prov_efs_file:s0
 /efs/prov_data(/.*)?	                         u:object_r:prov_efs_file:s0
 /efs/recovery(/.*)?	                         u:object_r:sec_efs_file:s0
@@ -1127,6 +1157,13 @@
 /efs/TEE(/.*)?                                   u:object_r:prov_efs_file:s0
 /efs/wifi(/.*)?	u:object_r:wifi_efs_file:s0
 /efs_gsm(/.*)?            u:object_r:efs_gsm_file:s0
+
+/efs/calibration_data                            u:object_r:sec_efs_file:s0
+/efs/grip_cal_data                               u:object_r:sec_efs_file:s0
+/efs/gyro_cal_data	                         u:object_r:sec_efs_file:s0
+/efs/hw_offset                                   u:object_r:sec_efs_file:s0
+/efs/osc_trim                                    u:object_r:sec_efs_file:s0
+/efs/prox_cal                                    u:object_r:sec_efs_file:s0
 
 ############################# 
 # EFS file of qcom_common
@@ -1144,6 +1181,7 @@
 # MISC partition file of sec_common
 #
 /custom(/.*)?   u:object_r:sbfs_file:s0
+/fw(/.*)?       u:object_r:device_firmware_file:s0
 /hidden(/.*)?	u:object_r:hidden_file:s0
 /persdata(/.*)?	u:object_r:persdata_data_file:s0
 /persdata/absolute(/.*)? 	u:object_r:abt_pers_data_file:s0
