@@ -10,7 +10,7 @@ BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 
 #Sabermod
 #Linaro
-BUILD_CROSS_COMPILE=$TOOLCHAIN_DIR/aarch64-UBERTC/bin/aarch64-linux-android-
+BUILD_CROSS_COMPILE=$TOOLCHAIN_DIR/stock_aarch64/bin/aarch64-linux-android-
 
 
 #vars

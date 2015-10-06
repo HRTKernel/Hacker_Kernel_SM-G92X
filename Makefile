@@ -158,7 +158,7 @@ VPATH		:= $(srctree)$(if $(KBUILD_EXTMOD),:$(KBUILD_EXTMOD))
 
 export srctree objtree VPATH
 
-TOOLCHAIN_DIR = /home/maik/android/toolchains/aarch64-linaro/bin/aarch64-linux-android-
+TOOLCHAIN_DIR = /home/maik/android/toolchains/stock_aarch64/bin/aarch64-linux-android-
 
 # SUBARCH tells the usermode build what the underlying arch is.  That is set
 # first, and if a usermode build is happening, the "ARCH=um" on the command
