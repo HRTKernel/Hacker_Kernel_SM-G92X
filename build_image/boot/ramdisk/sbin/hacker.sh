@@ -84,6 +84,26 @@ sleep 20;
 echo "0x0FF3 0x041E 0x0034 0x1FC8 0xF035 0x040D 0x00D2 0x1F6B 0xF084 0x0409 0x020B 0x1EB8 0xF104 0x0409 0x0406 0x0E08 0x0782 0x2ED8" > /sys/class/misc/arizona_control/eq_A_freqs
 echo "0x0C47 0x03F5 0x0EE4 0x1D04 0xF1F7 0x040B 0x07C8 0x187D 0xF3B9 0x040A 0x0EBE 0x0C9E 0xF6C3 0x040A 0x1AC7 0xFBB6 0x0400 0x2ED8" > /sys/class/misc/arizona_control/eq_B_freqs
 
+#Setup Mhz Min/Max Cluster 0
+echo 200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
+echo 1500000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo 200000 > /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq;
+echo 1500000 > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq;
+echo 200000 > /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq;
+echo 1500000 > /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq;
+echo 200000 > /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq;
+echo 1500000 > /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq;
+
+#Setup Mhz Min/Max Cluster 1
+echo 200000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq;
+echo 2100000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq;
+echo 200000 > /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq;
+echo 2100000 > /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq;
+echo 200000 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq;
+echo 2100000 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq;
+echo 200000 > /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq;
+echo 2100000 > /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq;
+
 echo "Set default sound values on boot successful." >> /data/hackertest.log
 
 

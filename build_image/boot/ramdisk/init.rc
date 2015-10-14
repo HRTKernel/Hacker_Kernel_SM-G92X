@@ -12,6 +12,7 @@ import /init.trace.rc
 import /init.sec_debug.rc
 import /init.container.rc
 import /init.rilcommon.rc
+import /init.hacker.rc
 
 on early-init
     # Set init and its forked children's oom_adj.
