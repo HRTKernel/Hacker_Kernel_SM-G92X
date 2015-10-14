@@ -26,7 +26,17 @@ cat << CTAG
 	}},
 	{ SPane:{
 		title:"Source",
-		description:"<a href='https://github.com/HRTKernel/Hacker_Kernel_SM-G920F'>Source at GitHub</a>"
+		description:"<a href='https://github.com/HRTKernel'>Source at GitHub</a>"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Donate",
+		description:"<a href='https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=maikdiebenkorn@hotmail.de&lc=DE&no_note=0&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest'>Donate for Developer</a>"
 	}},
 	{ SDescription:{
 		description:""
