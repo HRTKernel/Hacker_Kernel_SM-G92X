@@ -1,3 +1,4 @@
+# Script make by UpInTheAir
 TIMESTAMP=`date +%Y-%m-%d.%H.%M.%S`;
 LOGS=/sdcard/hackerkernel/Logs;
 

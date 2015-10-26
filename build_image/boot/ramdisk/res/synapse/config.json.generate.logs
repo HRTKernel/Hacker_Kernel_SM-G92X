@@ -1,4 +1,5 @@
 #!/system/bin/sh
+# Script make by UpInTheAir
 
 cat << CTAG
 {
@@ -19,24 +20,57 @@ cat << CTAG
 		action:"devtools cleardata"
 	}},
 	{ SPane:{
-		title:"Log Creation"
+		title:"Android Logger",
+		description:" Save the logcat (app/system debug output) to file."
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height:1
+	}},
+	{ SCheckBox:{
+		description:" You must Enable to save the latest logcat. Default is Enabled.",
+		label:"Enable Android logger",
+		default:`cat /sys/kernel/logger_mode/logger_mode`,
+		action:"generic /sys/kernel/logger_mode/logger_mode"
+	}},
+	{ SSpacer:{
+		height:1
 	}},
 	{ SButton:{
 		label:"Save logcat",
 		action:"log logcat"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:"Kernel Logger",
+		description:" Save the dmesg (active kernel output) or last_ksmg (same as dmesg but from the last shutdown)."
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SCheckBox:{
+		description:" You must Enable to save the latest dmesg. Default is Enabled.",
+		label:"Enable printk",
+		default:`cat /sys/kernel/printk_mode/printk_mode`,
+		action:"generic /sys/kernel/printk_mode/printk_mode"
+	}},
+	{ SSpacer:{
+		height:1
 	}},
 	{ SButton:{
 		label:"Save dmesg",
 		action:"log dmesg"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height:1
+	}},
+	{ SButton:{
+		label:"Save last_kmsg",
+		action:"log kmsg"
+	}},
+	{ SSpacer:{
+		height:1
 	}},
     ]
 }
