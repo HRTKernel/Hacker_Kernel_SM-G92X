@@ -23,18 +23,6 @@ cat << CTAG
 		title:"Android Logger",
 		description:" Save the logcat (app/system debug output) to file."
 	}},
-	{ SSpacer:{
-		height:1
-	}},
-	{ SCheckBox:{
-		description:" You must Enable to save the latest logcat. Default is Enabled.",
-		label:"Enable Android logger",
-		default:`cat /sys/kernel/logger_mode/logger_mode`,
-		action:"generic /sys/kernel/logger_mode/logger_mode"
-	}},
-	{ SSpacer:{
-		height:1
-	}},
 	{ SButton:{
 		label:"Save logcat",
 		action:"log logcat"
