@@ -532,7 +532,6 @@ static void thread_manage_work(struct work_struct *work)
 			if (!dynamic_hotplug(CMD_NORMAL))
 				prev_cmd = CMD_NORMAL;
 		}
-		dm_hotplug_disable = 1;
 	}
 	mutex_unlock(&thread_manage_lock);
 }
@@ -565,8 +564,10 @@ static int fb_state_change(struct notifier_block *nb,
 		pr_info("LCD is off\n");
 		screen_is_on = false;
 
+		if (!dynamic_hotplug(CMD_LOW_POWER))
+			prev_cmd = CMD_LOW_POWER;
+
 #ifdef CONFIG_HOTPLUG_THREAD_STOP
-		dm_hotplug_disable = 0;
 		if (thread_manage_wq) {
 			if (work_pending(&manage_work))
 				flush_work(&manage_work);
@@ -576,6 +577,9 @@ static int fb_state_change(struct notifier_block *nb,
 #endif
 		break;
 	case FB_BLANK_UNBLANK:
+		if (!dynamic_hotplug(CMD_NORMAL))
+			prev_cmd = CMD_NORMAL;
+
 		/*
 		 * LCD blank CPU qos is set by exynos-ikcs-cpufreq
 		 * This line of code release max limit when LCD is
@@ -640,7 +644,7 @@ static int __ref __cpu_hotplug(bool out_flag, enum hotplug_cmd cmd)
 	}
 #endif
 
-	if (exynos_dm_hotplug_disabled())
+	if (exynos_dm_hotplug_disabled() || lcd_is_on)
 		return 0;
 
 #if defined(CONFIG_SCHED_HMP)
