@@ -123,3 +123,21 @@ su -c pm enable com.google.android.gsf/.update.SystemUpdateService$SecretCodeRec
 
 echo "GApps fix applied successful." >> /data/hackertest.log
 
+LOGS=/data/media/0/hackerkernel/Logs;
+
+if [ ! -d $LOGS ]; then
+	mkdir /data/media/0/hackerkernel/Logs
+fi;
+
+chmod 777 $LOGS
+
+VALUES=/data/media/0/hackerkernel/values;
+
+if [ ! -d $VALUES ]; then
+	mkdir /data/media/0/hackerkernel/values
+fi;
+chmod 777 $VALUES
+
+echo "Interactive" > /data/media/0/hackerkernel/values/gpu_gov
+
+chmod 777 /data/media/0/hackerkernel/values/gpu_gov
