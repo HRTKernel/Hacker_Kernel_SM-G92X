@@ -12,6 +12,8 @@ cat << CTAG
 		`. /res/synapse/config.json.generate.little`
 		`. /res/synapse/config.json.generate.big`
 		`. /res/synapse/config.json.generate.gpu`
+		`. /res/synapse/config.json.generate.d2w`
+		`. /res/synapse/config.json.generate.led`
 		`. /res/synapse/config.json.generate.audio`
 		`. /res/synapse/config.json.generate.bus`
 		`. /res/synapse/config.json.generate.storage`

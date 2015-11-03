@@ -1,0 +1,32 @@
+#!/system/xbin/busybox sh
+# Script make by friedrich420
+
+cat << CTAG
+{
+    name:LED-CONTROL,
+    elements:[
+	{ SPane:{
+		title:"Brightness in High Brightness Environments"
+	}},
+	{ SSeekBar:{
+		description:"Set the relative intensity of the LED when in bright environments. Default is 40.",
+		min:0,
+		max:255,
+		step:5,
+		default:`cat /sys/class/sec/led/led_highpower_current`,
+		action:"generic /sys/class/sec/led/led_highpower_current"
+	}},
+	{ SPane:{
+		title:"Brightness in Low Brightness Environments"
+	}},
+	{ SSeekBar:{
+		description:"Set the relative intensity of the LED when in low brightness environments. Default is 5.",
+		min:0,
+		max:255,
+		step:5,
+		default:`cat /sys/class/sec/led/led_lowpower_current`,
+		action:"generic /sys/class/sec/led/led_lowpower_current"
+	}},
+    ]
+}
+CTAG
