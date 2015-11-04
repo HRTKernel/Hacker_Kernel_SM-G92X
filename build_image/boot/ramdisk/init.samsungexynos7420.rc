@@ -157,7 +157,7 @@ on post-fs-data
 #Private Mode
     mkdir /data/privatemode 0770 system system
     chown system system /data/privatemode
-    restorecon /data/privatemode
+    # restorecon /data/privatemode
 
 #NFC : create data/nfc for nv storage
     mkdir /data/nfc 0700 nfc nfc
@@ -755,7 +755,7 @@ service prepare_param /system/bin/prepare_param.sh /dev/block/platform/15570000.
     class core
     user root
     group root
-    seclabel u:r:prepare_param:s0
+    # seclabel u:r:prepare_param:s0
     oneshot
 
 #Private Mode
@@ -818,7 +818,7 @@ service fuse_UsbDriveF /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/Us
 # Set watchdog timer to 30 seconds and pet it every 10 seconds to get a 20 second margin
 service watchdogd /sbin/watchdogd 10 20
     class core
-    seclabel u:r:watchdogd:s0
+    # seclabel u:r:watchdogd:s0
 
 # on userdebug and eng builds, enable kgdb on the serial console
 on property:ro.debuggable=1
@@ -939,7 +939,7 @@ service rtc_log /system/bin/rtc_log.sh
     class main
     user system
     group system
-    seclabel u:r:rtc_log:s0
+    # seclabel u:r:rtc_log:s0
     oneshot
 
 # sem_daemon
