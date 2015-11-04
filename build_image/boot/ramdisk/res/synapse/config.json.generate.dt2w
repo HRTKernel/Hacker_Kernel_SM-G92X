@@ -3,7 +3,7 @@
 
 cat << CTAG
 {
-    name:D2W,
+    name:DT2W,
     elements:[
 	{ SPane:{
 		title:"Screen Wake Functions",
@@ -17,7 +17,7 @@ cat << CTAG
 		default:`cat /sys/android_touch/doubletap2wake`,
 		action:"generic /sys/android_touch/doubletap2wake",
 		values:{
-			`PROF='0:"Disabled", 1:"d2w"'
+			`PROF='0:"Disabled", 1:"dt2w"'
 			echo $PROF`
 		}
 	}},
