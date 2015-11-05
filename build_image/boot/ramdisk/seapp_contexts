@@ -17,6 +17,8 @@ user=_app seinfo=platform name=com.sec.android.nearby.mediaserver domain=platfor
 user=sprintextension seinfo=spr_ext name=com.sec.sprextension domain=system_app type=system_app_data_file
 user=_app seinfo=spay domain=platform_app type=platform_app_data_file
 user=spay seinfo=spay domain=platform_app type=platform_app_data_file
+user=system seinfo=spay domain=platform_app type=platform_app_data_file
+user=_app seinfo=samsung_keyboard name=com.sec.android.inputmethod.iwnnime.japan domain=system_app type=system_app_data_file
 isSystemServer=true domain=system_server
 user=shared_relro domain=shared_relro
 user=shell seinfo=platform domain=shell type=shell_data_file

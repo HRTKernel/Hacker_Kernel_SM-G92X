@@ -607,6 +607,11 @@
 /sys/class/kgsl/kgsl-3d0/dispatch(/.*)?     --            u:object_r:sysfs_ss_writable:s0
 /sys/class/power_supply/battery/camera                    u:object_r:sysfs_app_writable:s0
 
+
+############################# 
+# Device node of qcomm
+#
+/dev/snd/pcmC[0-9]*D[0-9]*c u:object_r:audio_capture_device:s0
 #line 1 "vendor/samsung/common/sepolicy/vmware/file_contexts"
 # VMware daemon
 /system/bin/mvpd	u:object_r:vmwared_exec:s0
@@ -665,6 +670,7 @@
 /dev/socket/dir_enc_report	u:object_r:vold_socket:s0
 /dev/socket/drsd        u:object_r:drsd_socket:s0
 /dev/socket/epm     u:object_r:epm_socket:s0
+/dev/socket/firewalld                                 u:object_r:firewalld_socket:s0
 /dev/socket/frigate		u:object_r:frigate_socket:s0
 /dev/socket/imsd	u:object_r:imsd_socket:s0
 /dev/socket/ipsec_socket        u:object_r:ipsec_socket:s0
@@ -688,6 +694,7 @@
 /dev/tuihw	u:object_r:tz_device:s0
 /dev/tzdev	u:object_r:tz_device:s0
 /dev/tzic	u:object_r:tz_device:s0
+/dev/tzirs	u:object_r:tz_device:s0
 /dev/url	u:object_r:url_device:s0
 /dev/usb(/.*)?	u:object_r:usb_device:s0
 /dev/usb.*	u:object_r:usb_device:s0
@@ -917,6 +924,7 @@
 # conflict with Qcom BSP, /system/bin/diag_uart_log	u:object_r:diag_uart_log_exec:s0
 /system/bin/dttexe	u:object_r:dttexe_exec:s0
 /system/bin/dumpsys	u:object_r:dumpsys_exec:s0
+/system/bin/firewalld	                              u:object_r:firewalld_exec:s0
 /system/bin/icd	u:object_r:icd_exec:s0
 /system/bin/immvibed	u:object_r:immvibed_exec:s0
 /system/bin/insthk	u:object_r:insthk_exec:s0
