@@ -651,7 +651,7 @@ static int __ref __cpu_hotplug(bool out_flag, enum hotplug_cmd cmd)
 	}
 #endif
 
-	if (exynos_dm_hotplug_disabled() || lcd_is_on)
+	if (exynos_dm_hotplug_disabled())
 		return 0;
 
 #if defined(CONFIG_SCHED_HMP)
