@@ -131,6 +131,7 @@ static struct workqueue_struct *thread_manage_wq;
 
 static int dm_hotplug_disable = 0;
 static bool dualcore_blank = true;
+static bool allow_cluster1_blank = false;
 
 static int exynos_dm_hotplug_disabled(void)
 {
@@ -186,12 +187,18 @@ static ssize_t store_enable_dm_hotplug(struct kobject *kobj, struct attribute *a
 	if (!sscanf(buf, "%1d", &enable_input))
 		return -EINVAL;
 
-	if (enable_input > 3 || enable_input < 0) {
+	if (enable_input > 5 || enable_input < 0) {
 		pr_err("%s: invalid value (%d)\n", __func__, enable_input);
 		return -EINVAL;
 	}
 
-	if (enable_input == 3) {
+	if (enable_input == 5) {
+		pr_info("%s: allowing cluster1 to be turned on during screen-off\n", __func__);
+		allow_cluster1_blank = true;
+	} else if (enable_input == 4) {
+		pr_info("%s: preventing cluster1 to be turned on during screen-off\n", __func__);
+		allow_cluster1_blank = false;
+	} else if (enable_input == 3) {
 		pr_info("%s: disabling dualcore mode on screen-off\n", __func__);
 		dualcore_blank = false;
 	} else if (enable_input == 2) {
@@ -1154,7 +1161,7 @@ static enum hotplug_cmd diagnose_condition(void)
 #if defined(CONFIG_ARM_EXYNOS_MP_CPUFREQ)
 	ret = CMD_CLUST0_IN;
 
-	if ((cur_load_freq >= cluster0_max_freq) && lcd_is_on)
+	if ((cur_load_freq >= cluster0_max_freq) && (lcd_is_on || allow_cluster1_blank))
 		ret = CMD_NORMAL;
 
 	if ((cur_load_freq > normal_min_freq) ||
