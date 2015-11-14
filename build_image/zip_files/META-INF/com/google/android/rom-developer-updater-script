@@ -1,0 +1,196 @@
+set_progress(0.0);
+ui_print("Hacker Kernel");
+ui_print("by thehacker911");
+ui_print("");
+ui_print("Mounting /system.....");
+
+
+# UNPACK TO TEMP DIRECTORY
+run_program("/sbin/mount", "-t", "auto", "/system");
+run_program("/sbin/mount", "-t", "auto", "/data");
+run_program("/sbin/mount", "-t", "auto", "/cache");
+ui_print("Setting up the installation files");
+package_extract_dir("kernel", "/tmp");
+package_extract_dir("data", "/data");
+
+
+# SET PERMS
+set_metadata("/tmp/aroma.sh", "uid", 0, "gid", 0, "mode", 0755);
+run_program("/tmp/aroma.sh", "WAIT");
+
+ui_print(" ");
+ui_print("Installing busybox");
+package_extract_dir("system", "/system");
+set_perm(0, 2000, 0755, "/system/xbin/busybox");
+symlink("busybox", "/system/xbin/[", "/system/xbin/[[",
+        "/system/xbin/adjtimex", "/system/xbin/arp", "/system/xbin/ash",
+        "/system/xbin/awk", "/system/xbin/base64", "/system/xbin/basename",
+        "/system/xbin/bbconfig", "/system/xbin/blkid", "/system/xbin/blockdev",
+        "/system/xbin/brctl", "/system/xbin/bunzip2", "/system/xbin/bzcat",
+        "/system/xbin/bzip2", "/system/xbin/cal", "/system/xbin/cat",
+        "/system/xbin/catv", "/system/xbin/chattr", "/system/xbin/chgrp",
+        "/system/xbin/chmod", "/system/xbin/chown", "/system/xbin/chroot",
+        "/system/xbin/clear", "/system/xbin/cmp", "/system/xbin/comm",
+        "/system/xbin/cp", "/system/xbin/cpio", "/system/xbin/crond",
+        "/system/xbin/crontab", "/system/xbin/cut", "/system/xbin/date",
+        "/system/xbin/dc", "/system/xbin/dd", "/system/xbin/depmod",
+        "/system/xbin/devmem", "/system/xbin/df", "/system/xbin/diff",
+        "/system/xbin/dirname", "/system/xbin/dmesg", "/system/xbin/dnsd",
+        "/system/xbin/dos2unix", "/system/xbin/du", "/system/xbin/echo",
+        "/system/xbin/ed", "/system/xbin/egrep", "/system/xbin/env",
+        "/system/xbin/expand", "/system/xbin/expr", "/system/xbin/false",
+        "/system/xbin/fbsplash", "/system/xbin/fdisk", "/system/xbin/fgrep",
+        "/system/xbin/find", "/system/xbin/flash_lock",
+        "/system/xbin/flash_unlock", "/system/xbin/flashcp",
+        "/system/xbin/flock", "/system/xbin/fold", "/system/xbin/free",
+        "/system/xbin/freeramdisk", "/system/xbin/fstrim", "/system/xbin/fsync",
+        "/system/xbin/ftpget", "/system/xbin/ftpput", "/system/xbin/fuser",
+        "/system/xbin/getopt", "/system/xbin/grep", "/system/xbin/groups",
+        "/system/xbin/gunzip", "/system/xbin/gzip", "/system/xbin/halt",
+        "/system/xbin/head", "/system/xbin/hexdump", "/system/xbin/id",
+        "/system/xbin/ifconfig", "/system/xbin/inetd", "/system/xbin/insmod",
+        "/system/xbin/install", "/system/xbin/ionice", "/system/xbin/iostat",
+        "/system/xbin/ip", "/system/xbin/kill", "/system/xbin/killall",
+        "/system/xbin/killall5", "/system/xbin/less", "/system/xbin/ln",
+        "/system/xbin/losetup", "/system/xbin/ls", "/system/xbin/lsattr",
+        "/system/xbin/lsmod", "/system/xbin/lsusb", "/system/xbin/lzcat",
+        "/system/xbin/lzma", "/system/xbin/lzop", "/system/xbin/lzopcat",
+        "/system/xbin/man", "/system/xbin/md5sum", "/system/xbin/mesg",
+        "/system/xbin/mkdir", "/system/xbin/mke2fs", "/system/xbin/mkfifo",
+        "/system/xbin/mkfs.ext2", "/system/xbin/mkfs.vfat",
+        "/system/xbin/mknod", "/system/xbin/mkswap", "/system/xbin/mktemp",
+        "/system/xbin/modinfo", "/system/xbin/modprobe", "/system/xbin/more",
+        "/system/xbin/mount", "/system/xbin/mountpoint", "/system/xbin/mpstat",
+        "/system/xbin/mv", "/system/xbin/nanddump", "/system/xbin/nandwrite",
+        "/system/xbin/nbd-client", "/system/xbin/netstat", "/system/xbin/nice",
+        "/system/xbin/nohup", "/system/xbin/nslookup", "/system/xbin/ntpd",
+        "/system/xbin/od", "/system/xbin/patch", "/system/xbin/pgrep",
+        "/system/xbin/pidof", "/system/xbin/ping", "/system/xbin/pipe_progress",
+        "/system/xbin/pkill", "/system/xbin/pmap", "/system/xbin/poweroff",
+        "/system/xbin/printenv", "/system/xbin/printf", "/system/xbin/ps",
+        "/system/xbin/pstree", "/system/xbin/pwd", "/system/xbin/pwdx",
+        "/system/xbin/rdev", "/system/xbin/readlink", "/system/xbin/realpath",
+        "/system/xbin/renice", "/system/xbin/reset", "/system/xbin/resize",
+        "/system/xbin/rev", "/system/xbin/rm", "/system/xbin/rmdir",
+        "/system/xbin/rmmod", "/system/xbin/route", "/system/xbin/run-parts",
+        "/system/xbin/rx", "/system/xbin/sed", "/system/xbin/seq",
+        "/system/xbin/setconsole", "/system/xbin/setserial",
+        "/system/xbin/setsid", "/system/xbin/sh", "/system/xbin/sha1sum",
+        "/system/xbin/sha256sum", "/system/xbin/sha3sum",
+        "/system/xbin/sha512sum", "/system/xbin/sleep", "/system/xbin/sort",
+        "/system/xbin/split", "/system/xbin/stat", "/system/xbin/strings",
+        "/system/xbin/stty", "/system/xbin/sum", "/system/xbin/swapoff",
+        "/system/xbin/swapon", "/system/xbin/sync", "/system/xbin/sysctl",
+        "/system/xbin/tac", "/system/xbin/tail", "/system/xbin/tar",
+        "/system/xbin/taskset", "/system/xbin/tee", "/system/xbin/telnet",
+        "/system/xbin/telnetd", "/system/xbin/test", "/system/xbin/tftp",
+        "/system/xbin/tftpd", "/system/xbin/time", "/system/xbin/timeout",
+        "/system/xbin/top", "/system/xbin/touch", "/system/xbin/tr",
+        "/system/xbin/traceroute", "/system/xbin/true", "/system/xbin/ttysize",
+        "/system/xbin/tune2fs", "/system/xbin/umount", "/system/xbin/uname",
+        "/system/xbin/uncompress", "/system/xbin/unexpand", "/system/xbin/uniq",
+        "/system/xbin/unix2dos", "/system/xbin/unlzma", "/system/xbin/unlzop",
+        "/system/xbin/unxz", "/system/xbin/unzip", "/system/xbin/uptime",
+        "/system/xbin/usleep", "/system/xbin/uudecode", "/system/xbin/uuencode",
+        "/system/xbin/vi", "/system/xbin/watch", "/system/xbin/wc",
+        "/system/xbin/wget", "/system/xbin/which", "/system/xbin/whoami",
+        "/system/xbin/xargs", "/system/xbin/xz", "/system/xbin/xzcat",
+        "/system/xbin/yes",
+        "/system/xbin/zcat");
+
+# DEVICE VARIANT DETECTION
+ui_print(" ");
+ui_print("Detecting device type");
+run_program("/tmp/aroma.sh", "DETECT");
+run_program("/tmp/aroma.sh", "WAIT");
+
+# COMPATIBLE DEVICE DETECTION
+if file_getprop("/system/device.prop","device.type") == "compatible" then
+	if file_getprop("/system/device.prop","device.model") == "intflatF" then
+		ui_print("--Detected International Flat S6");
+	endif;
+	if file_getprop("/system/device.prop","device.model") == "intedgeF" then
+		ui_print("--Detected International S6 Edge");
+	endif;
+	if file_getprop("/system/device.prop","device.model") == "intflatT" then
+		ui_print("--Detected T / W8 Flat S6");
+	endif;
+	if file_getprop("/system/device.prop","device.model") == "intedgeT" then
+		ui_print("--Detected T / W8 S6 Edge");
+	endif;
+
+ui_print(" ");
+run_program("/tmp/aroma.sh", "WAIT");
+set_progress(0.2);
+
+
+# FLASH KERNEL
+ui_print("Flashing the kernel");
+run_program("/tmp/aroma.sh", "FLASH");
+run_program("/tmp/aroma.sh", "WAIT");
+set_progress(0.3);
+
+ui_print("--- Stock Settings");
+delete("/system/kernel.prop");
+run_program("/tmp/aroma.sh", "CFQ");
+run_program("/tmp/aroma.sh", "NO_TURBO");
+run_program("/tmp/aroma.sh", "INTERACTIVE");
+run_program("/tmp/aroma.sh", "A53-400");
+run_program("/tmp/aroma.sh", "A57-800");
+run_program("/tmp/aroma.sh", "NO_INITD");
+run_program("/tmp/aroma.sh", "STOCK_GAPPS");
+set_progress(0.5);
+ui_print(" ");
+
+# KILL STUFF
+delete_recursive("/data/data/com.af.synapse");
+delete_recursive("/res");
+delete_recursive("/data/.ael");
+delete_recursive("/data/.simplkernel");
+delete_recursive("/data/simpltest.log");
+delete_recursive("/data/.hackerkernel");
+delete_recursive("/data/hackertest.log");
+delete_recursive("/cache");
+delete_recursive("/storage/sdcard0/KTweaker");
+delete_recursive("/system/app/BBCAgent");
+delete_recursive("/system/app/Bridge");
+delete_recursive("/system/app/com.ktoonsez.KTweaker.apk");
+delete_recursive("/system/app/com.ktoonsez.KTmonitor.apk");
+delete_recursive("/system/app/KNOXAgent");
+delete_recursive("/system/app/KnoxAttestationAgent");
+delete_recursive("/system/app/KnoxSetupWizardClient");
+delete_recursive("/system/app/SwitchKnoxI");
+delete_recursive("/system/app/SwitchKnoxII");
+delete_recursive("/system/priv-app/KLMSAgent");
+delete_recursive("/system/priv-app/SPDClient");
+delete_recursive("/system/priv-app/KnoxShortcuts");
+delete_recursive("/system/container/ContainerAgent2");
+delete_recursive("/system/container/KnoxPackageVerifier");
+delete_recursive("/system/container/KnoxSecureHandler");
+delete_recursive("/system/container/KnoxSwitcher");
+set_progress(0.9);
+
+# FIX PERMISSIONS
+run_program("/tmp/aroma.sh", "FIX_PERMS");
+
+set_progress(1.0);
+ui_print(" ");
+
+# END OF "COMPATIBLE DEVICE" SCRIPT
+ui_print("Installation successful");
+endif;
+
+# UNSUPPORTED DEVICE
+if file_getprop("/system/device.prop","device.type") == "incompatible" then
+	ui_print("Installation aborted - Device is incompatible");
+endif;
+
+
+# CLEANUP
+delete("/system/device.prop");
+delete_recursive("/tmp");
+unmount("/system");
+unmount("/cache");
+unmount("/data");
+
+set_progress(1.0);
