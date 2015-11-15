@@ -206,16 +206,26 @@ if file_getprop("/tmp/aroma-data/scheduler.prop","selected.1") == "2" then
 endif;
 
 if file_getprop("/tmp/aroma-data/scheduler.prop","selected.1") == "3" then
+	ui_print("--- Deadline Scheduler");
+	run_program("/tmp/aroma.sh", "DEADLINE");
+endif;
+
+if file_getprop("/tmp/aroma-data/scheduler.prop","selected.1") == "4" then
+	ui_print("--- Fiops Scheduler");
+	run_program("/tmp/aroma.sh", "FIOPS");
+endif;
+
+if file_getprop("/tmp/aroma-data/scheduler.prop","selected.1") == "5" then
 	ui_print("--- Noop Scheduler");
 	run_program("/tmp/aroma.sh", "NOOP");
 endif;
 
-if file_getprop("/tmp/aroma-data/scheduler.prop","selected.1") == "4" then
+if file_getprop("/tmp/aroma-data/scheduler.prop","selected.1") == "6" then
 	ui_print("--- Sioplus Scheduler");
 	run_program("/tmp/aroma.sh", "SIOPLUS");
 endif;
 
-if file_getprop("/tmp/aroma-data/scheduler.prop","selected.1") == "5" then
+if file_getprop("/tmp/aroma-data/scheduler.prop","selected.1") == "7" then
 	ui_print("--- Tripndroid Scheduler");
 	run_program("/tmp/aroma.sh", "TRIPNDROID");
 endif;

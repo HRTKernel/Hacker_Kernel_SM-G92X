@@ -66,9 +66,11 @@ if prop("install.prop","selected.1")=="5" then
 	"Which io scheduler?",	"",	2, #-- Group 1. key = "selected.1"
 	"CFQ",			"Use CFQ scheduler"	,	1,	#-- selected.1 = 1
 	"BFQ",      		"Use BFQ scheduler",	0,	#-- selected.1 = 2
-	"Noop",      		"Use Noop scheduler",				0,	#-- selected.1 = 3
-	"Sioplus",      	"Use Sioplus scheduler",					0,	#-- selected.1 = 4
-	"Tripndroid",      		"Use Tripndroid scheduler",					0	#-- selected.1 = 5
+	"Deadline",      	"Use Deadline scheduler",	0,	#-- selected.1 = 3
+	"Fiops",      		"Use Fiops scheduler",	0,	#-- selected.1 = 4
+	"Noop",      		"Use Noop scheduler",				0,	#-- selected.1 = 5
+	"Sioplus",      	"Use Sioplus scheduler",					0,	#-- selected.1 = 6
+	"Tripndroid",      	"Use Tripndroid scheduler",					0	#-- selected.1 = 7
 	);
 
 	selectbox(

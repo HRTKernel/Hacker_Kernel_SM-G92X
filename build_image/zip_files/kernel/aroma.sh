@@ -70,6 +70,12 @@ elif [ "$1" = "CFQ" ]; then
 elif [ "$1" = "BFQ" ]; then
 	echo "kernel.scheduler=bfq" >> $PROP
 
+elif [ "$1" = "DEADLINE" ]; then
+	echo "kernel.scheduler=deadline" >> $PROP
+
+elif [ "$1" = "FIOPS" ]; then
+	echo "kernel.scheduler=fiops" >> $PROP
+
 elif [ "$1" = "NOOP" ]; then
 	echo "kernel.scheduler=noop" >> $PROP
 

@@ -154,6 +154,18 @@ elif [ "`grep "kernel.scheduler=sioplus" $PROP`" != "" ]; then
     	echo "sioplus" > /sys/block/sdb/queue/scheduler
     	echo "sioplus" > /sys/block/sdc/queue/scheduler
     	echo "sioplus" > /sys/block/vnswap0/queue/scheduler
+elif [ "`grep "kernel.scheduler=fiops" $PROP`" != "" ]; then
+	echo "fiops" > /sys/block/mmcblk0/queue/scheduler
+    	echo "fiops" > /sys/block/sda/queue/scheduler
+    	echo "fiops" > /sys/block/sdb/queue/scheduler
+    	echo "fiops" > /sys/block/sdc/queue/scheduler
+    	echo "fiops" > /sys/block/vnswap0/queue/scheduler
+elif [ "`grep "kernel.scheduler=deadline" $PROP`" != "" ]; then
+	echo "deadline" > /sys/block/mmcblk0/queue/scheduler
+    	echo "deadline" > /sys/block/sda/queue/scheduler
+    	echo "deadline" > /sys/block/sdb/queue/scheduler
+    	echo "deadline" > /sys/block/sdc/queue/scheduler
+    	echo "deadline" > /sys/block/vnswap0/queue/scheduler
 elif [ "`grep "kernel.scheduler=bfq" $PROP`" != "" ]; then
 	echo "bfq" > /sys/block/mmcblk0/queue/scheduler
     	echo "bfq" > /sys/block/sda/queue/scheduler
