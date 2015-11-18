@@ -179,6 +179,16 @@ if prop("install.prop","selected.1")=="5" then
 	"No",      		"GApps Fix will be not be applied",			1	#-- selected.1 = 2
 	);
 
+	selectbox(
+	"Remove Knox from System?",
+	"Reomve Knox from System. You need this only by Stock Roms",
+	"icons/update",
+	"knox.prop",
+	"Remove Knox?",	"",	2, #-- Group 1. key = "selected.1"
+	"Yes",      		"Yes, i use a Stock Rom/Firmware",	1,	#-- selected.1 = 1
+	"No",      		"No, i use a Custom Rom",	0	#-- selected.1 = 2
+	);
+
 endif;
 
 

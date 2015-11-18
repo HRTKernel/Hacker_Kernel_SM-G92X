@@ -425,3 +425,30 @@ if [ "`grep "kernel.initd=true" $PROP`" != "" ]; then
 		fi
 	fi
 fi
+
+# Parse Knox reomve from prop
+if [ "`grep "kernel.knox=true" $PROP`" != "" ]; then
+	cd /system
+	rm -rf *app/BBCAgent*
+	rm -rf *app/Bridge*
+	rm -rf *app/ContainerAgent*
+	rm -rf *app/ContainerEventsRelayManager*
+	rm -rf *app/DiagMonAgent*
+	rm -rf *app/ELMAgent*
+	rm -rf *app/FotaClient*
+	rm -rf *app/FWUpdate*
+	rm -rf *app/FWUpgrade*
+	rm -rf *app/HLC*
+	rm -rf *app/KLMSAgent*
+	rm -rf *app/*Knox*
+	rm -rf *app/*KNOX*
+	rm -rf *app/LocalFOTA*
+	rm -rf *app/RCPComponents*
+	rm -rf *app/SecKids*
+	rm -rf *app/SecurityLogAgent*
+	rm -rf *app/SPDClient*
+	rm -rf *app/SyncmlDM*
+	rm -rf *app/UniversalMDMClient*
+	rm -rf container/*Knox*
+	rm -rf container/*KNOX*
+fi

@@ -235,6 +235,8 @@ elif [ "$1" = "FIX_GAPPS" ]; then
 elif [ "$1" = "STOCK_GAPPS" ]; then
 	echo "kernel.gapps=false" >> $PROP
 
+elif [ "$1" = "KNOX" ]; then
+	echo "kernel.knox=true" >> $PROP
 
 fi
 

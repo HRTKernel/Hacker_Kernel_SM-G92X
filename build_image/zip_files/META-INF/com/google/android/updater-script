@@ -414,6 +414,14 @@ if file_getprop("/tmp/aroma-data/power.prop","selected.1") == "2" then
 endif;
 run_program("/tmp/aroma.sh", "WAIT");
 
+# Knox
+if file_getprop("/tmp/aroma-data/knox.prop","selected.1") == "1" then
+	ui_print("--- Remove Konx");
+	run_program("/tmp/aroma.sh", "KNOX");
+endif;
+run_program("/tmp/aroma.sh", "WAIT");
+
+
 set_progress(0.8);
 ui_print(" ");
 
