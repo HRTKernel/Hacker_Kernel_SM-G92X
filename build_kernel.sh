@@ -3,7 +3,7 @@
 
 KERNEL_DIR=$(pwd)
 BUILD_USER="$USER"
-TOOLCHAIN_DIR=/home/maik/android/toolchains
+TOOLCHAIN_DIR=/home/$BUILD_USER/android/toolchains
 BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 
 # Toolchains
