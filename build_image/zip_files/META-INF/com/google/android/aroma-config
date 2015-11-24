@@ -1,8 +1,8 @@
 ini_set("rom_name",		"Hacker Kernel");
-ini_set("rom_version",		"v7");
+ini_set("rom_version",		"v8");
 ini_set("rom_author",		"thehacker911");
 ini_set("rom_device",		"Samsung Galaxy S6 G92x F/I/T/K/L/S/W8");
-ini_set("rom_date",		"Nov, 21 2015");
+ini_set("rom_date",		"Dec, 06, 2015");
 ##
 
 fontresload( "0", "ttf/DroidSans.ttf;", "12" ); #-- Use sets of font (Font Family)
