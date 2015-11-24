@@ -416,7 +416,7 @@ run_program("/tmp/aroma.sh", "WAIT");
 
 # Knox
 if file_getprop("/tmp/aroma-data/knox.prop","selected.1") == "1" then
-	ui_print("--- Remove Konx");
+	ui_print("--- Remove Knox");
 	run_program("/tmp/aroma.sh", "KNOX");
 endif;
 run_program("/tmp/aroma.sh", "WAIT");

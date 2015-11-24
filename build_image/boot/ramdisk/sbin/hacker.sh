@@ -60,6 +60,40 @@ echo  Kernel script is working !!! >> /data/hackertest.log
 echo "excecuted on $(date +"%d-%m-%Y %r" )" >> /data/hackertest.log
 echo  Done ! >> /data/hackertest.log
 
+# Assume SMP uses shared cpufreq policy for all CPUs
+chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+chown root system /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
+chmod 0644 /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
+chown root system /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
+chmod 0644 /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
+chown root system /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
+chmod 0644 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
+chown root system /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
+chmod 0644 /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
+chown root system /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
+chmod 0644 /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
+chown root system /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
+chmod 0644 /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
+chown root system /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+chmod 0644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+chown root system /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+chmod 0644 /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+chown root system /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
+chmod 0644 /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
+chown root system /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
+chmod 0644 /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq
+chown root system /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
+chmod 0644 /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
+chown root system /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
+chmod 0644 /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq
+chown root system /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
+chmod 0644 /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
+chown root system /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
+chmod 0644 /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
+echo "Scaling_min_freq Permissions fixed successful." >> /data/hackertest.log
 
 #Synapse profile
 if [ ! -f /data/.hackerkernel/bck_prof ]; then
@@ -118,7 +152,7 @@ $BB chmod -R 0400 /data/tombstones
 $BB chown -R root:root /data/property
 $BB chmod -R 0700 /data/property
 $BB chmod 06755 /sbin/busybox
-echo "- Critical Permissions fixed successful." >> /data/hackertest.log
+echo "Critical Permissions fixed successful." >> /data/hackertest.log
 
 # Parse init/d support from prop. If AUTO mode check to see if support has been added to the rom
 if [ "`grep "kernel.initd=true" $PROP`" != "" ]; then
