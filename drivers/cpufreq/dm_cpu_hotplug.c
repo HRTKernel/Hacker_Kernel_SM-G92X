@@ -130,8 +130,6 @@ static struct workqueue_struct *thread_manage_wq;
 #endif
 
 static int dm_hotplug_disable = 0;
-static bool dualcore_blank = false;
-static bool allow_cluster1_blank = false;
 
 static int exynos_dm_hotplug_disabled(void)
 {
@@ -187,24 +185,12 @@ static ssize_t store_enable_dm_hotplug(struct kobject *kobj, struct attribute *a
 	if (!sscanf(buf, "%1d", &enable_input))
 		return -EINVAL;
 
-	if (enable_input > 5 || enable_input < 0) {
+	if (enable_input > 1 || enable_input < 0) {
 		pr_err("%s: invalid value (%d)\n", __func__, enable_input);
 		return -EINVAL;
 	}
 
-	if (enable_input == 5) {
-		pr_info("%s: allowing cluster1 to be turned on during screen-off\n", __func__);
-		allow_cluster1_blank = true;
-	} else if (enable_input == 4) {
-		pr_info("%s: preventing cluster1 to be turned on during screen-off\n", __func__);
-		allow_cluster1_blank = false;
-	} else if (enable_input == 3) {
-		pr_info("%s: disabling dualcore mode on screen-off\n", __func__);
-		dualcore_blank = false;
-	} else if (enable_input == 2) {
-		pr_info("%s: enabling dualcore mode on screen-off\n", __func__);
-		dualcore_blank = true;
-	} else if (enable_input == 1) {
+	if (enable_input) {
 		do_enable_hotplug = true;
 		if (exynos_dm_hotplug_disabled())
 			exynos_dm_hotplug_enable();
@@ -536,9 +522,6 @@ static void thread_manage_work(struct work_struct *work)
 		}
 
 		wake_up_process(dm_hotplug_task);
-
-		if (!dynamic_hotplug(CMD_LOW_POWER))
-			prev_cmd = CMD_LOW_POWER;
 	} else {
 		if (dm_hotplug_task) {
 			kthread_stop(dm_hotplug_task);
@@ -578,9 +561,6 @@ static int fb_state_change(struct notifier_block *nb,
 		pr_info("LCD is off\n");
 		screen_is_on = false;
 
-		if (!dynamic_hotplug(CMD_LOW_POWER))
-			prev_cmd = CMD_LOW_POWER;
-
 #ifdef CONFIG_HOTPLUG_THREAD_STOP
 		if (thread_manage_wq) {
 			if (work_pending(&manage_work))
@@ -591,9 +571,6 @@ static int fb_state_change(struct notifier_block *nb,
 #endif
 		break;
 	case FB_BLANK_UNBLANK:
-		if (!dynamic_hotplug(CMD_NORMAL))
-			prev_cmd = CMD_NORMAL;
-
 		/*
 		 * LCD blank CPU qos is set by exynos-ikcs-cpufreq
 		 * This line of code release max limit when LCD is
@@ -627,6 +604,9 @@ static int __ref __cpu_hotplug(bool out_flag, enum hotplug_cmd cmd)
 {
 	int i = 0;
 	int ret = 0;
+#if defined(CONFIG_SCHED_HMP)
+	int hotplug_out_limit = 0;
+#endif
 #ifdef DM_HOTPLUG_DEBUG
 	char cmddesc[25];
 
@@ -708,7 +688,11 @@ static int __ref __cpu_hotplug(bool out_flag, enum hotplug_cmd cmd)
 				}
 			} else {
 				dm_dbg("%s: 5, %s\n", __func__, cmddesc);
-				for (i = setup_max_cpus - 1; i > 0; i--) {
+
+				if (cluster0_hotplug_in)
+					hotplug_out_limit = NR_CLUST0_CPUS - 2;
+
+				for (i = setup_max_cpus - 1; i > hotplug_out_limit; i--) {
 					if (cpu_online(i)) {
 						ret = cpu_down(i);
 						if (ret)
@@ -735,45 +719,27 @@ static int __ref __cpu_hotplug(bool out_flag, enum hotplug_cmd cmd)
 			}
 		} else {
 			if (cmd == CMD_CLUST0_ONE_IN) {
-				if (!lcd_is_on && dualcore_blank) {
-					dm_dbg("%s: 7, %s\n", __func__, cmddesc);
-					if (!cpu_online(1)) {
-						ret = cpu_up(1);
+				dm_dbg("%s: 7, %s\n", __func__, cmddesc);
+				for (i = 1; i < NR_CLUST0_CPUS - 1; i++) {
+					if (!cpu_online(i)) {
+						ret = cpu_up(i);
 						if (ret)
 							goto blk_out;
-					}
-				} else {
-					dm_dbg("%s: 8, %s\n", __func__, cmddesc);
-					for (i = 1; i < NR_CLUST0_CPUS - 1; i++) {
-						if (!cpu_online(i)) {
-							ret = cpu_up(i);
-							if (ret)
-								goto blk_out;
-						}
 					}
 				}
 			} else if ((cluster1_hotplugged && !do_disable_hotplug) ||
 				(cmd == CMD_CLUST0_IN)) {
-				if (!lcd_is_on && dualcore_blank) {
-					dm_dbg("%s: 9, %s\n", __func__, cmddesc);
-					if (!cpu_online(1)) {
-						ret = cpu_up(1);
+				dm_dbg("%s: 8, %s\n", __func__, cmddesc);
+				for (i = 1; i < NR_CLUST0_CPUS; i++) {
+					if (!cpu_online(i)) {
+						ret = cpu_up(i);
 						if (ret)
 							goto blk_out;
-					}
-				} else {
-					dm_dbg("%s: 10, %s\n", __func__, cmddesc);
-					for (i = 1; i < NR_CLUST0_CPUS; i++) {
-						if (!cpu_online(i)) {
-							ret = cpu_up(i);
-							if (ret)
-								goto blk_out;
-						}
 					}
 				}
 			} else {
 				if (lcd_is_on) {
-					dm_dbg("%s: 11, %s\n", __func__, cmddesc);
+					dm_dbg("%s: 9, %s\n", __func__, cmddesc);
 					for (i = NR_CLUST0_CPUS; i < setup_max_cpus; i++) {
 						if (do_hotplug_out)
 							goto blk_out;
@@ -788,7 +754,7 @@ static int __ref __cpu_hotplug(bool out_flag, enum hotplug_cmd cmd)
 						}
 					}
 
-					dm_dbg("%s: 12, %s\n", __func__, cmddesc);
+					dm_dbg("%s: 10, %s\n", __func__, cmddesc);
 					for (i = 1; i < NR_CLUST0_CPUS; i++) {
 						if (!cpu_online(i)) {
 							ret = cpu_up(i);
@@ -797,10 +763,11 @@ static int __ref __cpu_hotplug(bool out_flag, enum hotplug_cmd cmd)
 						}
 					}
 				} else {
-					dm_dbg("%s: 13, %s\n", __func__, cmddesc);
+					dm_dbg("%s: 11, %s\n", __func__, cmddesc);
 					for (i = 1; i < setup_max_cpus; i++) {
 						if (do_hotplug_out && i >= NR_CLUST0_CPUS)
 							goto blk_out;
+
 						if (!cpu_online(i)) {
 							ret = cpu_up(i);
 							if (ret)
@@ -816,7 +783,7 @@ static int __ref __cpu_hotplug(bool out_flag, enum hotplug_cmd cmd)
 		if (do_disable_hotplug)
 			goto blk_out;
 
-		dm_dbg("%s: 14, %s\n", __func__, cmddesc);
+		dm_dbg("%s: 12, %s\n", __func__, cmddesc);
 		for (i = setup_max_cpus - 1; i > 0; i--) {
 			if (cpu_online(i)) {
 				ret = cpu_down(i);
@@ -828,7 +795,7 @@ static int __ref __cpu_hotplug(bool out_flag, enum hotplug_cmd cmd)
 		if (in_suspend_prepared)
 			goto blk_out;
 
-		dm_dbg("%s: 15, %s\n", __func__, cmddesc);
+		dm_dbg("%s: 13, %s\n", __func__, cmddesc);
 		for (i = 1; i < setup_max_cpus; i++) {
 			if (!cpu_online(i)) {
 				ret = cpu_up(i);
@@ -996,7 +963,7 @@ static DECLARE_WORK(hotplug_in_work, event_hotplug_in_work);
 
 void event_hotplug_in(void)
 {
-	if (hotplug_wq && lcd_is_on)
+	if (hotplug_wq)
 		queue_work(hotplug_wq, &hotplug_in_work);
 }
 #endif
@@ -1009,23 +976,16 @@ static int __ref exynos_dm_hotplug_notifier(struct notifier_block *notifier,
 	switch (pm_event) {
 	case PM_SUSPEND_PREPARE:
 		mutex_lock(&thread_lock);
-		in_suspend_prepared = true;
 
 		if (!dynamic_hotplug(CMD_NORMAL))
 			prev_cmd = CMD_NORMAL;
+
+		in_suspend_prepared = true;
 
 		exynos_dm_hotplug_disable();
 		if (dm_hotplug_task) {
 			kthread_stop(dm_hotplug_task);
 			dm_hotplug_task = NULL;
-		}
-
-		for (i = 4; i < 11; i++) {
-			j = i;
-			if (j >= 8) j = 11 - j;
-			if (!cpu_online(j)) {
-				cpu_up(j);
-			}
 		}
 
 		mutex_unlock(&thread_lock);
@@ -1046,6 +1006,10 @@ static int __ref exynos_dm_hotplug_notifier(struct notifier_block *notifier,
 		in_suspend_prepared = false;
 
 		wake_up_process(dm_hotplug_task);
+
+		if (!dynamic_hotplug(CMD_NORMAL))
+			prev_cmd = CMD_NORMAL;
+
 		mutex_unlock(&thread_lock);
 		break;
 	}
@@ -1161,7 +1125,7 @@ static enum hotplug_cmd diagnose_condition(void)
 #if defined(CONFIG_ARM_EXYNOS_MP_CPUFREQ)
 	ret = CMD_CLUST0_IN;
 
-	if ((cur_load_freq >= cluster0_max_freq) && (lcd_is_on || allow_cluster1_blank))
+	if (cur_load_freq >= cluster0_max_freq)
 		ret = CMD_NORMAL;
 
 	if ((cur_load_freq > normal_min_freq) ||
