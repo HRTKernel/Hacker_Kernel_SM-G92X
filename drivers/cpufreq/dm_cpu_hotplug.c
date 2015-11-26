@@ -971,21 +971,21 @@ void event_hotplug_in(void)
 static int __ref exynos_dm_hotplug_notifier(struct notifier_block *notifier,
 					unsigned long pm_event, void *v)
 {
-	int i, j;
+	int i;
 
 	switch (pm_event) {
 	case PM_SUSPEND_PREPARE:
 		mutex_lock(&thread_lock);
-
-		if (!dynamic_hotplug(CMD_NORMAL))
-			prev_cmd = CMD_NORMAL;
-
 		in_suspend_prepared = true;
 
 		exynos_dm_hotplug_disable();
 		if (dm_hotplug_task) {
 			kthread_stop(dm_hotplug_task);
 			dm_hotplug_task = NULL;
+		}
+
+		for (i = 1; i < NR_CLUST0_CPUS; i++) {
+			cpu_up(i);
 		}
 
 		mutex_unlock(&thread_lock);
