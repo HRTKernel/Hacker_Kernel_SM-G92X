@@ -2,6 +2,7 @@
 #`. /res/synapse/config.json.generate.battery`
 #`. /res/synapse/config.json.generate.`
 # `. /res/synapse/config.json.generate.dt2w`
+#`. /res/synapse/config.json.generate.uksm`
 
 cat << CTAG
 
@@ -19,6 +20,7 @@ cat << CTAG
 		`. /res/synapse/config.json.generate.storage`
 		`. /res/synapse/config.json.generate.powersuspend`
 		`. /res/synapse/config.json.generate.vm`
+		`. /res/synapse/config.json.generate.network`
 		`. /res/synapse/config.json.generate.logs`
 		`. /res/synapse/config.json.generate.reboot`
 		`. /res/synapse/config.json.generate.profile`

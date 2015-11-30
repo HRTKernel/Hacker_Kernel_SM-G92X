@@ -51,6 +51,28 @@ if [ -e /data/hackertest.log ]; then
 rm /data/hackertest.log
 fi
 
+# Stop Google Service and restart it on boot (dorimanx)
+if [ "$($BB pidof com.google.android.gms | wc -l)" -eq "1" ]; then
+	$BB kill $($BB pidof com.google.android.gms);
+fi;
+if [ "$($BB pidof com.google.android.gms.unstable | wc -l)" -eq "1" ]; then
+	$BB kill $($BB pidof com.google.android.gms.unstable);
+fi;
+if [ "$($BB pidof com.google.android.gms.persistent | wc -l)" -eq "1" ]; then
+	$BB kill $($BB pidof com.google.android.gms.persistent);
+fi;
+if [ "$($BB pidof com.google.android.gms.wearable | wc -l)" -eq "1" ]; then
+	$BB kill $($BB pidof com.google.android.gms.wearable);
+fi;
+echo "Stop Google Service successful." >> /data/hackertest.log
+
+# faster I/O (dorimanx)
+for i in /sys/block/*/queue; do
+        echo "2" > $i/rq_affinity
+done
+echo "faster I/O successful." >> /data/hackertest.log
+
+
 #Set default values on boot
 echo "temporary none" > /sys/class/scsi_disk/0:0:0:1/cache_type
 echo "temporary none" > /sys/class/scsi_disk/0:0:0:2/cache_type
@@ -106,6 +128,7 @@ sleep 20;
 
 echo "0x0FF3 0x041E 0x0034 0x1FC8 0xF035 0x040D 0x00D2 0x1F6B 0xF084 0x0409 0x020B 0x1EB8 0xF104 0x0409 0x0406 0x0E08 0x0782 0x2ED8" > /sys/class/misc/arizona_control/eq_A_freqs
 echo "0x0C47 0x03F5 0x0EE4 0x1D04 0xF1F7 0x040B 0x07C8 0x187D 0xF3B9 0x040A 0x0EBE 0x0C9E 0xF6C3 0x040A 0x1AC7 0xFBB6 0x0400 0x2ED8" > /sys/class/misc/arizona_control/eq_B_freqs
+echo "1" >/sys/class/misc/arizona_control/switch_eq_hp
 
 echo "Set default sound values on boot successful." >> /data/hackertest.log
 
