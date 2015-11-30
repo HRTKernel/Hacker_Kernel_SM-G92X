@@ -97,15 +97,16 @@ if prop("install.prop","selected.1")=="5" then
 	"darkness",      		"Use darkness Governor",	0,	#-- selected.1 = 6
 	"hyper",      			"Use hyper Governor",		0,	#-- selected.1 = 7
 	"interactive",      		"Use interactive Governor",	1,	#-- selected.1 = 8
-	"lionheart",      		"Use lionheart Governor",	0,	#-- selected.1 = 9
-	"nightmare",      		"Use nightmare Governor",	0,	#-- selected.1 = 10
-	"ondemand",      		"Use ondemand Governor",	0,	#-- selected.1 = 11
-	"ondemandplus",      		"Use ondemandplus Governor",	0,	#-- selected.1 = 12
-	"performance",      		"Use performance Governor",	0,	#-- selected.1 = 13
-	"preservative",      		"Use preservative Governor",	0,	#-- selected.1 = 14
-	"smartass2",      		"Use smartass2 Governor",	0,	#-- selected.1 = 15
-	"userspace",      		"Use userspace Governor",	0,	#-- selected.1 = 16
-	"wheatley",      		"Use wheatley Governor",	0	#-- selected.1 = 17
+	"interextrem",      		"Use interextrem Governor",	0,	#-- selected.1 = 9
+	"lionheart",      		"Use lionheart Governor",	0,	#-- selected.1 = 10
+	"nightmare",      		"Use nightmare Governor",	0,	#-- selected.1 = 11
+	"ondemand",      		"Use ondemand Governor",	0,	#-- selected.1 = 12
+	"ondemandplus",      		"Use ondemandplus Governor",	0,	#-- selected.1 = 13
+	"performance",      		"Use performance Governor",	0,	#-- selected.1 = 14
+	"preservative",      		"Use preservative Governor",	0,	#-- selected.1 = 15
+	"smartass2",      		"Use smartass2 Governor",	0,	#-- selected.1 = 16
+	"userspace",      		"Use userspace Governor",	0,	#-- selected.1 = 17
+	"wheatley",      		"Use wheatley Governor",	0	#-- selected.1 = 18
 	);	
 
 	selectbox(
@@ -119,15 +120,15 @@ if prop("install.prop","selected.1")=="5" then
 	"400 MHz",      		"Use 400 MHz",	1	#-- selected.1 = 3
 	);
 
-#	selectbox(
-#	"Default Kernel Freq max A53 Cluster",
-#	"Select your preferred max Freq A53 Cluster",
-#	"icons/update",
-#	"a53freqmax.prop",
-#	"Which max Freq A53 Cluster?",	"",	2, #-- Group 1. key = "selected.1"
-#	"1500 MHz",      		"Use 1500 MHz",	1,	#-- selected.1 = 1
-#	"1600 MHz",      		"Use 1600 MHz",	0	#-- selected.1 = 2
-#	);
+	selectbox(
+	"Default Kernel Freq max A53 Cluster",
+	"Select your preferred max Freq A53 Cluster",
+	"icons/update",
+	"a53freqmax.prop",
+	"Which max Freq A53 Cluster?",	"",	2, #-- Group 1. key = "selected.1"
+	"1500 MHz",      		"Use 1500 MHz",	1,	#-- selected.1 = 1
+	"1600 MHz",      		"Use 1600 MHz (Overclock)",	0	#-- selected.1 = 2
+	);
 
 
 #A57 CLOCK
@@ -143,20 +144,20 @@ if prop("install.prop","selected.1")=="5" then
 	"400 MHz",      		"Use 400 MHz",	0,	#-- selected.1 = 3
 	"500 MHz",      		"Use 500 MHz",	0,	#-- selected.1 = 4
 	"600 MHz",      		"Use 600 MHz",	0,	#-- selected.1 = 5
-	"700 MHz",  	    		"Use 700 MHz",	0,	#-- selected.1 = 6
+	"700 MHz",  	    	"Use 700 MHz",	0,	#-- selected.1 = 6
 	"800 MHz",      		"Use 800 MHz",	1	#-- selected.1 = 7
 	);
 
-#	selectbox(
-#	"Default Kernel Freq max A57 Cluster",
-#	"Select your preferred max Freq A57 Cluster",
-#	"icons/update",
-#	"a57freqmax.prop",
-#	"Which max Freq A57 Cluster?",	"",	2, #-- Group 1. key = "selected.1"
-#	"2100 MHz",      		"Use 2100 MHz",	1,	#-- selected.1 = 1
-#	"2200 MHz",      		"Use 2200 MHz",	0,	#-- selected.1 = 2
-#	"2304 MHz",      		"Use 2304 MHz",	0	#-- selected.1 = 3
-#	);
+	selectbox(
+	"Default Kernel Freq max A57 Cluster",
+	"Select your preferred max Freq A57 Cluster",
+	"icons/update",
+	"a57freqmax.prop",
+	"Which max Freq A57 Cluster?",	"",	2, #-- Group 1. key = "selected.1"
+	"2100 MHz",      		"Use 2100 MHz",	1,	#-- selected.1 = 1
+	"2200 MHz",      		"Use 2200 MHz (Overclock)",	0,	#-- selected.1 = 2
+	"2304 MHz",      		"Use 2304 MHz (Overclock)",	0	#-- selected.1 = 3
+	);
 
 
 	selectbox(

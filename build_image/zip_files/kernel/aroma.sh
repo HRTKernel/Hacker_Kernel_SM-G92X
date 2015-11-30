@@ -110,6 +110,9 @@ elif [ "$1" = "HYPER" ]; then
 
 elif [ "$1" = "INTERACTIVE" ]; then
 	echo "kernel.governor=interactive" >> $PROP
+	
+elif [ "$1" = "INTEREXTREM" ]; then
+	echo "kernel.governor=interextrem" >> $PROP	
 
 elif [ "$1" = "LIONHEART" ]; then
 	echo "kernel.governor=lionheart" >> $PROP
@@ -198,7 +201,7 @@ elif [ "$1" = "A57-1800" ]; then
 elif [ "$1" = "A57-1896" ]; then
 	echo "kernel.cpu.a57.max=1896000" >> $PROP
 
-elif [ "$1" = "2000" ]; then
+elif [ "$1" = "A57-2000" ]; then
 	echo "kernel.cpu.a57.max=2000000" >> $PROP
 
 elif [ "$1" = "A57-2100" ]; then
@@ -216,12 +219,6 @@ elif [ "$1" = "TURBO" ]; then
 
 elif [ "$1" = "NO_TURBO" ]; then
 	echo "kernel.turbo=false" >> $PROP
-
-elif [ "$1" = "BOOST" ]; then
-	echo "kernel.inputboost=true" >> $PROP
-
-elif [ "$1" = "NO_BOOST" ]; then
-	echo "kernel.inputboost=false" >> $PROP
 
 elif [ "$1" = "AUTO_INITD" ]; then
 	echo "kernel.initd=true" >> $PROP

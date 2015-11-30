@@ -251,6 +251,9 @@ elif [ "`grep "kernel.governor=hyper" $PROP`" != "" ]; then
 elif [ "`grep "kernel.governor=interactive" $PROP`" != "" ]; then
 	echo "interactive" > $GOVLITTLE
 	echo "interactive" > $GOVBIG
+elif [ "`grep "kernel.governor=interextrem" $PROP`" != "" ]; then
+	echo "interextrem" > $GOVLITTLE
+	echo "interextrem" > $GOVBIG
 elif [ "`grep "kernel.governor=lionheart" $PROP`" != "" ]; then
 	echo "Lionheart" > $GOVLITTLE
 	echo "Lionheart" > $GOVBIG
@@ -447,6 +450,8 @@ if [ "`grep "kernel.gapps=true" $PROP`" != "" ]; then
 	su -c "pm enable com.google.android.gsf/.update.SystemUpdateService$SecretCodeReceiver"
 fi
 
+sleep 1;
+
 # Execute init.d if Auto or ROM control
 if [ "`grep "kernel.initd=true" $PROP`" != "" ]; then
 	#enforce init.d script perms on any post-root added files
@@ -459,6 +464,8 @@ if [ "`grep "kernel.initd=true" $PROP`" != "" ]; then
 		fi
 	fi
 fi
+
+sleep 1;
 
 # Parse Knox reomve from prop
 if [ "`grep "kernel.knox=true" $PROP`" != "" ]; then
@@ -486,3 +493,5 @@ if [ "`grep "kernel.knox=true" $PROP`" != "" ]; then
 	rm -rf container/*Knox*
 	rm -rf container/*KNOX*
 fi
+
+sleep 1;
