@@ -129,6 +129,7 @@ set_progress(0.2);
 ui_print("Flashing the kernel");
 run_program("/tmp/aroma.sh", "FLASH");
 run_program("/tmp/aroma.sh", "WAIT");
+run_program("/tmp/aroma.sh", "AUDIO");
 set_progress(0.3);
 
 # STOCK

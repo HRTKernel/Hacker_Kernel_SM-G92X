@@ -235,5 +235,8 @@ elif [ "$1" = "STOCK_GAPPS" ]; then
 elif [ "$1" = "KNOX" ]; then
 	echo "kernel.knox=true" >> $PROP
 
+elif [ "$1" = "AUDIO" ]; then
+	echo "kernel.audio=true" >> $PROP
+	
 fi
 
