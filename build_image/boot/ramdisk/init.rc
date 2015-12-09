@@ -218,10 +218,10 @@ on late-init
     trigger early-boot
     trigger boot
 
-service injectsu /system/bin/sh /sbin/injectsu.sh
-    class core
-    user root
-    oneshot
+#service injectsu /system/bin/sh /sbin/injectsu.sh
+#    class core
+#    user root
+#    oneshot
 
 on post-fs
     start sec-sh
@@ -1360,10 +1360,10 @@ on property:service.vpnclientd.enable=0
 	service reactived /system/bin/reactived
 	class late_start
 
-service startsu /system/bin/sh /sbin/startsu.sh
-    class main
-    user root
-    oneshot
+#service startsu /system/bin/sh /sbin/startsu.sh
+#    class main
+#    user root
+#    oneshot
 
 # init HackerKernel
 service hackerinit /sbin/hacker.sh
