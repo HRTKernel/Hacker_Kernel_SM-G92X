@@ -17,7 +17,6 @@ cat << CTAG
 		`. /res/synapse/config.json.generate.led`
 		`. /res/synapse/config.json.generate.audio`
 		`. /res/synapse/config.json.generate.bus`
-		`. /res/synapse/config.json.generate.io`
 		`. /res/synapse/config.json.generate.storage`
 		`. /res/synapse/config.json.generate.powersuspend`
 		`. /res/synapse/config.json.generate.vm`
