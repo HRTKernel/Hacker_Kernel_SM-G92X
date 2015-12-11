@@ -2,6 +2,9 @@
 # Makefile for the input core drivers.
 #
 
+#Disable Strict Aliasing Optimizations
+CFLAGS_KERNEL += -fno-strict-aliasing
+
 # Each configuration option enables a list of files.
 
 obj-$(CONFIG_INPUT)		+= input-core.o

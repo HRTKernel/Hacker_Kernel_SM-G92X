@@ -2,6 +2,9 @@
 # Makefile for the linux kernel.
 #
 
+#Disable Strict Aliasing Optimizations
+CFLAGS_KERNEL += -fno-strict-aliasing
+
 obj-y     = fork.o exec_domain.o panic.o printk.o printk_interface.o \
 	    cpu.o exit.o itimer.o time.o softirq.o resource.o \
 	    sysctl.o sysctl_binary.o capability.o ptrace.o timer.o user.o \

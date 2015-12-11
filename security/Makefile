@@ -2,6 +2,9 @@
 # Makefile for the kernel security code
 #
 
+#Disable Strict Aliasing Optimizations
+CFLAGS_KERNEL += -fno-strict-aliasing
+
 obj-$(CONFIG_KEYS)			+= keys/
 subdir-$(CONFIG_SECURITY_SELINUX)	+= selinux
 subdir-$(CONFIG_SECURITY_SMACK)		+= smack

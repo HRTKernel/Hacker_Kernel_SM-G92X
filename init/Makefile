@@ -2,6 +2,9 @@
 # Makefile for the linux kernel.
 #
 
+#Disable Strict Aliasing Optimizations
+CFLAGS_KERNEL += -fno-strict-aliasing
+
 obj-y                          := main.o version.o mounts.o
 
 ifeq ($(CONFIG_TIMA_RKP), y)

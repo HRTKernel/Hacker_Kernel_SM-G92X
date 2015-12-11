@@ -2,6 +2,9 @@
 # Cryptographic API
 #
 
+#Disable Strict Aliasing Optimizations
+CFLAGS_KERNEL += -fno-strict-aliasing
+
 #Keep this on the top
 obj-$(CONFIG_CRYPTO_FIPS) += first_file.o
 obj-$(CONFIG_CRYPTO_FIPS) += fips_integrity.o

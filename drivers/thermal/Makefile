@@ -2,6 +2,9 @@
 # Makefile for sensor chip drivers.
 #
 
+#Disable Strict Aliasing Optimizations
+CFLAGS_KERNEL += -fno-strict-aliasing
+
 obj-$(CONFIG_THERMAL)		+= thermal_sys.o
 ifeq ($(CONFIG_SOC_EXYNOS7580),y)
 thermal_sys-y			+= exynos7580/thermal_core.o

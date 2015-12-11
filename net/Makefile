@@ -5,6 +5,9 @@
 # Rewritten to use lists instead of if-statements.
 #
 
+#Disable Strict Aliasing Optimizations
+CFLAGS_KERNEL += -fno-strict-aliasing
+
 obj-y	:= nonet.o
 
 obj-$(CONFIG_NET)		:= socket.o core/

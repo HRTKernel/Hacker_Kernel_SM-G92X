@@ -2,6 +2,9 @@
 # Makefile for the kernel multimedia device drivers.
 #
 
+#Disable Strict Aliasing Optimizations
+CFLAGS_KERNEL += -fno-strict-aliasing
+
 media-objs	:= media-device.o media-devnode.o media-entity.o
 
 #
