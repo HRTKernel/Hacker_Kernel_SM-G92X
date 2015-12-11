@@ -385,7 +385,7 @@ KBUILD_CPPFLAGS := -D__KERNEL__
 
 KBUILD_CFLAGS   := $(GRAPHITE) -w -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -finline-functions -fno-common \
-		   -Werror-implicit-function-declaration \
+		   -Werror-implicit-function-declaration -fno-pic \
 		   -Wno-format-security -ffast-math \
 		   -fno-delete-null-pointer-checks \
 		   -fdiagnostics-show-option \
