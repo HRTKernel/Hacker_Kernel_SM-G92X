@@ -218,6 +218,39 @@ $BB chmod -R 0700 /data/property
 $BB chmod 06755 /sbin/busybox
 echo "Critical Permissions fixed successful." >> /data/hackertest.log
 
+# Tweak interextrem
+echo "19000 960000:39000 1248000:29000" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/above_hispeed_delay
+echo "0" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/align_windows
+echo "0" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/boost
+echo "" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/boostpulse
+echo "80000" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/boostpulse_duration
+echo "80" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/go_hispeed_load
+echo "1344000" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/hispeed_freq
+echo "1" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/io_is_busy
+echo "30000" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/max_freq_hysteresis
+echo "30000" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/min_sample_time
+echo "80 1344000:95 1478400:99" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/target_loads
+echo "7000" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/timer_rate
+echo "80000" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/timer_slack
+echo "1" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/use_migration_notif
+echo "1" > /sys/devices/system/cpu/cpu0/cpufreq/interextrem/use_sched_load
+echo "19000 960000:39000 1248000:29000" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/above_hispeed_delay
+echo "0" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/align_windows
+echo "0" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/boost
+echo "" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/boostpulse
+echo "80000" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/boostpulse_duration
+echo "80" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/go_hispeed_load
+echo "1344000" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/hispeed_freq
+echo "1" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/io_is_busy
+echo "30000" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/max_freq_hysteresis
+echo "30000" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/min_sample_time
+echo "80 1344000:95 1478400:99" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/target_loads
+echo "7000" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/timer_rate
+echo "80000" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/timer_slack
+echo "1" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/use_migration_notif
+echo "1" > /sys/devices/system/cpu/cpu4/cpufreq/interextrem/use_sched_load
+
+
 # Parse init/d support from prop. If AUTO mode check to see if support has been added to the rom
 if [ "`grep "kernel.initd=true" $PROP`" != "" ]; then
 	if [ "`grep "init.d" /system/etc/init.sec.boot.sh`" = "" ]; then
