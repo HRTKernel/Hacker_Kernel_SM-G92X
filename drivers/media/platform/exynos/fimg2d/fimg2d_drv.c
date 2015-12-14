@@ -491,7 +491,7 @@ static long fimg2d_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		if (copy_from_user(&act, (void *)arg, sizeof(act)))
 			return -EFAULT;
 
-		g2d_lock(&ctrl->drvlock);
+		mutex_lock(&ctrl->drvlock);
 		atomic_set(&ctrl->drvact, act);
 		if (act == DRV_ACT) {
 			fimg2d_power_control(ctrl, FIMG2D_PW_OFF);
@@ -500,7 +500,7 @@ static long fimg2d_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 			fimg2d_power_control(ctrl, FIMG2D_PW_ON);
 			fimg2d_info("fimg2d driver is deactivated\n");
 		}
-		g2d_unlock(&ctrl->drvlock);
+		mutex_unlock(&ctrl->drvlock);
 		break;
 	}
 	default:
@@ -1134,7 +1134,6 @@ static int fimg2d_suspend(struct device *dev)
 	unsigned long flags;
 	int retry = POLL_RETRY;
 
-	g2d_lock(&ctrl->drvlock);
 	g2d_spin_lock(&ctrl->bltlock, flags);
 	atomic_set(&ctrl->suspended, 1);
 	g2d_spin_unlock(&ctrl->bltlock, flags);
@@ -1143,7 +1142,6 @@ static int fimg2d_suspend(struct device *dev)
 			break;
 		mdelay(POLL_TIMEOUT);
 	}
-	g2d_unlock(&ctrl->drvlock);
 	if (ip_is_g2d_5h() || ip_is_g2d_5hp())
 		exynos5433_fimg2d_clk_set_osc(ctrl);
 	fimg2d_info("suspend... done\n");
@@ -1155,11 +1153,9 @@ static int fimg2d_resume(struct device *dev)
 	unsigned long flags;
 	int ret = 0;
 
-	g2d_lock(&ctrl->drvlock);
 	g2d_spin_lock(&ctrl->bltlock, flags);
 	atomic_set(&ctrl->suspended, 0);
 	g2d_spin_unlock(&ctrl->bltlock, flags);
-	g2d_unlock(&ctrl->drvlock);
 	/* G2D clk gating mask */
 	if (ip_is_g2d_5ar2()) {
 		fimg2d_clk_on(ctrl);
