@@ -1,0 +1,252 @@
+ini_set("rom_name",		"Hacker Kernel");
+ini_set("rom_version",		"v8");
+ini_set("rom_author",		"thehacker911");
+ini_set("rom_device",		"Samsung Galaxy S6 G92x F/I/T/K/L/S/W8");
+ini_set("rom_date",		"Dec, 06, 2015");
+##
+
+fontresload( "0", "ttf/DroidSans.ttf;", "12" ); #-- Use sets of font (Font Family)
+
+theme("touchwiz");
+
+viewbox(
+    "Welcome",
+    "You are about to Install <b>"+
+	  ini_get("rom_name")+
+	"</b> for <b>"+ini_get("rom_device")+"</b>.\n\n"+
+    "Relevant information of the Package:\n\n"+
+	  "  Rom\t		<b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
+      "  Version\t	<b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
+	  "  Date\t 		<b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n\n"+
+    "<b><#0f0>Only for G92xF/I/T/K/L/S/W8 models</#></b>\n\n\n"+	
+	"The default selected options represent Stock kernel settings",
+    "@welcome"
+);
+
+agreebox(
+  #-- Title
+    "READ THIS",
+  
+  #-- Subtitle / Description
+    "Please read before going further",
+  
+  #-- Icon
+    "@license",
+  
+  #-- Text Content ( Read from <AROMA Resource Dir>/license.txt )
+    resread("license.txt"),
+  
+  #-- Checkbox Text
+    "I Agree with this",
+  
+  #-- Unchecked Alert Message
+    "Please check the Agree box first"
+);
+
+	selectbox(
+	"Installation Mode",
+	"Set your installation mode, you have a Choice of Stock, Performance, Battery, Use existing settings or Use new settings",
+	"icons/update",
+	"install.prop",
+	"Choose your installation mode?",	"",	2, #-- Group 1. key = "selected.1"
+	"Stock",			"Install the kernel with a completely stock configuration",						1,	#-- selected.1 = 1
+	"Performance",      		"Install the kernel with a performance tuned configuration",						0,	#-- selected.1 = 2
+	"Battery",      		"Install the kernel with a battery configuration",						0,	#-- selected.1 = 3
+	"Use Existing Config",      	"Use an existing custom configuration if present.  If not present, Stock settings will be used",	0,	#-- selected.1 = 4
+	"Make New Config",     		"Create a new custom configuration",									0	#-- selected.1 = 5
+	);
+
+if prop("install.prop","selected.1")=="5" then
+
+	selectbox(
+	"Default Kernel Scheduler",
+	"Select your preferred default io scheduler",
+	"icons/update",
+	"scheduler.prop",
+	"Which io scheduler?",	"",	2, #-- Group 1. key = "selected.1"
+	"CFQ",			"Use CFQ scheduler"	,	1,	#-- selected.1 = 1
+	"BFQ",      		"Use BFQ scheduler",	0,	#-- selected.1 = 2
+	"Deadline",      	"Use Deadline scheduler",	0,	#-- selected.1 = 3
+	"Fiops",      		"Use Fiops scheduler",	0,	#-- selected.1 = 4
+	"Noop",      		"Use Noop scheduler",				0,	#-- selected.1 = 5
+	"Sioplus",      	"Use Sioplus scheduler",					0,	#-- selected.1 = 6
+	"Tripndroid",      	"Use Tripndroid scheduler",					0	#-- selected.1 = 7
+	);
+
+	selectbox(
+	"Apply Turbo Mode?",
+	"Applying Turbo Mode will substantially increase smoothness of the user expernience, but may negatively impact battery life",
+	"icons/update",
+	"delag.prop",
+	"Do you want to apply Turbo Mode?",	"", 2, #-- Group 1. key = "selected.1"
+	"Yes",			"Performance will be improved but battery life may be impacted",	0,	#-- selected.1 = 1
+	"No",      		"Set stock behaviour",							1	 #-- selected.1 = 2
+	);
+
+	selectbox(
+	"Default Kernel Governor",
+	"Select your preferred default Governor",
+	"icons/update",
+	"governor.prop",
+	"Which Governor?",	"",	2, #-- Group 1. key = "selected.1"
+	"alucard",			"Use alucard Governor",		0,	#-- selected.1 = 1
+	"bioshock",      		"Use bioshock governor",	0,	#-- selected.1 = 2
+	"conservative",      		"Use conservative Governor",	0,	#-- selected.1 = 3
+	"conservativex",      		"Use conservativex Governor",	0,	#-- selected.1 = 4
+	"dancedance",      		"Use dancedance Governor",	0,	#-- selected.1 = 5
+	"darkness",      		"Use darkness Governor",	0,	#-- selected.1 = 6
+	"hyper",      			"Use hyper Governor",		0,	#-- selected.1 = 7
+	"interactive",      		"Use interactive Governor",	1,	#-- selected.1 = 8
+	"interextrem",      		"Use interextrem Governor",	0,	#-- selected.1 = 9
+	"lionheart",      		"Use lionheart Governor",	0,	#-- selected.1 = 10
+	"nightmare",      		"Use nightmare Governor",	0,	#-- selected.1 = 11
+	"ondemand",      		"Use ondemand Governor",	0,	#-- selected.1 = 12
+	"ondemandplus",      		"Use ondemandplus Governor",	0,	#-- selected.1 = 13
+	"performance",      		"Use performance Governor",	0,	#-- selected.1 = 14
+	"preservative",      		"Use preservative Governor",	0,	#-- selected.1 = 15
+	"smartass2",      		"Use smartass2 Governor",	0,	#-- selected.1 = 16
+	"userspace",      		"Use userspace Governor",	0,	#-- selected.1 = 17
+	"wheatley",      		"Use wheatley Governor",	0	#-- selected.1 = 18
+	);	
+
+	selectbox(
+	"Default Kernel Freq min A53 Cluster",
+	"Select your preferred min Freq A53 Cluster",
+	"icons/update",
+	"a53freqmin.prop",
+	"Which min Freq A53 Cluster?",	"",	2, #-- Group 1. key = "selected.1"
+	"200 MHz",			"Use 200 MHz",	0,	#-- selected.1 = 1
+	"300 MHz",      		"Use 300 MHz",	0,	#-- selected.1 = 2
+	"400 MHz",      		"Use 400 MHz",	1	#-- selected.1 = 3
+	);
+
+	selectbox(
+	"Default Kernel Freq max A53 Cluster",
+	"Select your preferred max Freq A53 Cluster",
+	"icons/update",
+	"a53freqmax.prop",
+	"Which max Freq A53 Cluster?",	"",	2, #-- Group 1. key = "selected.1"
+	"1500 MHz",      		"Use 1500 MHz",	1,	#-- selected.1 = 1
+	"1600 MHz",      		"Use 1600 MHz (Overclock)",	0	#-- selected.1 = 2
+	);
+
+
+#A57 CLOCK
+
+	selectbox(
+	"Default Kernel Freq min A57 Cluster",
+	"Select your preferred min Freq A57 Cluster",
+	"icons/update",
+	"a57freqmin.prop",
+	"Which min Freq A57 Cluster?",	"",	2, #-- Group 1. key = "selected.1"
+	"200 MHz",			"Use 200 MHz",	0,	#-- selected.1 = 1
+	"300 MHz",      		"Use 300 MHz",	0,	#-- selected.1 = 2
+	"400 MHz",      		"Use 400 MHz",	0,	#-- selected.1 = 3
+	"500 MHz",      		"Use 500 MHz",	0,	#-- selected.1 = 4
+	"600 MHz",      		"Use 600 MHz",	0,	#-- selected.1 = 5
+	"700 MHz",  	    	"Use 700 MHz",	0,	#-- selected.1 = 6
+	"800 MHz",      		"Use 800 MHz",	1	#-- selected.1 = 7
+	);
+
+	selectbox(
+	"Default Kernel Freq max A57 Cluster",
+	"Select your preferred max Freq A57 Cluster",
+	"icons/update",
+	"a57freqmax.prop",
+	"Which max Freq A57 Cluster?",	"",	2, #-- Group 1. key = "selected.1"
+	"2100 MHz",      		"Use 2100 MHz",	1,	#-- selected.1 = 1
+	"2200 MHz",      		"Use 2200 MHz (Overclock)",	0,	#-- selected.1 = 2
+	"2304 MHz",      		"Use 2304 MHz (Overclock)",	0	#-- selected.1 = 3
+	);
+
+
+	selectbox(
+	"Control of init.d script support",
+	"Choose between allowing Automatic ROM / Kernel control of init.d (recommended) or entirely leaving it to the ROM. In case of stock ROM, this will result in no init.d support",
+	"icons/update",
+	"init.prop",
+	"Automatic control of init.d ?",	"", 2, #-- Group 1. key = "selected.1"
+	"Yes",			"Automatically control init.d, and run init.d scripts if no ROM support present",	1,	#-- selected.1 = 1
+	"No",      		"Kernel will not control init.d (entirely ROM dependant support)",			0	#-- selected.1 = 2
+	);
+
+	selectbox(
+	"GApps Wakelock fix",
+	"Applying the Google Apps wakelock fix can in many situations save power, although the opposite effect has been also been observed on some ROMs",
+	"icons/update",
+	"power.prop",
+	"Apply the Google Apps Wakelock fix?",	"", 2, #-- Group 1. key = "selected.1"
+	"Yes",			"GApps Fix will be applied every boot",			0,	#-- selected.1 = 1
+	"No",      		"GApps Fix will be not be applied",			1	#-- selected.1 = 2
+	);
+
+	selectbox(
+	"Remove Knox from System?",
+	"Reomve Knox from System. You need this only by Stock Roms",
+	"icons/update",
+	"knox.prop",
+	"Remove Knox?",	"",	2, #-- Group 1. key = "selected.1"
+	"Yes",      		"Yes, i use a Stock Rom/Firmware",	1,	#-- selected.1 = 1
+	"No",      		"No, i use a Custom Rom",	0	#-- selected.1 = 2
+	);
+
+endif;
+
+
+ini_set("text_next", "Next");
+
+viewbox(
+	"Ready to Install",
+	"Installation is configured.\n\n"+
+	"Press <b>Next</b> to install Hacker Kernel on your phone.\n\n"+
+	"If you want to review or change any of your installation settings, press <b>Back</b>.",
+	"@install"
+);
+
+setvar("retstatus",
+install(
+	#-- Title
+	"Installing",
+	#-- Installation Process message
+	"<b>"+ini_get("rom_name")+"</b> installation.\n\n"+
+	"Please wait while installation wizard installs <b>"+ini_get("rom_name")+
+	"</b>. This should only take a few seconds",
+	#-- Installation Icon
+	"@install",
+	#-- Installation Finish Message
+	"The installation wizard has successfully installed <b>"+ini_get("rom_name")+
+	"</b>. Press Next to return to Recovery."
+	)
+);
+
+ini_set("text_next", "Next");
+
+#viewbox(
+#	#-- Title
+#	"Installation Completed",
+#	#-- Text
+#	"<#selectbg_g><b>Congratulations...</b></#>\n\n"+
+#	"<b>"+ini_get("rom_name")+"</b> has been installed on your device.\n\n"+
+#	"Installer Status: "+getvar("retstatus")+"\n\n",
+#	#-- Icon
+#	"@welcome",
+#	#-- Checkbox Text
+#	"Reboot now",
+#	#-- Initial Checkbox value ( 0=unchecked, 1=checked ) -  (Optional, default:0)
+#	"1",
+#	#-- Save checked value in variable "reboot_it" (Optional)
+#	"reboot_it"
+#);
+
+#if
+#	getvar("reboot_it")=="1"
+#then
+#	#
+#	# reboot("onfinish");   - Reboot if anything finished
+#	# reboot("now");        - Reboot Directly
+#	# reboot("disable");    - If you set reboot("onfinish") before, use this command to revert it.
+#	#
+#	reboot("onfinish");
+#endif;
+
+#---- FINISH

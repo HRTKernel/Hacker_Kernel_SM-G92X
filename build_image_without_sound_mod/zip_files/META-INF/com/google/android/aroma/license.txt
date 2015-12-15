@@ -1,0 +1,11 @@
+<@center><b><#selectbg_g>Terms of Service</#></b>
+
+By installing this kernel, you take full responsability of it's use, I (thehacker911) am not responsible of any damage this package may cause to your device.
+
+
+<@center><b><#selectbg_g>READ THIS BEFORE GOING FURTHER</#>
+<@left>
+Do not flash this package if you have a Sprint or Rogers device
+
+<@center><#selectbg_g>http://smartlounge.eu</#></b>
+<@left>
