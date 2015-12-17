@@ -19,6 +19,7 @@
 #include <linux/cpu.h>
 #include <linux/cpumask.h>
 #include <linux/cpufreq.h>
+#include <linux/cpufreq_kt.h>
 #include <linux/ipa.h>
 #include <linux/module.h>
 #include <linux/moduleparam.h>
@@ -134,6 +135,9 @@ static unsigned int cluster0_min_freq=0;
 			pm_qos_remove_request(req); \
 }
 #endif /* CONFIG_MODE_AUTO_CHANGE */
+
+#define DEFAULT_SCREEN_OFF_MAX 1000000
+static unsigned long screen_off_max = DEFAULT_SCREEN_OFF_MAX;
 
 struct cpufreq_interactive_tunables {
 	int usage_count;
@@ -1037,6 +1041,9 @@ static int cpufreq_interactive_speedchange_task(void *data)
 				if (pjcpu->target_freq > max_freq)
 					max_freq = pjcpu->target_freq;
 			}
+			
+			if (unlikely(!screen_is_on))
+					if (max_freq > screen_off_max) max_freq = screen_off_max;
 
 			if (max_freq != pcpu->policy->cur) {
 				u64 now;
@@ -2772,6 +2779,7 @@ static int __init cpufreq_interactive_init(void)
 {
 	unsigned int i;
 	struct cpufreq_interactive_cpuinfo *pcpu;
+	screen_is_on = true;
 
 	/* Initalize per-cpu timers */
 	for_each_possible_cpu(i) {
