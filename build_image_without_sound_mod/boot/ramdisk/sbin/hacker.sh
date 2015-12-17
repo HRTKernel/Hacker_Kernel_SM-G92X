@@ -31,6 +31,7 @@ SCHEDULER4=deadline
 SCHEDULER5=bfq
 SCHEDULER6=tripndroid
 SCHEDULER7=cfq
+SCHEDULER8=row
 CPUGOVERNOR1=alucard
 CPUGOVERNOR2=bioshock
 CPUGOVERNOR3=conservative
@@ -309,6 +310,12 @@ elif [ "`grep "kernel.scheduler=cfg" $PROP`" != "" ]; then
     	echo $SCHEDULER7 > /sys/block/sdb/queue/scheduler
     	echo $SCHEDULER7 > /sys/block/sdc/queue/scheduler
     	echo $SCHEDULER7 > /sys/block/vnswap0/queue/scheduler
+elif [ "`grep "kernel.scheduler=row" $PROP`" != "" ]; then
+	echo $SCHEDULER8 > /sys/block/mmcblk0/queue/scheduler
+    	echo $SCHEDULER8 > /sys/block/sda/queue/scheduler
+    	echo $SCHEDULER8 > /sys/block/sdb/queue/scheduler
+    	echo $SCHEDULER8 > /sys/block/sdc/queue/scheduler
+    	echo $SCHEDULER8 > /sys/block/vnswap0/queue/scheduler
 else
 	echo $SCHEDULER7 > /sys/block/mmcblk0/queue/scheduler
     	echo $SCHEDULER7 > /sys/block/sda/queue/scheduler

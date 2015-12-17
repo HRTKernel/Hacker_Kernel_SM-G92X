@@ -84,6 +84,9 @@ elif [ "$1" = "SIOPLUS" ]; then
 
 elif [ "$1" = "TRIPNDROID" ]; then
 	echo "kernel.scheduler=tripndroid" >> $PROP
+	
+elif [ "$1" = "ROW" ]; then
+	echo "kernel.scheduler=row" >> $PROP
 
 # GOVS
 

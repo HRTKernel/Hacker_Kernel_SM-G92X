@@ -2,7 +2,7 @@ ini_set("rom_name",		"Hacker Kernel");
 ini_set("rom_version",		"v8");
 ini_set("rom_author",		"thehacker911");
 ini_set("rom_device",		"Samsung Galaxy S6 G92x F/I/T/K/L/S/W8");
-ini_set("rom_date",		"Dec, 06, 2015");
+ini_set("rom_date",		"Dec, 20, 2015");
 ##
 
 fontresload( "0", "ttf/DroidSans.ttf;", "12" ); #-- Use sets of font (Font Family)
@@ -69,8 +69,9 @@ if prop("install.prop","selected.1")=="5" then
 	"Deadline",      	"Use Deadline scheduler",	0,	#-- selected.1 = 3
 	"Fiops",      		"Use Fiops scheduler",	0,	#-- selected.1 = 4
 	"Noop",      		"Use Noop scheduler",				0,	#-- selected.1 = 5
-	"Sioplus",      	"Use Sioplus scheduler",					0,	#-- selected.1 = 6
-	"Tripndroid",      	"Use Tripndroid scheduler",					0	#-- selected.1 = 7
+	"ROW",      		"Use ROW scheduler",				0,	#-- selected.1 = 6
+	"Sioplus",      	"Use Sioplus scheduler",					0,	#-- selected.1 = 7
+	"Tripndroid",      	"Use Tripndroid scheduler",					0	#-- selected.1 = 8
 	);
 
 	selectbox(
