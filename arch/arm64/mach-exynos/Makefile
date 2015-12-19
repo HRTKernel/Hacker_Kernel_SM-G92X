@@ -47,4 +47,4 @@ obj-$(CONFIG_MSM_HSIC_SYSMON) += hsic_sysmon.o
 obj-$(CONFIG_MSM_HSIC_SYSMON_TEST) += hsic_sysmon_test.o
 obj-$(CONFIG_MSM_SUBSYSTEM_RESTART) += subsystem_restart.o subsystem_notif.o
 obj-$(CONFIG_MSM_SYSMON_COMM) += sysmon.o
-obj-$(CONFIG_THUNDERPLUG_CONTROL) += thunderplug.o
+
