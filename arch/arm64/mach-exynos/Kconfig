@@ -245,6 +245,12 @@ config EXYNOS_SPI_RESET_DURING_DSTOP
 
 endif
 
+config THUNDERPLUG_CONTROL		
+	bool "Enable plugging down/up of cores using powersuspend"		
+	help		
+	  This driver uses powersuspend to take down the cpu cores		
+	  on a octa core device.		
+
 config MSM_HSIC_SYSMON
 	tristate "MSM HSIC system monitor driver"
 	depends on USB
