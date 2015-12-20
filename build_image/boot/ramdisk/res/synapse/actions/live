@@ -111,4 +111,19 @@ selinux_status)
                 echo ENFORCING MODE
 	fi
   ;;
+usb_status)
+  USB_STATUS=$(cat /sys/class/android_usb/android0/functions);
+	if [ "$USB_STATUS" == "mtp,acm,adb" ]; then
+                echo MTP MODE
+	elif [ "$USB_STATUS" == "ptp,adb" ]; then
+                echo PTP MODE
+	elif [ "$USB_STATUS" == "mass_storage,adb" ]; then
+                echo CD_ROM MODE
+	elif [ "$USB_STATUS" == "mtp,acm,adb,hid" ]; then
+                echo USB_KEYBOARD-MOUSE
+	else
+                echo UNSUPPORTED MODE
+                echo Please enable USB-Debugging and re-connect cable
+	fi
+  ;;
 esac
