@@ -1,0 +1,20 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:"Debloating",
+    elements:[
+	{ STitleBar:{
+		title:"Debloat Options"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SButton:{
+		label:"Debloat System/APP",
+		action:"debloat system_app"
+	}},
+
+    ]
+}
+CTAG
