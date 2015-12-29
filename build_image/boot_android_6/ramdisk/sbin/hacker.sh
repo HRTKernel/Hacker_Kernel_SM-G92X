@@ -122,9 +122,10 @@ done
 echo "faster I/O successful." >> /data/hackertest.log
 
 #Set default values on boot
-#echo "temporary none" > /sys/class/scsi_disk/0:0:0:1/cache_type
-#echo "temporary none" > /sys/class/scsi_disk/0:0:0:2/cache_type
-#echo "Set deepsleep values on boot successful." >> /data/hackertest.log
+echo "echo 'temporary none' > /sys/class/scsi_disk/0:0:0:1/cache_type" > /su/su.d/0000deepsleep
+echo "echo 'temporary none' > /sys/class/scsi_disk/0:0:0:2/cache_type" >> /su/su.d/0000deepsleep
+chmod 0700 /su/su.d/0000deepsleep
+echo "Set deepsleep values on boot successful." >> /data/hackertest.log
 
 # Assume SMP uses shared cpufreq policy for all CPUs
 chown root system $FREQMAXLITTLE1
