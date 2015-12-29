@@ -13,6 +13,9 @@ on fs
     rm /data/sv_cno.info
 
     setprop ro.gps.chip.vendor BCM4773_EXERCISE
+    
+# GPS SLocation Core
+    setprop ro.gps.chip.vendor.slocation BCM4773_SLOCATION_CORE
 
 # SensorHub Debugging File Node
 chown gps system /sys/devices/platform/bbd.0/BBD

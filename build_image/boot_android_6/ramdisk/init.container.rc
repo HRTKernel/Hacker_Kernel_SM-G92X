@@ -6,15 +6,20 @@ on init
     mkdir /knox_data 0775 root system
     mkdir /knox_data/userdata 0775 system system
     mkdir /knox_data/appdata 0775 system system
-
+    mkdir /mnt/shell 0750 shell shell
     mkdir /mnt/shell/knox-emulated 0700 system system
 
     symlink /mnt/shell/knox-emulated /storage/knox-emulated
+    
+    # From M OS, FS for ext has been seperated
+    mkdir /mnt/knox 0700 root root
 
     # SDP USER 0, SECURE FS
     mkdir /mnt/shell/enc_emulated 0700 system system
-    mkdir /storage/enc_emulated 0711 system system
     mkdir /mnt/shell/enc_media 0700 system system
+    mkdir /mnt/runtime/default/enc_emulated 0755 system system
+    mkdir /mnt/runtime/read/enc_emulated 0755 system system
+    mkdir /mnt/runtime/write/enc_emulated 0755 system system
 
     chown system system /dev/dek_evt
     chmod 600 /dev/dek_evt
@@ -28,6 +33,9 @@ on init
     chown system 8001 /dev/sdp_mm
     chmod 660 /dev/sdp_mm
 
+    chown system 8001 /dev/sdp_dlp
+    chmod 660 /dev/sdp_dlp
+
 on post-fs-data
 
     # create knox filesystem structure
@@ -37,6 +45,7 @@ on post-fs-data
     mkdir /data/knox/ext_sdcard 0771 system system
     mkdir /data/knox/app 0771 system system
     mkdir /data/knox/tmp 0771 system system
+    mkdir /data/knox/tmp_sdcard 0700 system system
 
     export KNOX_STORAGE /data/knox/ext_sdcard
 
@@ -48,7 +57,7 @@ on post-fs-data
 
     export ENC_EMULATED_STORAGE_TARGET /storage/enc_emulated
 
-    # restorecon /data/knox
+    restorecon /data/knox
 
 on boot
 
@@ -66,14 +75,14 @@ service sdp_cryptod /system/bin/sdp_cryptod
     group system
 
 # virtual sdcard daemon running as system (1000)
-service knox /system/bin/sdcard /data/knox/sdcard /mnt/shell/knox-emulated 1000 1000
-    class late_start
-    oneshot
+#service knox /system/bin/sdcard /data/knox/sdcard /mnt/shell/knox-emulated 1000 1000
+#    class late_start
+#    oneshot
 
 # virtual sdcard daemon running as system (1000)
-service secure_fs /system/bin/sdcard -r /data/knox/secure_fs/enc_media /mnt/shell/enc_media 1000 1000
-    class late_start
-    oneshot
+#service secure_fs /system/bin/sdcard -r /data/knox/secure_fs/enc_media /mnt/shell/enc_media 1000 1000
+#    class late_start
+#    oneshot
 
-    start knox
+#    start knox
 

@@ -13,6 +13,9 @@ on init
     symlink /storage/sdcard /sdcard
     symlink /storage/sdcard /mnt/sdcard
 
+    # By default, primary storage is physical
+    setprop ro.vold.primary_physical 1
+
 on boot
     setprop ARGH ARGH
     setprop net.eth0.gw 10.0.2.2
@@ -90,7 +93,11 @@ service qemud /system/bin/qemud
 service goldfish-logcat /system/bin/logcat -Q
     oneshot
 
+service fingerprintd /system/bin/fingerprintd
+    class late_start
+    user system
+
 # fusewrapped external sdcard daemon running as media_rw (1023)
 service fuse_sdcard /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard /storage/sdcard
     class late_start
-    disabled
+    disabled    

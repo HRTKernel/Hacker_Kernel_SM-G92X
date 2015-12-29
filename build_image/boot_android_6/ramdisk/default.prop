@@ -6,6 +6,7 @@ persist.eons.enabled=true
 persist.radio.apm_sim_not_pwdn=1
 persist.radio.rilversion=8
 rild.libpath=/system/lib64/libsec-ril.so
+rild.libpath2=/system/lib64/libsec-ril-dsds.so
 persist.security.ams.enforcing=0
 ro.secure=0
 ro.allow.mock.location=0
@@ -18,8 +19,15 @@ ro.securestorage.support=false
 persist.sys.usb.config=mtp,adb
 ro.zygote=zygote64_32
 ro.multisim.simslotcount=1
-dalvik.vm.dex2oat-Xms=64m
-dalvik.vm.dex2oat-Xmx=512m
 dalvik.vm.image-dex2oat-Xms=64m
 dalvik.vm.image-dex2oat-Xmx=64m
+dalvik.vm.dex2oat-Xms=64m
+dalvik.vm.dex2oat-Xmx=512m
 ro.dalvik.vm.native.bridge=0
+debug.atrace.tags.enableflags=0
+#
+# BOOTIMAGE_BUILD_PROPERTIES
+#
+ro.bootimage.build.date=Tue Dec 15 09:47:33 KST 2015
+ro.bootimage.build.date.utc=1450140453
+ro.bootimage.build.fingerprint=samsung/zerofltexx/zeroflte:6.0/MRA58K/G920FXXU3ZOL6:user/test-keys

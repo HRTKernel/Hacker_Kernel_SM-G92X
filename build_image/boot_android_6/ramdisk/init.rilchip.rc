@@ -20,10 +20,16 @@ service ril-daemon1 /system/bin/rild -c 2
     user root
     group radio cache inet misc audio sdcard_r sdcard_rw log
     disabled
+    onrestart restart cpboot-daemon
 
 on property:persist.sys.cpboot=disable
     stop ril-daemon
     stop cpboot-daemon
+
+service SMD-daemon /system/bin/smdexe
+    class main
+    user root
+    group system radio inet net_raw
 
 on fs
 # DIAG
