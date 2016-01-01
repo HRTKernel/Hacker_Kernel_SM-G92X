@@ -1,5 +1,5 @@
 ini_set("rom_name",		"Hacker Kernel");
-ini_set("rom_version",		"v8");
+ini_set("rom_version",		"v9");
 ini_set("rom_author",		"thehacker911");
 ini_set("rom_device",		"Samsung Galaxy S6 G92x F/I/T/K/L/S/W8");
 ini_set("rom_date",		"Dec, 20, 2015");
