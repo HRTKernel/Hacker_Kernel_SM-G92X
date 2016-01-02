@@ -4,6 +4,9 @@ SUBLEVEL = 94
 EXTRAVERSION =
 NAME = TOSSUG Baby Fish
 
+#TOOLCHAIN_DIR = /home/kerneldev/android/toolchains/UBERTC-aarch64-linux-android-6.0/bin/aarch64-linux-android-
+TOOLCHAIN_DIR = /home/kerneldev/android/toolchains/aarch64-linux-gnu-5.3/bin/aarch64-
+
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
 # More info can be located in ./README
@@ -157,8 +160,6 @@ obj		:= $(objtree)
 VPATH		:= $(srctree)$(if $(KBUILD_EXTMOD),:$(KBUILD_EXTMOD))
 
 export srctree objtree VPATH
-
-TOOLCHAIN_DIR = /home/kerneldev/android/toolchains/UBERTC-aarch64-linux-android-6.0/bin/aarch64-linux-android-
 
 # SUBARCH tells the usermode build what the underlying arch is.  That is set
 # first, and if a usermode build is happening, the "ARCH=um" on the command
