@@ -20,12 +20,8 @@ ZIP_VER=`sed -n '8p' thehacker911`
 DEVICE_VER=`sed -n '4p' thehacker911`
 VER=`sed -n '10p' thehacker911`
 KERNEL_NAME="$ZIP_VER$DEVICE_VER$VER"
-
-# Toolchains
-
-#Sabermod
-#Linaro
-BUILD_CROSS_COMPILE=$TOOLCHAIN_DIR/UBERTC-aarch64-linux-android-6.0/bin/aarch64-linux-android-
+TOOLCHAIN=`sed -n '12p' thehacker911`
+BUILD_CROSS_COMPILE=$TOOLCHAIN_DIR/$TOOLCHAIN
 
 
 #vars
