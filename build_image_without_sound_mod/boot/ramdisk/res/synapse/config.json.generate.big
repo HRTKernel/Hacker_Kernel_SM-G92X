@@ -42,6 +42,23 @@ cat << CTAG
 		}
 	}},
 	{ SPane:{
+		title:"Interactive Governor Tuning"
+	}},
+	{ SOptionList:{
+		title:"Profile",
+		description:" Select your profile for CPU Interactive governor.\n",
+		default:`echo $(/res/synapse/actions/tuning interactive_b)`,
+		action:"tuning interactive_b",
+		values:[Default, Performance, Battery,],
+		notify:[
+			{
+				on:APPLY,
+				do:[ REFRESH, APPLY ],
+				to:"/sys/devices/system/cpu/cpu4/cpufreq"
+			}
+		]
+	}},
+	{ SPane:{
 		title:"HPM Voltage Control",
         }},
 	{ SSeekBar:{
