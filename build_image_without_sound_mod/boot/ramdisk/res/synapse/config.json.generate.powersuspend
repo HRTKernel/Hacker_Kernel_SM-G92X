@@ -15,7 +15,7 @@ cat << CTAG
 		default:`cat /sys/kernel/power_suspend/power_suspend_mode`,
 		action:"generic /sys/kernel/power_suspend/power_suspend_mode",
 		values:{
-			 1:"Userspace", 2:"DisplayPanel"
+			 0:"Autosleep", 1:"Userspace", 2:"DisplayPanel", 3:"Hybrid"
 		}
 	}},
 	{ SSpacer:{
