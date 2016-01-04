@@ -4,6 +4,7 @@
 
 BB=/system/xbin/busybox
 PROP=/system/kernel.prop
+SYSTEMPROP=/system/build.prop
 GOVLITTLE=/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 GOVBIG=/sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
 FREQMINLITTLE1=/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
@@ -122,9 +123,11 @@ done
 echo "faster I/O successful." >> /data/hackertest.log
 
 #Set default values on boot
-echo "temporary none" > /sys/class/scsi_disk/0:0:0:1/cache_type
-echo "temporary none" > /sys/class/scsi_disk/0:0:0:2/cache_type
-echo "Set deepsleep values on boot successful." >> /data/hackertest.log
+if [ "`grep "ro.build.version.release=5.1.1" $SYSTEMPROP`" != "" ]; then
+	echo "echo "temporary none" > /sys/class/scsi_disk/0:0:0:1/cache_type" >  /system/su.d/000000deepsleep
+	echo "echo "temporary none" > /sys/class/scsi_disk/0:0:0:2/cache_type" >> /system/su.d/000000deepsleep
+	echo "Set deepsleep values on boot successful." >> /data/hackertest.log
+fi
 
 # Assume SMP uses shared cpufreq policy for all CPUs
 chown root system $FREQMAXLITTLE1
