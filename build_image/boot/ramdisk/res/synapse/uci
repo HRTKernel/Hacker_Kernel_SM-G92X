@@ -1,5 +1,7 @@
 #!/system/bin/sh
 
+BB=/system/xbin/busybox;
+
 config=/res/synapse/config.json
 action=/res/synapse/actions/
 
@@ -8,14 +10,15 @@ then
     source /res/synapse/config.json.generate > $config
 fi
 
-case $1 in
-config)
-  cat $config
-  ;;
-configpath)
-  echo $config
-  ;;
-actionpath)
-  echo $action
-  ;;
-esac
+case "${1}" in
+  config)
+	cat $CONFIG_JSON;;
+  configpath)
+	echo $CONFIG_JSON;;
+  actionpath)
+	echo $ACTION_SCRIPTS:/sbin;;
+  reset)
+	$BB mount -t rootfs -o rw,remount rootfs;
+	$BB rm -f $CONFIG_JSON;
+	$BB mount -t rootfs -o rw,remount rootfs;;
+esac;
