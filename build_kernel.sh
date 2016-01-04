@@ -93,6 +93,8 @@ REPACK_KERNEL()
 	      rm $BUILD_KERNEL_DIR/build_image/zip_files/system/lib/modules/placeholder
 
 	      cd build_image
+	      mkdir backup_image
+	      cp -r Image backup_image/zImage
 	      rm output_kernel/*.zip
 
 	      echo "Making boot.img ..."
@@ -101,6 +103,7 @@ REPACK_KERNEL()
 	      cp -r Image boot/zImage
 	      chmod a+r dt.img
 	      cp dt.img boot/dt.img
+	      cp dt.img backup_image/dt.img
 
 	      ./mkboot boot boot.img
 	      #./mkboot boot.img boot
