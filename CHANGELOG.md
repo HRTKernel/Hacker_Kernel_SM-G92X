@@ -1,5 +1,8 @@
 # Change Log
 
+## [V10.1](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/tree/V10.1) (2016-01-06)
+[Full Changelog](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/compare/V10...V10.1)
+
 ## [V10](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/tree/V10) (2016-01-05)
 [Full Changelog](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/compare/V9...V10)
 
