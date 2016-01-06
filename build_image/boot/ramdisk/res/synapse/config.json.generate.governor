@@ -43,26 +43,22 @@ cat << CTAG
 					generic: {
 						directory: {},
 						element: {
-							SGeneric: { title:"@NAME" }
+							SGeneric: { title:"@BASENAME" }
 						}
 					},
-					matched: {
-						elements: [
-							{ "sampling_rate" : {
-								SSeekBar: {
-									title:"Sampling rate",
-									description:" The sampling rate controls the rate in which the governor polls for frequency changes.",
-									min:50000, max:150000, step:10000, unit:" ms"
-								}
-							}}
-						]
-					},
 					exclude: [
+						"above_hispeed_delay",
 						"boostpulse",
 						"cpu_util",
-						"sampling_rate_min"
+						"enforced_mode",
+						"go_hispeed_load",
+						"hispeed_freq",
+						"mode",
+						"sampling_rate_min",
+						"single_cluster0_min_freq",
+						"target_loads"
 					]
-				}
+				},
 			}
 		},
 		exclude: [
@@ -79,7 +75,7 @@ cat << CTAG
 			"scaling_max_freq",
 			"scaling_min_freq",
 			"scaling_setspeed",
-                        "stats"
+			"stats"
 		]
 	}},
 	{ SDescription:{
@@ -100,26 +96,22 @@ cat << CTAG
 					generic: {
 						directory: {},
 						element: {
-							SGeneric: { title:"@NAME" }
+							SGeneric: { title:"@BASENAME" }
 						}
 					},
-					matched: {
-						elements: [
-							{ "sampling_rate" : {
-								SSeekBar: {
-									title:"Sampling rate",
-									description:" The sampling rate controls the rate in which the governor polls for frequency changes.",
-									min:50000, max:150000, step:10000, unit:" ms"
-								}
-							}}
-						]
-					},
 					exclude: [
+						"above_hispeed_delay",
 						"boostpulse",
 						"cpu_util",
-						"sampling_rate_min"
+						"enforced_mode",
+						"go_hispeed_load",
+						"hispeed_freq",
+						"mode",
+						"sampling_rate_min",
+						"single_cluster0_min_freq",
+						"target_loads"
 					]
-				}
+				},
 			}
 		},
 		exclude: [
@@ -136,7 +128,7 @@ cat << CTAG
 			"scaling_max_freq",
 			"scaling_min_freq",
 			"scaling_setspeed",
-                        "stats"
+			"stats"
 		]
 	}},
 	{ SDescription:{
