@@ -1,0 +1,24 @@
+#!/system/bin/sh
+
+BB=/system/xbin/busybox;
+
+config=/res/synapse/config.json
+action=/res/synapse/actions/
+
+if [ ! -f $config ]
+then
+    source /res/synapse/config.json.generate > $config
+fi
+
+case "${1}" in
+  config)
+	cat $config;;
+  configpath)
+	echo $config;;
+  actionpath)
+	echo $action:/sbin;;
+  reset)
+	$BB mount -t rootfs -o rw,remount rootfs;
+	$BB rm -f $config;
+	$BB mount -t rootfs -o rw,remount rootfs;;
+esac;

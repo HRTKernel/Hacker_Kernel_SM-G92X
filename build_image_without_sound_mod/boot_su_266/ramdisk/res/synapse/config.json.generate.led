@@ -1,0 +1,129 @@
+#!/system/xbin/busybox sh
+# Script make by friedrich420
+
+cat << CTAG
+{
+    name:LED-CONTROL,
+    elements:[
+	{ SPane:{
+		title:"Brightness in High Brightness Environments"
+	}},
+	{ SSeekBar:{
+		description:"Set the relative intensity of the LED when in bright environments. Default is 40.",
+		min:0,
+		max:255,
+		step:5,
+		default:`cat /sys/class/sec/led/led_highpower_current`,
+		action:"generic /sys/class/sec/led/led_highpower_current"
+	}},
+	{ SPane:{
+		title:"Brightness in Low Brightness Environments"
+	}},
+	{ SSeekBar:{
+		description:"Set the relative intensity of the LED when in low brightness environments. Default is 5.",
+		min:0,
+		max:255,
+		step:5,
+		default:`cat /sys/class/sec/led/led_lowpower_current`,
+		action:"generic /sys/class/sec/led/led_lowpower_current"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"LED notification delay"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"Delay ON",
+		description:" Divider for delay on.\n (0 = no on time / 0.5 = default).\n",
+		unit:" sec",
+		weight:0.001,
+		min:0,
+		max:10000,
+		step:500,
+		default:`cat /sys/class/sec/led/led_notification_delay_on`,
+		action:"generic /sys/class/sec/led/led_notification_delay_on"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"Delay OFF",
+		description:" Divider for delay off.\n (0 = no off time / 5 = default).\n",
+		unit:" sec",
+		weight:0.001,
+		min:0,
+		max:10000,
+		step:500,
+		default:`cat /sys/class/sec/led/led_notification_delay_off`,
+		action:"generic /sys/class/sec/led/led_notification_delay_off"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"Fade-in/out (ramp) time period"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+        { SCheckBox:{
+                description:" Enable or disable LED fade-in/out (ramp) control. Default is Disabled.\n",
+                label:"Ramp control",
+		action:"generic /sys/class/sec/led/led_notification_ramp_control"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"Fade-in",
+		description:" Sets the time period of the rising slope.\n (0 = no ramp time / 800 = default).\n",
+		unit:" ms",
+		min:0,
+		max:2000,
+		step:100,
+		default:`cat /sys/class/sec/led/led_notification_ramp_up`,
+		action:"generic /sys/class/sec/led/led_notification_ramp_up"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"Fade-out",
+		description:" Sets the time period of the falling slope.\n (0 = no ramp time / 1000 = default).\n",
+		unit:" ms",
+		min:0,
+		max:2000,
+		step:100,
+		default:`cat /sys/class/sec/led/led_notification_ramp_down`,
+		action:"generic /sys/class/sec/led/led_notification_ramp_down"
+	}},
+	{ SDescription:{
+		  description:" "
+	}},
+	{ SPane:{
+		title:"Test"
+	}},
+	{ SDescription:{
+		  description:" "
+	}},
+	{ SButton:{
+		label:"Test Notification",
+		action:"led 3"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SButton:{
+		label:"Stop Notification",
+		action:"led 0"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

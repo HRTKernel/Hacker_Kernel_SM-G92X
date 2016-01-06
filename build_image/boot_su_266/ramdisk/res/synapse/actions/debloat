@@ -1,0 +1,40 @@
+# by thehacker911
+BB=/system/xbin/busybox
+SA=/system/app
+SPA=/system/priv-app
+BSA=/data/media/0/hacker-kernel-data/debloat/app
+BSPA=/data/media/0/hacker-kernel-data/debloat/priv-app
+
+case $1 in
+	system_app)
+    		if [ -f "$BSA" ] 
+    		then 
+			echo "Folder found"
+		else 
+			echo "Folder not found. Create folder"
+			$BB mkdir -p $BSA
+			$BB chmod -R 0777 $BAS
+   		fi
+		$BB mv $SPA/Music2 $BSA
+		echo "Device rebooting in 10 sec"
+		$BB sleep 10;
+		reboot;
+	;;
+	system_priv_app)
+		$BB sleep 1;
+	;;
+	knox)
+		$BB sleep 1;
+	;;
+	bak_system_app)
+		$BB sleep 1;
+	;;
+	bak_system_priv_app)
+		$BB sleep 1;
+	;;
+	bak_knox)
+		$BB sleep 1;
+	;;
+esac;
+
+

@@ -1,0 +1,129 @@
+BB=/system/xbin/busybox;
+
+case $1 in
+gpu)
+  echo Clock: $(($(cat /sys/devices/platform/gpusysfs/gpu_clock))) MHz
+  ;;
+gpu_load)
+  echo Load: $(($(cat /sys/class/misc/mali0/device/utilization))) %
+  ;;
+entropy)
+  echo "`cat /proc/sys/kernel/random/entropy_avail`";
+  ;;
+batttype)
+  echo Charge Type: `cat /sys/devices/battery.54/power_supply/battery/charge_type`
+  ;;
+battcurrav)
+  echo Current Average: $(($(cat /sys/devices/battery.54/power_supply/battery/current_avg) )) mA
+  ;;
+battcurrnow)
+  echo Current Now: $(($(cat /sys/devices/battery.54/power_supply/battery/current_now) )) mA
+  ;;
+battvoltnow)
+  echo Voltage Now: $(($(cat /sys/devices/battery.54/power_supply/battery/voltage_now) /1000)) mV
+  ;;
+batttemp)
+  echo Temp: $(($(cat /sys/devices/battery.54/power_supply/battery/batt_temp) / 10)) °C
+  ;;
+battcapa)
+  echo Capacity: $(($(cat /sys/devices/battery.54/power_supply/battery/capacity) )) %
+  ;;
+battstatus)
+  echo Status: `cat /sys/devices/battery.54/power_supply/battery/status`
+  ;;
+batthealth)
+  echo Health: `cat /sys/devices/battery.54/power_supply/battery/health`
+  ;;
+LiveMemory)
+  while read TYPE MEM KB; do
+	if [ "$TYPE" = "MemTotal:" ]; then
+		TOTAL="$((MEM / 1024)) MB";
+	elif [ "$TYPE" = "MemFree:" ]; then
+		CACHED=$((MEM / 1024));
+	elif [ "$TYPE" = "Cached:" ]; then
+		FREE=$((MEM / 1024));
+	fi;
+  done < /proc/meminfo;
+		
+  FREE="$((FREE + CACHED)) MB";
+  $BB echo "Total: $TOTAL@nFree: $FREE";
+;;
+LiveUpTime)
+  TOTAL=`$BB awk '{ print $1 }' /proc/uptime`;
+  AWAKE=$((`$BB awk '{s+=$2} END {print s}' /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state` / 100));
+  SLEEP=`$BB awk "BEGIN { print ($TOTAL - $AWAKE) }"`;
+		
+  PERC_A=`$BB awk "BEGIN { print ( ($AWAKE / $TOTAL) * 100) }"`;
+  PERC_A="`$BB printf "%0.1f\n" $PERC_A`%";
+  PERC_S=`$BB awk "BEGIN { print ( ($SLEEP / $TOTAL) * 100) }"`;
+  PERC_S="`$BB printf "%0.1f\n" $PERC_S`%";
+		
+  TOTAL=`$BB echo - | $BB awk -v "S=$TOTAL" '{printf "%dh:%dm:%ds",S/(60*60),S%(60*60)/60,S%60}'`;
+  AWAKE=`$BB echo - | $BB awk -v "S=$AWAKE" '{printf "%dh:%dm:%ds",S/(60*60),S%(60*60)/60,S%60}'`;
+  SLEEP=`$BB echo - | $BB awk -v "S=$SLEEP" '{printf "%dh:%dm:%ds",S/(60*60),S%(60*60)/60,S%60}'`;
+  $BB echo "Total: $TOTAL (100.0%)@nSleep: $SLEEP ($PERC_S)@nAwake: $AWAKE ($PERC_A)";
+;;
+LiveGPUTime)
+  STATE="";
+  CNT=0;
+  SUM=`$BB awk '{s+=$2} END {print s}' /sys/devices/14ac0000.mali/time_in_state`;
+		
+  while read FREQ TIME; do
+	if [ "$CNT" -ge $2 ] && [ "$CNT" -le $3 ]; then
+		FREQ="$((FREQ / 1)) MHz:";
+		if [ $TIME -ge "100" ]; then
+			PERC=`$BB awk "BEGIN { print ( ($TIME / $SUM) * 100) }"`;
+			PERC="`$BB printf "%0.1f\n" $PERC`%";
+			TIME=$((TIME / 100));
+			STATE="$STATE $FREQ `$BB echo - | $BB awk -v "S=$TIME" '{printf "%dh:%dm:%ds",S/(60*60),S%(60*60)/60,S%60}'` ($PERC)@n";
+		fi;
+	fi;
+	CNT=$((CNT+1));
+  done < /sys/devices/14ac0000.mali/time_in_state;
+		
+  STATE=${STATE%??};
+  $BB echo "$STATE";
+  ;;
+KSMStats)
+  UKSM="$(expr `cat /sys/kernel/mm/ksm/run`)"
+	if [ UKSM -eq "1" ]; then
+		RUNS=`echo "Number of full scans: $((\`cat /sys/kernel/mm/ksm/full_scans\`))"`
+		SAVEDMEM=`echo "Saved memory: $((\`cat /sys/kernel/mm/ksm/pages_sharing\`*4096/1024/1024)) MB"`
+		SHARDMEM=`echo "Shared memory: $((\`cat /sys/kernel/mm/ksm/pages_shared\`*4096/1024/1024)) MB"`
+		echo $RUNS@n$SAVEDMEM@n$SHARDMEM
+	else
+		echo KSM is Disabled
+	fi
+  ;;
+check_service)
+  CORTEX_CHECK=`pgrep -f "/system/xbin/busybox sh /sbin/cortexbrain-tune.sh" | wc -l`;
+	if [ "$CORTEX_CHECK" != 0 ]; then
+                echo "SERVICE ONLINE";
+	else
+                echo "SERVICE OFFLINE";
+	fi;
+  ;;
+selinux_status)
+  SELINUX_STATUS="$(expr `cat /sys/fs/selinux/enforce`)"
+	if [ SELINUX_STATUS -eq "0" ]; then
+                echo PERMISSIVE MODE
+	else
+                echo ENFORCING MODE
+	fi
+  ;;
+usb_status)
+  USB_STATUS=$(cat /sys/class/android_usb/android0/functions);
+	if [ "$USB_STATUS" == "mtp,acm,adb" ]; then
+                echo MTP MODE
+	elif [ "$USB_STATUS" == "ptp,adb" ]; then
+                echo PTP MODE
+	elif [ "$USB_STATUS" == "mass_storage,adb" ]; then
+                echo CD_ROM MODE
+	elif [ "$USB_STATUS" == "mtp,acm,adb,hid" ]; then
+                echo USB_KEYBOARD-MOUSE
+	else
+                echo UNSUPPORTED MODE
+                echo Please enable USB-Debugging and re-connect cable
+	fi
+  ;;
+esac

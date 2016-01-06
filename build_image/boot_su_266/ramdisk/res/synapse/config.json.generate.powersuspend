@@ -1,0 +1,42 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:POWER SUSPEND,
+    elements:[
+	{ SPane:{
+		title:"PowerSuspend",
+		description:" PowerSuspend driver is a replacement for the early_suspend/late_resume driver. Hybrid uses autosleep & display panel hook."
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		default:`cat /sys/kernel/power_suspend/power_suspend_mode`,
+		action:"generic /sys/kernel/power_suspend/power_suspend_mode",
+		values:{
+			 0:"Autosleep", 1:"Userspace", 2:"DisplayPanel", 3:"Hybrid"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SCheckBox:{
+		description:" Kernel power management driver when screen is off. Better battery savings if enabled. Note: You can only change this setting if PowerSuspend Mode is set to Userspace.\n",
+		label:"PowerSuspend State",
+		default:`cat /sys/kernel/power_suspend/power_suspend_state`,
+		action:"suspend_state /sys/kernel/power_suspend/power_suspend_state"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SButton:{
+		label:"PowerSuspend version",
+		action:"show susp"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG
