@@ -130,7 +130,7 @@ static struct workqueue_struct *thread_manage_wq;
 #endif
 
 static int dm_hotplug_disable = 0;
-static bool dualcore_blank = true;
+static bool dualcore_blank = false;
 static bool allow_cluster1_blank = false;
 
 static int exynos_dm_hotplug_disabled(void)
