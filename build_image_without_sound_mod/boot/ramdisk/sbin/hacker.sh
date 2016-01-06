@@ -124,8 +124,12 @@ echo "faster I/O successful." >> /data/hackertest.log
 
 #Set default values on boot
 if [ "`grep "ro.build.version.release=5.1.1" $SYSTEMPROP`" != "" ]; then
-	echo "echo "temporary none" > /sys/class/scsi_disk/0:0:0:1/cache_type" >  /system/su.d/000000deepsleep
+	mkdir /system/su.d
+	chmod 0700 /system/su.d
+	echo "#!/tmp-mksh/tmp-mksh" > /system/su.d/000000deepsleep
+	echo "echo "temporary none" > /sys/class/scsi_disk/0:0:0:1/cache_type" >>  /system/su.d/000000deepsleep
 	echo "echo "temporary none" > /sys/class/scsi_disk/0:0:0:2/cache_type" >> /system/su.d/000000deepsleep
+	chmod 0700 /system/su.d/000000deepsleep
 	echo "Set deepsleep values on boot successful." >> /data/hackertest.log
 fi
 
