@@ -282,59 +282,23 @@ sleep 5
 
 # Parse IO Scheduler from prop
 if [ "`grep "kernel.scheduler=noop" $PROP`" != "" ]; then
-	echo $SCHEDULER1 > /sys/block/mmcblk0/queue/scheduler
     	echo $SCHEDULER1 > /sys/block/sda/queue/scheduler
-    	echo $SCHEDULER1 > /sys/block/sdb/queue/scheduler
-    	echo $SCHEDULER1 > /sys/block/sdc/queue/scheduler
-    	echo $SCHEDULER1 > /sys/block/vnswap0/queue/scheduler
 elif [ "`grep "kernel.scheduler=sioplus" $PROP`" != "" ]; then
-	echo $SCHEDULER2 > /sys/block/mmcblk0/queue/scheduler
     	echo $SCHEDULER2 > /sys/block/sda/queue/scheduler
-    	echo $SCHEDULER2 > /sys/block/sdb/queue/scheduler
-    	echo $SCHEDULER2 > /sys/block/sdc/queue/scheduler
-    	echo $SCHEDULER2 > /sys/block/vnswap0/queue/scheduler
 elif [ "`grep "kernel.scheduler=fiops" $PROP`" != "" ]; then
-	echo $SCHEDULER3 > /sys/block/mmcblk0/queue/scheduler
     	echo $SCHEDULER3 > /sys/block/sda/queue/scheduler
-    	echo $SCHEDULER3 > /sys/block/sdb/queue/scheduler
-    	echo $SCHEDULER3 > /sys/block/sdc/queue/scheduler
-    	echo $SCHEDULER3 > /sys/block/vnswap0/queue/scheduler
 elif [ "`grep "kernel.scheduler=deadline" $PROP`" != "" ]; then
-	echo $SCHEDULER4 > /sys/block/mmcblk0/queue/scheduler
     	echo $SCHEDULER4 > /sys/block/sda/queue/scheduler
-    	echo $SCHEDULER4 > /sys/block/sdb/queue/scheduler
-    	echo $SCHEDULER4 > /sys/block/sdc/queue/scheduler
-    	echo $SCHEDULER4 > /sys/block/vnswap0/queue/scheduler
 elif [ "`grep "kernel.scheduler=bfq" $PROP`" != "" ]; then
-	echo $SCHEDULER5 > /sys/block/mmcblk0/queue/scheduler
     	echo $SCHEDULER5 > /sys/block/sda/queue/scheduler
-    	echo $SCHEDULER5 > /sys/block/sdb/queue/scheduler
-    	echo $SCHEDULER5 > /sys/block/sdc/queue/scheduler
-    	echo $SCHEDULER5 > /sys/block/vnswap0/queue/scheduler
 elif [ "`grep "kernel.scheduler=tripndroid" $PROP`" != "" ]; then
-	echo $SCHEDULER6 > /sys/block/mmcblk0/queue/scheduler
     	echo $SCHEDULER6 > /sys/block/sda/queue/scheduler
-    	echo $SCHEDULER6 > /sys/block/sdb/queue/scheduler
-    	echo $SCHEDULER6 > /sys/block/sdc/queue/scheduler
-    	echo $SCHEDULER6 > /sys/block/vnswap0/queue/scheduler
 elif [ "`grep "kernel.scheduler=cfg" $PROP`" != "" ]; then
-	echo $SCHEDULER7 > /sys/block/mmcblk0/queue/scheduler
     	echo $SCHEDULER7 > /sys/block/sda/queue/scheduler
-    	echo $SCHEDULER7 > /sys/block/sdb/queue/scheduler
-    	echo $SCHEDULER7 > /sys/block/sdc/queue/scheduler
-    	echo $SCHEDULER7 > /sys/block/vnswap0/queue/scheduler
 elif [ "`grep "kernel.scheduler=row" $PROP`" != "" ]; then
-	echo $SCHEDULER8 > /sys/block/mmcblk0/queue/scheduler
     	echo $SCHEDULER8 > /sys/block/sda/queue/scheduler
-    	echo $SCHEDULER8 > /sys/block/sdb/queue/scheduler
-    	echo $SCHEDULER8 > /sys/block/sdc/queue/scheduler
-    	echo $SCHEDULER8 > /sys/block/vnswap0/queue/scheduler
 else
-	echo $SCHEDULER7 > /sys/block/mmcblk0/queue/scheduler
     	echo $SCHEDULER7 > /sys/block/sda/queue/scheduler
-    	echo $SCHEDULER7 > /sys/block/sdb/queue/scheduler
-    	echo $SCHEDULER7 > /sys/block/sdc/queue/scheduler
-    	echo $SCHEDULER7 > /sys/block/vnswap0/queue/scheduler
 fi
 
 # Parse Governor from prop
