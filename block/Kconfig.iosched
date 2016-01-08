@@ -73,6 +73,39 @@ config IOSCHED_BFQ
 	  applications. If compiled built-in (saying Y here), BFQ can
 	  be configured to support hierarchical scheduling.
 
+config IOSCHED_SIO
+	tristate "Simple I/O scheduler"
+	default y
+	---help---
+	The Simple I/O scheduler is an extremely simple scheduler,
+	based on noop and deadline, that relies on deadlines to
+	ensure fairness. The algorithm does not do any sorting but
+	basic merging, trying to keep a minimum overhead. It is aimed
+	mainly for aleatory access devices (eg: flash devices).
+
+config IOSCHED_ZEN
+	tristate "Zen I/O scheduler"
+	default y
+	---help---
+	FCFS, dispatches are back-inserted, deadlines ensure fairness.
+        Should work best with devices where there is no travel delay.
+
+config IOSCHED_FIFO
+	tristate "Fifo I/O scheduler"
+	default y
+	---help---
+	Fifo is similar to no-op I/O scheduler and it's a minimal scheduler that does
+	basic   merging and sorting. Ported from: 
+	https://github.com/AndroidDeveloperAlliance/ZenKernel_TUNA/blob/master/block/fifo-
+	iosched.c
+
+config IOSCHED_VR
+	tristate "V(R) I/O scheduler"
+	default y
+	---help---
+	Requests are chosen according to SSTF with a penalty of rev_penalty
+	for switching head direction.	  
+	  
 config CGROUP_BFQIO
 	bool "BFQ hierarchical scheduling support"
 	depends on CGROUPS && IOSCHED_BFQ=y
@@ -123,7 +156,19 @@ choice
 		  Dispatching is done in a RR manner when the dispatch quantum
 		  for each queue is defined according to queue priority.
 		  Most suitable for mobile devices.
-		
+
+	config DEFAULT_SIO
+		bool "SIO" if IOSCHED_SIO=y
+
+	config DEFAULT_FIFO
+		bool "FIFO" if IOSCHED_FIFO=y
+
+	config DEFAULT_ZEN
+		bool "ZEN" if IOSCHED_ZEN=y
+
+	config DEFAULT_VR
+		bool "VR" if IOSCHED_VR=y		  
+		  
 	config DEFAULT_CFQ
 		bool "CFQ" if IOSCHED_CFQ=y
 
@@ -155,6 +200,10 @@ config DEFAULT_IOSCHED
 	default "bfq" if DEFAULT_BFQ
 	default "fiops" if DEFAULT_FIOPS
 	default "noop" if DEFAULT_NOOP
+	default "sio" if DEFAULT_SIO
+	default "fifo" if DEFAULT_FIFO
+	default "zen" if DEFAULT_ZEN
+	default "vr" if DEFAULT_VR
 
 endmenu
 
