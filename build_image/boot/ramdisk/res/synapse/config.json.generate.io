@@ -7,7 +7,7 @@ cat << CTAG
     { SPane:{
 		title:"I/O schedulers",
 		description:"Set the active I/O elevator algorithm. The scheduler decides how to handle I/O requests and how to handle them."
-    }},
+	}},
 	{ SOptionList:{
 		title:"Internal Storage Scheduler",
 		default:`cat /sys/block/sda/queue/scheduler | busybox awk 'NR>1{print $1}' RS=[ FS=]`,
@@ -23,7 +23,16 @@ cat << CTAG
 		default:`cat /sys/block/sda/queue/read_ahead_kb`,
 		action:"generic /sys/block/sda/queue/read_ahead_kb"
 	}},
-
+	{ SPane:{
+		title:"I/O Tuning"
+	}},
+	{ SOptionList:{
+		title:"Profile",
+		description:" Select your profile for I/O.\n",
+		default:`echo $(/res/synapse/actions/io io_tweaking)`,
+		action:"io io_tweaking",
+		values:[Default, Boost, Fast_Boost,],
+	}},
 	{ SPane:{
 		title:"I/O Scheduler Tunables",
 	}},

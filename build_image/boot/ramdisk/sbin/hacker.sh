@@ -116,12 +116,6 @@ fi
 #fi
 #echo "Stop Google Service successful." >> /data/hackertest.log
 
-# faster I/O (dorimanx)
-for i in /sys/block/*/queue; do
-        echo "2" > $i/rq_affinity
-done
-echo "faster I/O successful." >> /data/hackertest.log
-
 #Set default values on boot
 if [ "`grep "ro.build.version.release=5.1.1" $SYSTEMPROP`" != "" ]; then
 	mkdir /system/su.d
