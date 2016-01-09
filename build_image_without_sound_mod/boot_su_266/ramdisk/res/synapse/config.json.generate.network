@@ -5,6 +5,20 @@ cat << CTAG
     name:NETWORK,
     elements:[
     	{ SPane:{
+		title:"Save WiFi Passwords",
+		description:" Save your WiFi Passowords under /sdcard/hackerkernel."
+    	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SButton:{
+		label:"Save WiFi Passwords",
+		action:"network wifi_passwords"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+    	{ SPane:{
 		title:"TCP Congestion Control",
 		description:" Select your preferred WIFI TCP algorithm. Regulates upload and download affecting throughput in various ways. Default is Westwood+."
     	}},

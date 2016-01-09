@@ -107,4 +107,11 @@ dns)
     echo Smart_Viper
   fi
   ;;
+wifi_passwords)
+  $BB mount -t rootfs -o remount,rw rootfs;
+  P=/data/media/0/hackerkernel/wifi.txt
+  cat /data/misc/wifi/wpa_supplicant.conf > $P
+  sleep 1
+  echo WiFi Passwords saved
+  ;;
 esac
