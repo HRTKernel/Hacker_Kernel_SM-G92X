@@ -4,7 +4,7 @@ SUBLEVEL = 94
 EXTRAVERSION =
 NAME = TOSSUG Baby Fish
 
-#TOOLCHAIN_DIR = /home/kerneldev/android/toolchains/UBERTC-aarch64-linux-android-6.0/bin/aarch64-linux-android-
+#TOOLCHAIN_DIR = $(CURDIR)/toolchain/aarch64-linux-gnu-5.3/bin/aarch64-
 TOOLCHAIN_DIR = /home/kerneldev/android/toolchains/aarch64-linux-gnu-5.3/bin/aarch64-
 
 # *DOCUMENTATION*
