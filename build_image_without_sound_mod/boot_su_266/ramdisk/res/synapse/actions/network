@@ -114,4 +114,18 @@ wifi_passwords)
   sleep 1
   echo WiFi Passwords saved
   ;;
+wifi_passwords_restore)
+   if [ -f /data/media/0/hackerkernel/wifi.txt ]; then
+	P=/data/misc/wifi/wpa_supplicant.conf
+	svc wifi disable 2> /dev/null;
+	rm -f /data/misc/dhcp/dhcpcd*;
+	cat /data/media/0/hackerkernel/wifi.txt > $P
+	$BB chmod 660 $P;
+	svc wifi enable 2> /dev/null;
+	sleep 1
+	echo "WiFi Passwords Restored. Please Reboot!";
+  else
+	echo "No backup file found";
+  fi
+  ;;
 esac

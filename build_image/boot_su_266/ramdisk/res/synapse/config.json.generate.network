@@ -18,7 +18,17 @@ cat << CTAG
 	{ SDescription:{
 		description:""
 	}},
-    	{ SPane:{
+	{ SButton:{
+		label:"Restore WiFi Passwords",
+		action:"network wifi_passwords_restore"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
 		title:"TCP Congestion Control",
 		description:" Select your preferred WIFI TCP algorithm. Regulates upload and download affecting throughput in various ways. Default is Westwood+."
     	}},
