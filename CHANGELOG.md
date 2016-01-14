@@ -1,5 +1,12 @@
 # Change Log
 
+## [V11](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/tree/V11) (2016-01-14)
+[Full Changelog](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/compare/V10.1...V11)
+
+**Merged pull requests:**
+
+- Enable performance event support [\#1](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/pull/1) ([mlq](https://github.com/mlq))
+
 ## [V10.1](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/tree/V10.1) (2016-01-06)
 [Full Changelog](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/compare/V10...V10.1)
 
