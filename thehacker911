@@ -3,11 +3,11 @@ Hacker
 #Device
 -S6-Universal
 #Version
--V10.1
+-V11
 #Zip-Name
 hacker-kernel
 #Version
--V10.1-WSM
+-V11-WSM
 #Toolchain
 aarch64-linux-gnu-5.3/bin/aarch64-
 #Su Version
