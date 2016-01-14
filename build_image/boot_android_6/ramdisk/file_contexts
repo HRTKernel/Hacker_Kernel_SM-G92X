@@ -1143,6 +1143,7 @@
 /dev/socket/vpnclientd          u:object_r:vpnclientd_socket:s0
 /dev/sound_trigger_boost        u:object_r:audio_device:s0
 /dev/ssp_sensorhub	u:object_r:input_device:s0
+/dev/ssp_data_injection	u:object_r:input_device:s0
 /dev/timerirq	u:object_r:timerirq_device:s0
 /dev/ttyGS[0-9]*	u:object_r:usb_serial_device:s0
 /dev/ttyUSB[0-9]*	u:object_r:usb_device:s0
@@ -1158,6 +1159,8 @@
 /dev/usb_mtp_gadget.*	u:object_r:mtp_device:s0
 /dev/validity(/.*)?	u:object_r:validity_device:s0
 /dev/vfsspi	u:object_r:vfsspi_device:s0
+/dev/video26        u:object_r:video_scaler_device:s0
+/dev/video29        u:object_r:video_scaler_device:s0
 /dev/video4[0-9]        u:object_r:camera_device:s0
 /dev/video5[0-2]        u:object_r:video_scaler_device:s0
 
@@ -1324,7 +1327,7 @@
 ### start : supporting Factory app.
 /sys/bus/i2c/drivers/fsa9480/7-0025/syssleep          u:object_r:sysfs_ss_writable:s0
 /sys/bus/i2c/drivers/sm5502/7-0025/syssleep           u:object_r:sysfs_ss_writable:s0
-/sys/class/android_usb/android0(/.*)?          --     u:object_r:sysfs_ss_writable:s0
+/sys/class/android_usb/android0(/.*)?          --     u:object_r:sysfs_android_usb:s0
 /sys/class/backlight(/.*)?                     --     u:object_r:sysfs_ss_writable:s0 
 /sys/class/dsm/maxdsm_cal(/.*)?                --     u:object_r:sysfs_ss_writable:s0
 /sys/class/earsmart/control/always_stream_fs_on       u:object_r:sysfs_ss_writable:s0
@@ -1353,6 +1356,12 @@
 /sys/module/qpnp_power_on/parameters/wake_enabled                       u:object_r:sysfs_ss_writable:s0
 /sys/power/ftm_sleep                                                    u:object_r:sysfs_ss_writable:s0
 ### end : supporting Factory app.
+
+# VR inflight write
+/sys/power/cpuhotplug/enabled                           u:object_r:sysfs_ss_writable:s0
+
+#secure touch
+/sys/class/input/input[0-9]+/secure_touch_enable        u:object_r:sysfs_ss_writable:s0
 
 
 ############################# 
@@ -1538,6 +1547,7 @@
 /data/data/com\.android\.shell(/.*)?		u:object_r:shell_data_file:s0
 /data/data/imsqmisocket	u:object_r:system_data_file:s0
 /data/data/lptcpSocket u:object_r:lptcp_data_file:s0
+/data/dipconfs(/.*)?                                  u:object_r:debug_interface_data_file:s0
 /data/DownFilters/Lib(/.*)?		u:object_r:downfilters_lib_file:s0
 /data/DownFilters/Lib64(/.*)?		u:object_r:downfilters_lib_file:s0
 /data/DxDrm(/.*)?                                     u:object_r:drm_playready_file:s0
@@ -1599,6 +1609,8 @@
 /data/\.wifiver\.info                                 u:object_r:wifiver_data_file:s0
 /data/\.otp\.info                                 u:object_r:wifiver_data_file:s0
 
+/data/EP_save\.bak                                 u:object_r:mediaserver_data_file:s0
+
 
 ############################# 
 # DATA file of knox_common
@@ -1607,12 +1619,13 @@
 /data/clipboard/knox(/.*)?  u:object_r:knox_clipboard_file:s0
 /data/clipboard1[0-9][0-9](/.*)?  u:object_r:knox_clipboard_file:s0
 /data/container(/.*)?	u:object_r:container_app_data_backend:s0
+/data/container2\.0(/.*)?                              u:object_r:bbccontainer_app_data_backend:s0
 /data/knox_otp(/.*)?     u:object_r:otp_data_file:s0
 /data/knox(/.*)?	u:object_r:container_app_data_backend:s0
 /data/knox/data/19[5-9](/.*)?	        u:object_r:bbccontainer_app_data_backend:s0
 /data/knox/sdcard/19[5-9](/.*)?	        u:object_r:bbccontainer_app_data_backend:s0
 /data/knox/secure_fs/enc_media(/.*)?	        u:object_r:media_rw_data_file:s0
-/data/knox/secure_fs/enc_user(/.*)?	        u:object_r:media_rw_data_file:s0
+#/data/knox/secure_fs/enc_user(/.*)?	        u:object_r:media_rw_data_file:s0
 
 /data/security/aasa(/.*)?               u:object_r:security_spota_file:s0
 /data/security/spota(/.*)?              u:object_r:security_spota_file:s0
@@ -1624,10 +1637,10 @@
 /data/user/19[5-9](/.*)?            u:object_r:bbccontainer_app_data_backend:s0
 
 # /mnt/runtime/
-/mnt/runtime/(default|read|write)/emulated/([1-9])?[0-9](/.*)?          u:object_r:media_rw_data_file:s0
+/mnt/runtime/(default|read|write)/emulated/[0-9](/.*)?          u:object_r:media_rw_data_file:s0
 
 # /storage/emulated/
-/storage/emulated/([1-9])?[0-9](/.*)?             u:object_r:media_rw_data_file:s0
+/storage/emulated/[0-9](/.*)?             u:object_r:media_rw_data_file:s0
 
 /storage/(emulated|knox-emulated)/1[0-8][0-9](/.*)?               u:object_r:container_app_data_backend:s0
 /storage/(emulated|knox-emulated)/19[0-4](/.*)?                   u:object_r:container_app_data_backend:s0
@@ -1642,14 +1655,21 @@
 /mnt/shell/emulated/1[0-8][0-9](/.*)?                      u:object_r:container_app_data_backend:s0
 /mnt/shell/emulated/19[0-4](/.*)?                          u:object_r:container_app_data_backend:s0
 /mnt/shell/emulated/19[5-9](/.*)?                          u:object_r:bbccontainer_app_data_backend:s0
-/mnt/shell/enc_emulated/([1-9])?[0-9](/.*)?                u:object_r:media_rw_data_file:s0
-/mnt/shell/enc_media/([1-9])?[0-9](/.*)?                   u:object_r:media_rw_data_file:s0
+/mnt/shell/enc_emulated/[0-9](/.*)?                        u:object_r:media_rw_data_file:s0
+/mnt/shell/enc_media/[0-9](/.*)?                           u:object_r:media_rw_data_file:s0
 /mnt/shell/knox-emulated/1[0-8][0-9](/.*)?                 u:object_r:container_app_data_backend:s0
 /mnt/shell/knox-emulated/19[0-4](/.*)?                     u:object_r:container_app_data_backend:s0
 /mnt/shell/knox-emulated/19[5-9](/.*)?                     u:object_r:bbccontainer_app_data_backend:s0
 #/mnt/user/1[0-8][0-9](/.*)?           u:object_r:container_app_data_backend:s0
 #/mnt/user/19[0-4](/.*)?               u:object_r:container_app_data_backend:s0
 #/mnt/user/19[5-9](/.*)?               u:object_r:bbccontainer_app_data_backend:s0
+
+# AfW
+/data/media/[1-9][0-9](/.*)?                                         u:object_r:container_app_data_backend:s0
+/mnt/runtime/(default|read|write)/emulated/[1-9][0-9](/.*)?          u:object_r:container_app_data_backend:s0
+/mnt/shell/enc_emulated/[1-9][0-9](/.*)?                             u:object_r:container_app_data_backend:s0
+/mnt/shell/enc_media/[1-9][0-9](/.*)?                                u:object_r:container_app_data_backend:s0
+/storage/emulated/[1-9][0-9](/.*)?                                   u:object_r:container_app_data_backend:s0
 
 ############################# 
 # DATA file of qcom_common
@@ -1665,6 +1685,7 @@
 /cpefs(/.*)?                                     u:object_r:sec_efs_file:s0
 /efs/bluetooth(/.*)?	u:object_r:bluetooth_efs_file:s0
 /efs/carrier(/.*)?	u:object_r:carrier_efs_file:s0
+/efs/cirrus(/.*)?                                u:object_r:sec_efs_file:s0
 /efs/cpk(/.*)?	                                 u:object_r:cpk_efs_file:s0
 /efs/drx(/.*)?                                   u:object_r:sec_efs_file:s0
 /efs/FactoryApp(/.*)?	u:object_r:app_efs_file:s0

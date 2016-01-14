@@ -85,7 +85,6 @@ subsystem adf
 /dev/mtp_usb              0660   root       mtp
 /dev/usb_accessory        0660   root       usb
 /dev/tun                  0660   system     vpn
-/dev/url                  0660   secnetfilter    secnetfilter
 
 # CDMA radio interface MUX
 /dev/ts0710mux*           0640   radio      radio
@@ -122,3 +121,5 @@ subsystem adf
 
 # Fingerprint Sensor
 /dev/vfsspi        0660   system     system
+/dev/esfp0        0660   system     system
+

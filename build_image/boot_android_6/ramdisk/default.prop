@@ -28,6 +28,6 @@ debug.atrace.tags.enableflags=0
 #
 # BOOTIMAGE_BUILD_PROPERTIES
 #
-ro.bootimage.build.date=Tue Dec 15 09:47:33 KST 2015
-ro.bootimage.build.date.utc=1450140453
-ro.bootimage.build.fingerprint=samsung/zerofltexx/zeroflte:6.0/MRA58K/G920FXXU3ZOL6:user/test-keys
+ro.bootimage.build.date=Wed Jan 6 18:56:50 KST 2016
+ro.bootimage.build.date.utc=1452074210
+ro.bootimage.build.fingerprint=samsung/zerofltexx/zeroflte:6.0.1/MMB29K/G920FXXU3ZPA1:user/test-keys

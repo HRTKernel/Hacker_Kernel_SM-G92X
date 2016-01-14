@@ -5,4 +5,5 @@
 # data partition must be located at the bottom for supporting device encryption
 
 /dev/block/platform/15570000.ufs/by-name/SYSTEM		/system	ext4	ro,errors=panic,noload										wait
+/dev/block/platform/15570000.ufs/by-name/EFS            /efs    ext4    noatime,nosuid,nodev,noauto_da_alloc,discard,journal_async_commit,data=ordered,errors=panic     wait,check
 /dev/block/platform/15570000.ufs/by-name/CACHE		/cache	ext4	noatime,nosuid,nodev,noauto_da_alloc,discard,journal_async_commit,data=ordered,errors=panic	wait,check

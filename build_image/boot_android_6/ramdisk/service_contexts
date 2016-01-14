@@ -221,6 +221,7 @@ emergency_service                           u:object_r:system_app_service:s0
 fingerprint_service                         u:object_r:system_app_service:s0
 ImsBase                                     u:object_r:system_app_service:s0
 ImsCapability                               u:object_r:system_app_service:s0
+imsopenapi                                  u:object_r:system_app_service:s0
 ImsPersonalProfile                          u:object_r:system_app_service:s0
 ImsPresence                                 u:object_r:system_app_service:s0
 ImsSms                                      u:object_r:system_app_service:s0
@@ -228,9 +229,11 @@ ImsSSConfig                                 u:object_r:system_app_service:s0
 ImsTapi                                     u:object_r:system_app_service:s0
 ImsVolte                                    u:object_r:system_app_service:s0
 ImsVsh                                      u:object_r:system_app_service:s0
+ims6                                        u:object_r:system_app_service:s0
 secims		                            u:object_r:system_app_service:s0
 service.gesture                             u:object_r:system_app_service:s0
 SveService                                  u:object_r:system_app_service:s0
+volte                                       u:object_r:system_app_service:s0
 AAS                                         u:object_r:system_service:s0
 application_policy                          u:object_r:system_service:s0
 barbeam                                     u:object_r:system_service:s0
@@ -250,9 +253,11 @@ device_info                                 u:object_r:system_service:s0
 DigitalPen                                  u:object_r:system_service:s0
 DirEncryptService                           u:object_r:system_service:s0
 download                                    u:object_r:system_service:s0
+DPU                                         u:object_r:system_service:s0
 dualscreen                                  u:object_r:system_service:s0
 edge                                        u:object_r:system_service:s0
 emailksproxy                                u:object_r:system_service:s0
+EngineeringModeService                      u:object_r:system_service:s0
 epdg                                        u:object_r:system_service:s0
 execute                                     u:object_r:system_service:s0
 EXT_CONTROL_DEVICE_SERVICE                  u:object_r:system_service:s0
@@ -304,7 +309,6 @@ scontext                                    u:object_r:system_service:s0
 spengestureservice                          u:object_r:system_service:s0
 storage                                     u:object_r:system_service:s0
 SecExternalDisplayService                   u:object_r:system_service:s0
-tactileassist                               u:object_r:system_service:s0
 tima                                        u:object_r:system_service:s0
 transcloud                                  u:object_r:system_service:s0
 tw_toolbox                                  u:object_r:system_service:s0
@@ -312,6 +316,7 @@ voip                                        u:object_r:system_service:s0
 vr                                          u:object_r:system_service:s0
 wifi_extd_service                           u:object_r:system_service:s0
 wifipasspoint                               u:object_r:system_service:s0
+tactileassist                               u:object_r:tactileassist_service:s0
 CCM                                         u:object_r:tlc_server_service:s0
 DCM                                         u:object_r:tlc_server_service:s0
 ESECOMM                                     u:object_r:tlc_server_service:s0

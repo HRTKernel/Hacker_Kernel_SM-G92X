@@ -109,6 +109,7 @@ on post-fs-data
     chown system audio /sys/class/earsmart/control/route_value
     chown system audio /sys/class/earsmart/control/veq_control_set
     chown system audio /sys/class/earsmart/control/extra_volume
+    chown system audio /sys/class/earsmart/control/always_stream_fs_on
 
     #Private Mode
     mkdir /mnt/shell/privatemode 0700 system system
@@ -125,7 +126,7 @@ on post-fs-data
 #Private Mode
     mkdir /data/privatemode 0770 system system
     chown system system /data/privatemode
-    # restorecon /data/privatemode
+    restorecon /data/privatemode
 
 #NFC : create data/nfc for nv storage
     mkdir /data/nfc 0700 nfc nfc
@@ -365,10 +366,7 @@ on boot
     chown bluetooth net_bt_stack /dev/ttySAC4
     chmod 0660 /dev/ttySAC4
 # mobicore
-    mkdir /data/app/mcRegistry 0775 system system
-    chmod 0660 /dev/s5p-smem
     chmod 0660 /dev/t-base-tui
-    chown system system /dev/s5p-smem
     chown system system /dev/t-base-tui
 
 # sem_daemon permission
@@ -414,9 +412,6 @@ on boot
     chown system system /dev/ttyGS2
     chown system system /dev/ttyGS3
 
-# Permissions for usb_lock
-    chown system radio /sys/class/android_usb/android0/usb_lock
-
 # On-Board DM
     chmod 6755 /system/bin/dmm_v2
 
@@ -426,6 +421,9 @@ on boot
     # FM Radio
     chmod 0640 /dev/fmradio
     chown system system /dev/fmradio
+
+#MST HW Support
+    setprop ro.mst.support 1
 
 on fs
     mount_all /fstab.samsungexynos7420
@@ -502,11 +500,7 @@ on fs
     chown system radio /sys/class/lcd/panel/lcd_type
     chown system system /sys/class/lcd/panel/siop_enable
     chown system system /sys/class/lcd/panel/temperature
-    chown system radio /sys/class/lcd/panel/mcd_mode
     chown system media_rw /sys/class/backlight/panel/weakness_hbm_comp
-
-# Permissions for LCD ALPM 
-    chown system system /sys/class/lcd/panel/alpm
 
 # Permissions for MDNIE
     chown system media_rw /sys/class/mdnie/mdnie/mode
@@ -534,6 +528,9 @@ on fs
 # Permissions for S.LSI ESE
     chmod 0660 /dev/p3
     chown system system /dev/p3
+
+# NFC : create data/nfc for nv storage
+    mkdir /efs/sec_efs/nfc 0500 nfc nfc
 
 # terminal mode
     chmod 0660 /sys/class/android_usb/android0/terminal_version
@@ -707,8 +704,6 @@ on fs
 # TSP & Pressure Sensor
     #chown system system /sys/class/sec/tsp/brane
     #chmod 0660 /sys/class/sec/tsp/brane
-	chown system system /dev/i2c-7
-    chmod 0660 /dev/i2c-7
 
 # DIAG
 service DIAG-daemon /system/bin/diagexe
@@ -761,11 +756,6 @@ on property:ro.debuggable=1
 on property:sys.boot_completed=1
     write /proc/sys/vm/dirty_bytes 62914560
     write /proc/sys/vm/dirty_background_bytes 20971520
-
-# Activate Background Compaction
-on property:sys.sysctl.compact_memory=1
-    write /proc/sys/vm/compact_memory 1
-    setprop sys.sysctl.compact_memory=0
 
 #
 # start netmgrd
@@ -847,6 +837,7 @@ service cs_service /system/bin/cs
     disabled
 on property:sys.mobicoredaemon.enable=true
     start cs_service
+    write /proc/iccc_ready 1
 
 # SSWAP
 service swapon /sbin/sswap -s -f 2048
@@ -868,7 +859,7 @@ service rtc_log /system/bin/rtc_log.sh
     class main
     user system
     group system
-    # seclabel u:r:rtc_log:s0
+    seclabel u:r:rtc_log:s0
     oneshot
 
 # sem_daemon

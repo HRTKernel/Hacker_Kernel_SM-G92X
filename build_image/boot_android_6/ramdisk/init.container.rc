@@ -11,6 +11,10 @@ on init
 
     symlink /mnt/shell/knox-emulated /storage/knox-emulated
     
+    mkdir /mnt/shell/private_default 0700 system system
+    mkdir /mnt/shell/private_read 0700 system system
+    mkdir /mnt/shell/private_write 0700 system system
+    
     # From M OS, FS for ext has been seperated
     mkdir /mnt/knox 0700 root root
 

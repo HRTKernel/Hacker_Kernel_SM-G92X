@@ -8,8 +8,6 @@ on init
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /storage/sdcard 0555 root root
 
-    export EXTERNAL_STORAGE /storage/sdcard
-
     # Support legacy paths
     #symlink /storage/sdcard /sdcard
     #symlink /storage/sdcard /mnt/sdcard
@@ -42,6 +40,12 @@ on boot
 # disable some daemons the emulator doesn't want
     stop dund
     stop akmd
+
+# enable dhcpcd on eth0 interface
+service dhcpcd_eth0 /system/bin/dhcpcd -ABDKL
+    class main
+    disabled
+    oneshot
 
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector

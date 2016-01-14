@@ -27,6 +27,8 @@ user=asf_mediashare seinfo=platform domain=platform_app type=app_data_file level
 user=bcmgr seinfo=platform domain=platform_app type=app_data_file levelFrom=user
 user=cloudgateway seinfo=platform domain=platform_app type=app_data_file levelFrom=user
 user=samsungcloud seinfo=platform domain=platform_app type=app_data_file levelFrom=user
+user=intelligenceservice seinfo=platform domain=platform_app type=app_data_file levelFrom=user
+user=enhanced_features seinfo=platform domain=platform_app type=app_data_file levelFrom=user
 user=_app seinfo=spay domain=platform_app type=platform_app_data_file levelFrom=user
 user=spay seinfo=spay domain=platform_app type=platform_app_data_file
 user=system seinfo=spay domain=platform_app type=platform_app_data_file
@@ -45,11 +47,15 @@ user=_app seinfo=spr_ext name=com.kineto.smartwifi domain=filtered_untrusted_app
 user=_app seinfo=trusted_dmb name=com.omnitel* domain=filtered_untrusted_app type=app_data_file levelFrom=user
 user=_app seinfo=filtered_untrusted name=com.visionobjects.resourcemanager domain=filtered_untrusted_app type=filtered_app_data_file levelFrom=user
 user=_app seinfo=filtered_untrusted name=com.myscript.atk.rmc.service.sample domain=filtered_untrusted_app type=filtered_app_data_file levelFrom=user
+user=_app seinfo=filtered_untrusted name=jp.co.fsi.* domain=filtered_untrusted_app type=filtered_app_data_file levelFrom=user
 user=_app seinfo=sprintitson domain=itsonclient_app type=itsonapp_data_file levelFrom=user
 user=itson seinfo=sprintitson domain=itsonclient_app type=itsonapp_data_file levelFrom=user
 user=sprintitson seinfo=sprintitson domain=itsonclient_app type=itsonapp_data_file levelFrom=user
 user=_app seinfo=mmphone domain=carrier_app type=app_data_file levelFrom=user
 user=system seinfo=default domain=untrusted_app type=app_data_file levelFrom=user
+user=_app seinfo=platform name=com.android.defcontainer domain=platform_app type=app_data_file
+user=_app seinfo=vzw_untrusted domain=vzwfiltered_untrusted_app type=app_data_file levelFrom=user
+user=_app seinfo=xcal_untrusted domain=vzwfiltered_untrusted_app type=app_data_file levelFrom=user
 user=_app seinfo=tmosimlock name=com.tmobile.simlock domain=filtered_untrusted_app type=app_data_file levelFrom=user
 user=_app seinfo=tmosimlock name=com.metro.simlock domain=filtered_untrusted_app type=app_data_file levelFrom=user
 user=_app seinfo=llk_untrusted name=com.customermobile.preload.main2 domain=llk_untrusted_app type=app_data_file levelFrom=user
