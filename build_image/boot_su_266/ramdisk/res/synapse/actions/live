@@ -126,4 +126,12 @@ usb_status)
                 echo Please enable USB-Debugging and re-connect cable
 	fi
   ;;
+check_cron)
+CRON_SERVICE=$(pidof crond | wc -l);
+	if [ "$CRON_SERVICE" -eq "1" ]; then
+		echo "SERVICE ONLINE";
+	else
+		echo "SERVICE OFFLINE";
+	fi;
+  ;;
 esac

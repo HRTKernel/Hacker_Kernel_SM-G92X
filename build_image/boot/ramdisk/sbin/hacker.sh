@@ -86,6 +86,7 @@ sync
 # Make internal storage directory.
 if [ ! -d /data/.hackerkernel ]; then
 	mkdir /data/.hackerkernel
+	$BB chmod -R 0777 /.hackerkernel/
 fi
 
 # Synapse
@@ -94,6 +95,14 @@ busybox chmod -R 755 /res/synapse
 busybox ln -fs /res/synapse/uci /sbin/uci
 /sbin/uci
 busybox mount -t rootfs -o remount,ro rootfs
+
+# Setup for Cron Task
+# Copy Cron files
+$BB cp -a /res/crontab/ /data/
+if [ ! -e /data/crontab/custom_jobs ]; then
+	$BB touch /data/crontab/custom_jobs;
+	$BB chmod 777 /data/crontab/custom_jobs;
+fi
 
 # kernel custom test
 
@@ -170,12 +179,12 @@ fi
 chmod 777 /data/.hackerkernel/bck_prof
 
 sleep 20;
-
-echo "0x0FF3 0x041E 0x0034 0x1FC8 0xF035 0x040D 0x00D2 0x1F6B 0xF084 0x0409 0x020B 0x1EB8 0xF104 0x0409 0x0406 0x0E08 0x0782 0x2ED8" > /sys/class/misc/arizona_control/eq_A_freqs
-echo "0x0C47 0x03F5 0x0EE4 0x1D04 0xF1F7 0x040B 0x07C8 0x187D 0xF3B9 0x040A 0x0EBE 0x0C9E 0xF6C3 0x040A 0x1AC7 0xFBB6 0x0400 0x2ED8" > /sys/class/misc/arizona_control/eq_B_freqs
-echo "1" >/sys/class/misc/arizona_control/switch_eq_hp
-echo "Set default sound values on boot successful." >> /data/hackertest.log
-
+if [ -d "/sys/class/misc/arizona_control" ]; then
+	echo "0x0FF3 0x041E 0x0034 0x1FC8 0xF035 0x040D 0x00D2 0x1F6B 0xF084 0x0409 0x020B 0x1EB8 0xF104 0x0409 0x0406 0x0E08 0x0782 0x2ED8" > /sys/class/misc/arizona_control/eq_A_freqs
+	echo "0x0C47 0x03F5 0x0EE4 0x1D04 0xF1F7 0x040B 0x07C8 0x187D 0xF3B9 0x040A 0x0EBE 0x0C9E 0xF6C3 0x040A 0x1AC7 0xFBB6 0x0400 0x2ED8" > /sys/class/misc/arizona_control/eq_B_freqs
+	echo "1" >/sys/class/misc/arizona_control/switch_eq_hp
+	echo "Set default sound values on boot successful." >> /data/hackertest.log
+fi
 
 #Setup Mhz Min/Max Cluster A53
 #echo $CPUFREQ16 > $FREQMAXLITTLE1
