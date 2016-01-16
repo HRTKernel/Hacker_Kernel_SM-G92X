@@ -18,7 +18,7 @@ KERNEL_ZIMG=$BUILD_KERNEL_DIR/arch/arm64/boot/Image
 OUTPUT_DIR=$BUILD_KERNEL_DIR/build_image/output_kernel
 ZIP_VER=`sed -n '8p' thehacker911`
 DEVICE_VER=`sed -n '16p' thehacker911`
-VER=`sed -n '6p' thehacker911`
+VER=`sed -n '10p' thehacker911`
 SU_VER=`sed -n '14p' thehacker911`
 KERNEL_NAME="$ZIP_VER$DEVICE_VER$VER"
 TOOLCHAIN=aarch64-linux-gnu-5.3/bin/aarch64-
@@ -89,13 +89,13 @@ REPACK_KERNEL()
 	if [ -e $BUILD_KERNEL_DIR/arch/arm64/boot/Image ]; then
 	      cp -r $KERNEL_ZIMG $BOOTIMG_DIR_2/Image
 
-	      find . -name "*.ko" -exec cp {} $BUILD_KERNEL_DIR/build_image_without_sound_mod/zip_files/system/lib/modules/ \;
+	      find . -name "*.ko" -exec cp {} $BUILD_KERNEL_DIR/build_image/zip_files/system/lib/modules/ \;
 
-	      rm $BUILD_KERNEL_DIR/build_image_without_sound_mod/zip_files/system/lib/modules/placeholder
+	      rm $BUILD_KERNEL_DIR/build_image/zip_files/system/lib/modules/placeholder
 
-	      cd build_image_without_sound_mod
-	      mkdir backup_image
-	      cp -r Image backup_image/zImage
+	      cd build_image
+	      mkdir backup_image_wsm
+	      cp -r Image backup_image_wsm/zImage
 	      rm output_kernel/*.zip
 
 	      echo "Making boot.img ..."
@@ -104,7 +104,7 @@ REPACK_KERNEL()
 	      cp -r Image boot/zImage
 	      chmod a+r dt.img
 	      cp dt.img boot/dt.img
-	      cp dt.img backup_image/dt.img
+	      cp dt.img backup_image_wsm/dt.img
 
 	      ./mkboot boot boot.img
 	      #./mkboot boot.img boot
@@ -126,8 +126,8 @@ REPACK_KERNEL()
 	      rm boot/dt.img
 	      
 	      echo "repack wsm version + su systemless"
-	      cp backup_image/dt.img boot_su_266/dt.img
-	      cp backup_image/zImage boot_su_266/zImage
+	      cp backup_image_wsm/dt.img boot_su_266/dt.img
+	      cp backup_image_wsm/zImage boot_su_266/zImage
 	      ./mkboot boot_su_266 boot.img
 	      cp $BOOTIMG $FLASH_ZIP_FILES/kernel/boot.img
 	      cd $FLASH_ZIP_FILES
