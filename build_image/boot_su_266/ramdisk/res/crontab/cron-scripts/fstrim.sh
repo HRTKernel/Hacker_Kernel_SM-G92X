@@ -28,12 +28,12 @@ if [ $FSTRIM == 1 ]; then
 
 	$BB sync
 
-	date +%R-%F-%Z > /data/crontab/cron-fstrim;
+	date +%R-%F > /data/crontab/cron-fstrim;
 	echo " File System trimmed" >> /data/crontab/cron-fstrim;
 
 elif [ $FSTRIM == 0 ]; then
 
-	date +%R-%F-%Z > /data/crontab/cron-fstrim;
+	date +%R-%F > /data/crontab/cron-fstrim;
 	echo " File System Trim is disabled" >> /data/crontab/cron-fstrim;
 fi;
 

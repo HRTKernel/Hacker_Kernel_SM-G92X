@@ -51,7 +51,7 @@ cat << CTAG
 	}},
 	{ SOptionList:{
 		title:"Clean app-cache",
-		description:"Clear app-cache every day at 4:30AM UTC, only if CPU is resting (IDLE)! This can maintain free space on data partition, and clean all old junk.\n",
+		description:"Clear app-cache every day at 4:30AM, only if CPU is resting (IDLE)! This can maintain free space on data partition, and clean all old junk.\n",
 		default:`echo $(/res/synapse/actions/crontab cache)`,
 		action:"crontab cache",
 		values:[Disabled, Enabled,]
@@ -61,7 +61,7 @@ cat << CTAG
 	}},
 	{ SOptionList:{
 		title:"Optimize Databases",
-		description:"Optimize all databases found in /data & /sdcard every day at 4:40AM UTC, only if CPU is resting (IDLE)! This increases database read/write performance.\n",
+		description:"Optimize all databases found in /data & /sdcard every day at 4:40AM, only if CPU is resting (IDLE)! This increases database read/write performance.\n",
 		default:`echo $(/res/synapse/actions/crontab sqlite)`,
 		action:"crontab sqlite",
 		values:[Disabled, Enabled,]
@@ -71,7 +71,7 @@ cat << CTAG
 	}},
 	{ SOptionList:{
 		title:"File System Trim",
-		description:"Cron to trim System, Data and Cache partitions every day at 4:50AM UTC, only if CPU is resting (IDLE)! This will help retain consistant IO throughput.\n",
+		description:"Cron to trim System, Data and Cache partitions every day at 4:50AM, only if CPU is resting (IDLE)! This will help retain consistant IO throughput.\n",
 		default:`echo $(/res/synapse/actions/crontab fstrim)`,
 		action:"crontab fstrim",
 		values:[Disabled, Enabled,]
@@ -81,7 +81,7 @@ cat << CTAG
 	}},
 	{ SOptionList:{
 		title:"Battery Scaling Calibration",
-		description:"Calibrate battery every week at SUN 5:00AM UTC. This will reset your device battery % to scale correctly to the approximate available mV.\n",
+		description:"Calibrate battery every week at SUN 5:00AM. This will reset your device battery % to scale correctly to the approximate available mV.\n",
 		default:`echo $(/res/synapse/actions/crontab fg_reset)`,
 		action:"crontab fg_reset",
 		values:[Disabled, Enabled,]

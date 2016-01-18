@@ -26,12 +26,12 @@ if [ $GOOGLE == 1 ]; then
 		$BB kill $($BB pidof com.google.android.gms.wearable);
 	fi;
 
-	date +%R-%F-%Z > /data/crontab/cron-ram-release;
+	date +%R-%F > /data/crontab/cron-ram-release;
 	echo " Google RAM released" >> /data/crontab/cron-ram-release;
 
 elif [ $GOOGLE == 0 ]; then
 
-	date +%R-%F-%Z > /data/crontab/cron-ram-release;
+	date +%R-%F > /data/crontab/cron-ram-release;
 	echo " Google RAM Release is disabled" >> /data/crontab/cron-ram-release;
 fi;
 

@@ -40,18 +40,18 @@ if [ $DROP_CACHE == 1 ]; then
 		sysctl -w vm.drop_caches=3;
 		sync;
 
-		date +%R-%F-%Z > /data/crontab/cron-clear-ram-cache;
+		date +%R-%F > /data/crontab/cron-clear-ram-cache;
 		echo " Cache above 50%! Cleaned RAM Cache" >> /data/crontab/cron-clear-ram-cache;
 
 	elif [ "$MEM_USED_CALC" -lt "50" ]; then
 
-		date +%R-%F-%Z > /data/crontab/cron-clear-ram-cache;
+		date +%R-%F > /data/crontab/cron-clear-ram-cache;
 		echo " Cache below 50%! Cleaning RAM Cache aborted" >> /data/crontab/cron-clear-ram-cache;
 	fi;
 
 elif [ $DROP_CACHE == 0 ]; then
 
-	date +%R-%F-%Z > /data/crontab/cron-clear-ram-cache;
+	date +%R-%F > /data/crontab/cron-clear-ram-cache;
 	echo " Clean RAM Cache is disabled" >> /data/crontab/cron-clear-ram-cache;
 fi;
 

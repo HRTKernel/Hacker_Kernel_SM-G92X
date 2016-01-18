@@ -1,5 +1,6 @@
 #!/system/xbin/busybox sh
 
+# Clear Cache script
 # Original by dorimanx for ExTweaks
 # Modified by UpInTheAir for SkyHigh kernels & Synapse
 
@@ -33,13 +34,13 @@ if [ $CACHE == 1 ]; then
 	rm -rf /data/tombstones/*
 	$BB sync;
 
-	date +%R-%F-%Z > /data/crontab/cron-clear-file-cache;
+	date +%R-%F > /data/crontab/cron-clear-file-cache;
 	echo " Cleaned Apps Cache" >> /data/crontab/cron-clear-file-cache;
 	sync;
 
 elif [ $CACHE == 0 ]; then
 
-	date +%R-%F-%Z > /data/crontab/cron-clear-file-cache;
+	date +%R-%F > /data/crontab/cron-clear-file-cache;
 	echo " Clean file-cache is disabled" >> /data/crontab/cron-clear-file-cache;
 fi;
 

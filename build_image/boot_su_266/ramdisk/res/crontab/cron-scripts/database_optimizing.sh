@@ -31,12 +31,12 @@ if [ $SQLITE == 1 ]; then
 	done;
 	sync;
 
-	date +%R-%F-%Z > /data/crontab/cron-db-optimizing;
+	date +%R-%F > /data/crontab/cron-db-optimizing;
 	echo " DB Optimized" >> /data/crontab/cron-db-optimizing;
 
 elif [ $SQLITE == 0 ]; then
 
-	date +%R-%F-%Z > /data/crontab/cron-db-optimizing;
+	date +%R-%F > /data/crontab/cron-db-optimizing;
 	echo " DB Optimization is disabled" >> /data/crontab/cron-db-optimizing;
 fi;
 

@@ -17,12 +17,12 @@ if [ $FG_RESET == 1 ]; then
 	$BB chmod 666 /sys/devices/battery.53/power_supply/battery/fg_reset_cap;
 	echo 1 > /sys/devices/battery.53/power_supply/battery/fg_reset_cap;
 
-	date +%R-%F-%Z > /data/crontab/cron-reset_battery;
+	date +%R-%F > /data/crontab/cron-reset_battery;
 	echo " Battery Reset" >> /data/crontab/cron-reset_battery;
 
 elif [ $FG_RESET == 0 ]; then
 
-	date +%R-%F-%Z > /data/crontab/cron-reset_battery;
+	date +%R-%F > /data/crontab/cron-reset_battery;
 	echo " Battery Reset is disabled" >> /data/crontab/cron-reset_battery;
 fi;
 
