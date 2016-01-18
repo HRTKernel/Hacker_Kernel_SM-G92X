@@ -1,0 +1,75 @@
+#!/system/bin/sh
+#
+# UNIVERSAL DUMPER
+# <config.json.generate.dumping>
+# Copyright (c) 2016 thehacker911 <maikdiebenkorn@gmail.com>
+#
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as
+# published by the Free Software Foundation.
+#
+
+cat << CTAG
+	{
+		name:DUMPING,
+		elements:[
+		{ SPane:{
+			title:"Make Kernel Dump",
+			description:" Creates a dump of Kernel. This may take several minutes. You found the dump under /sdcard/boot.img",
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ SButton:{
+			label:"Dump Kernel",
+			action:"dumping kernel"
+		}},
+		{ SDescription:{
+			description:""
+		}},
+		{ SPane:{
+			title:"Make Modem Dump",
+			description:" Creates a dump of Modem. This may take several minutes. You found the dump under /sdcard/modem.bin",
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ SButton:{
+			label:"Dump Modem",
+			action:"dumping modem"
+		}},
+		{ SDescription:{
+			description:""
+		}},
+		{ SPane:{
+			title:"Make System Dump",
+			description:" Creates a dump of System. This may take several minutes. You found the dump under /sdcard/system.img",
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ SButton:{
+			label:"Dump System",
+			action:"dumping system"
+		}},
+		{ SDescription:{
+			description:""
+		}},
+		{ SPane:{
+			title:"Make Recovery Dump",
+			description:" Creates a dump of Recovery. This may take several minutes. You found the dump under /sdcard/recovery.img",
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ SButton:{
+			label:"Dump Recovery",
+			action:"dumping recovery"
+		}},
+		{ SDescription:{
+			description:""
+		}},	
+		]
+	}
+CTAG

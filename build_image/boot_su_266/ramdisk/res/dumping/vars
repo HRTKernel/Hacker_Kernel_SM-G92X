@@ -1,0 +1,5 @@
+#Dumping vars. Line 2 = Kernel, Line 3 = Modem, Line 4 = System, Line 5 = Recovery, ...
+/dev/block/platform/15570000.ufs/by-name/BOOT
+/dev/block/platform/15570000.ufs/by-name/RADIO
+/dev/block/platform/15570000.ufs/by-name/SYSTEM
+/dev/block/platform/15570000.ufs/by-name/RECOVERY
