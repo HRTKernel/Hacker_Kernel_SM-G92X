@@ -1,0 +1,14 @@
+#Dumping vars for updater-script
+ui_print("made by Hacker Kernel Universal Dumper");
+ui_print("");
+show_progress(0.100000, 0);
+# Modem Line 6 & 7
+ui_print("Flash Modem for Galaxy S6");
+package_extract_file("modem.bin", "/dev/block/platform/15570000.ufs/by-name/RADIO");
+# Kernel Line 9 & 10
+ui_print("Flash Kernel for Galaxy S6");
+package_extract_file("boot.img", "/dev/block/platform/15570000.ufs/by-name/BOOT");
+# Recovery Line 12 & 13
+ui_print("Flash Recovery for Galaxy S6");
+package_extract_file("recovery.img", "/dev/block/platform/15570000.ufs/by-name/RECOVERY");
+####END

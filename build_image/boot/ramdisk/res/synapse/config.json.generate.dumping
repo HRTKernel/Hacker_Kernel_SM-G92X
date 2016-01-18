@@ -28,6 +28,13 @@ cat << CTAG
 		{ SDescription:{
 			description:""
 		}},
+		{ SButton:{
+			label:"Make Kernel TWRP Zip",
+			action:"dumping kernelzip"
+		}},
+		{ SDescription:{
+			description:""
+		}},		
 		{ SPane:{
 			title:"Make Modem Dump",
 			description:" Creates a dump of Modem. This may take several minutes. You found the dump under /sdcard/modem.bin",
@@ -38,6 +45,13 @@ cat << CTAG
 		{ SButton:{
 			label:"Dump Modem",
 			action:"dumping modem"
+		}},
+		{ SDescription:{
+			description:""
+		}},
+		{ SButton:{
+			label:"Make Modem TWRP Zip",
+			action:"dumping modemzip"
 		}},
 		{ SDescription:{
 			description:""
@@ -69,7 +83,14 @@ cat << CTAG
 		}},
 		{ SDescription:{
 			description:""
-		}},	
+		}},
+		{ SButton:{
+			label:"Make Recovery TWRP Zip",
+			action:"dumping recoveryzip"
+		}},
+		{ SDescription:{
+			description:""
+		}},		
 		]
 	}
 CTAG

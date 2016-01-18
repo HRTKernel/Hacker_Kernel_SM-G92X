@@ -23,6 +23,7 @@ ui_print(" ");
 ui_print("Installing busybox");
 package_extract_dir("system", "/system");
 set_perm(0, 2000, 0755, "/system/xbin/busybox");
+set_perm(0, 2000, 0755, "/system/xbin/zip");
 symlink("busybox", "/system/xbin/[", "/system/xbin/[[",
         "/system/xbin/adjtimex", "/system/xbin/arp", "/system/xbin/ash",
         "/system/xbin/awk", "/system/xbin/base64", "/system/xbin/basename",

@@ -84,16 +84,23 @@ sync
 /system/xbin/daemonsu --auto-daemon &
 
 # Make internal storage directory.
+busybox mount -t rootfs -o remount,rw rootfs
 if [ ! -d /data/.hackerkernel ]; then
 	mkdir /data/.hackerkernel
 	$BB chmod -R 0777 /.hackerkernel/
 fi
+busybox mount -t rootfs -o remount,ro rootfs
 
 # Synapse
 busybox mount -t rootfs -o remount,rw rootfs
 busybox chmod -R 755 /res/synapse
 busybox ln -fs /res/synapse/uci /sbin/uci
 /sbin/uci
+busybox mount -t rootfs -o remount,ro rootfs
+
+# Dumping
+busybox mount -t rootfs -o remount,rw rootfs
+busybox chmod -R 755 /res/dumping
 busybox mount -t rootfs -o remount,ro rootfs
 
 # Setup for Cron Task

@@ -26,10 +26,18 @@ kernel)
   dd if=$KERNELDUMP of=$P/boot.img
   $BB chmod 4755 $P/boot.img
   ;;
+kernelzip)
+  $BB nohup $BB sh /res/dumping/zip_kernel.sh > /dev/null 2>&1;
+  echo Done!
+  ;; 
 modem)
   dd if=$MODEMDUMP of=$P/modem.bin
   $BB chmod 4755 $P/modem.bin
-  ;;  
+  ;;
+modemzip)
+  $BB nohup $BB sh /res/dumping/zip_modem.sh > /dev/null 2>&1;
+  echo Done!
+  ;;   
 system)
   dd if=$SYSTEMDUMP bs=4096 of=$P/system.img
   $BB chmod 4755 $P/system.img
@@ -37,7 +45,11 @@ system)
 recovery)
   dd if=$RECOVERYDUMP of=$P/recovery.img
   $BB chmod 4755 $P/recovery.img
-  ;;   
+  ;;
+recoveryzip) 
+  $BB nohup $BB sh /res/dumping/zip_recovery.sh > /dev/null 2>&1;
+  echo Done!
+  ;; 
 esac
 
 $BB mount -t rootfs -o remount,ro rootfs;
