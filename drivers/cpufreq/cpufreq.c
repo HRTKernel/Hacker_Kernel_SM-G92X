@@ -473,9 +473,6 @@ static ssize_t store_##file_name					\
 	return ret ? ret : count;					\
 }
 
-store_one(scaling_min_freq, min);
-store_one(scaling_max_freq, max);
-
 static void __cpuinit set_cpu_min_max_work_fn(struct work_struct *work)
 {
 	struct hotplug_data *data = container_of(work, struct hotplug_data, hotplug_work);
