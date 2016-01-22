@@ -1,5 +1,5 @@
 # by thehacker911
-BB=/system/xbin/busybox
+BB=/sbin/busybox
 SA=/system/app
 SPA=/system/priv-app
 BSA=/data/media/0/hacker-kernel-data/debloat/app

@@ -1,5 +1,5 @@
 HRT=/data/.hackerkernel;
-BB=/system/xbin/busybox;
+BB=/sbin/busybox;
 if [ -f "/system/xbin/sqlite3" ]; then SQL3=/system/xbin/sqlite3; else SQL3=/sbin/sqlite3; fi;
 
 SYNAPSE_SD_DIR=/sdcard/Synapse;

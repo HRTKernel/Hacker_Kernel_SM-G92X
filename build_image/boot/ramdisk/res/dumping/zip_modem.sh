@@ -1,4 +1,4 @@
-#!/system/xbin/busybox sh
+#!/sbin/busybox sh
 #
 # UNIVERSAL DUMPER
 # <zip-modem.sh>
@@ -10,7 +10,7 @@
 # published by the Free Software Foundation.
 #
 
-BB=/system/xbin/busybox;
+BB=/sbin/busybox;
 ZIP=/system/xbin/zip;
 DUMP=`sed -n '3p' /res/dumping/vars` # Found at /res/dumping/vars Line 3
 P=/sdcard

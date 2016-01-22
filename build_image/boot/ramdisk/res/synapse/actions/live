@@ -1,4 +1,4 @@
-BB=/system/xbin/busybox;
+BB=/sbin/busybox;
 
 case $1 in
 gpu)
@@ -96,7 +96,7 @@ KSMStats)
 	fi
   ;;
 check_service)
-  CORTEX_CHECK=`pgrep -f "/system/xbin/busybox sh /sbin/cortexbrain-tune.sh" | wc -l`;
+  CORTEX_CHECK=`pgrep -f "/sbin/busybox sh /sbin/cortexbrain-tune.sh" | wc -l`;
 	if [ "$CORTEX_CHECK" != 0 ]; then
                 echo "SERVICE ONLINE";
 	else

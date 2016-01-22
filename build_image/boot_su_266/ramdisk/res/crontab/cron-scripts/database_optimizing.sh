@@ -1,10 +1,10 @@
-#!/system/xbin/busybox sh
+#!/sbin/busybox sh
 
 # Optimize Databases script
 # Original by dorimanx for ExTweaks
 # Modified by UpInTheAir for SkyHigh kernels & Synapse
 
-BB=/system/xbin/busybox;
+BB=/sbin/busybox;
 P=/data/media/0/hackerkernel/values/cron_sqlite;
 SQLITE=`cat $P`;
 

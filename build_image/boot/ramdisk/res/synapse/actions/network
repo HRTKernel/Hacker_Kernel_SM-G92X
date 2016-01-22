@@ -1,6 +1,6 @@
 # By UpInTheAir for SkyHigh SM-N915S kernels
 
-BB=/system/xbin/busybox;
+BB=/sbin/busybox;
 
 case $1 in
 tcp_security)

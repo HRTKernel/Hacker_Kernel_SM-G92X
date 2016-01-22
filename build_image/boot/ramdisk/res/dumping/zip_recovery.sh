@@ -1,4 +1,4 @@
-#!/system/xbin/busybox sh
+#!/sbin/busybox sh
 #
 # UNIVERSAL DUMPER
 # <zip-recovery.sh>
@@ -10,7 +10,7 @@
 # published by the Free Software Foundation.
 #
 
-BB=/system/xbin/busybox;
+BB=/sbin/busybox;
 ZIP=/system/xbin/zip;
 DUMP=`sed -n '5p' /res/dumping/vars` # Found at /res/dumping/vars Line 5
 P=/sdcard
