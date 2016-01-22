@@ -1,9 +1,9 @@
-#!/sbin/busybox sh
+#!/system/xbin/busybox sh
 
 # Created By Dorimanx and Dairinin
 # Modified by UpInTheAir for SkyHigh kernel & Synapse
 
-BB=/sbin/busybox;
+BB=/system/xbin/busybox;
 
 ROOTFS_MOUNT=$(mount | grep rootfs | cut -c26-27 | grep -c rw)
 if [ "$ROOTFS_MOUNT" -eq "0" ]; then

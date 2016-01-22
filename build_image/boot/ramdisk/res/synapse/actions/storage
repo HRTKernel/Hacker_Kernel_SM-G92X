@@ -1,6 +1,6 @@
 # By UpInTheAir for SkyHigh kernels
 
-BB=/sbin/busybox;
+BB=/system/xbin/busybox;
 
 case $1 in
 usb_mode)

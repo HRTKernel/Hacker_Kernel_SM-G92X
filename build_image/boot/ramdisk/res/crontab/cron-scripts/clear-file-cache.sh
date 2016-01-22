@@ -1,10 +1,10 @@
-#!/sbin/busybox sh
+#!/system/xbin/busybox sh
 
 # Clear Cache script
 # Original by dorimanx for ExTweaks
 # Modified by UpInTheAir for SkyHigh kernels & Synapse
 
-BB=/sbin/busybox;
+BB=/system/xbin/busybox;
 P=/data/media/0/hackerkernel/values/cron_cache;
 CACHE=`cat $P`;
 

@@ -1,10 +1,10 @@
-#!/sbin/busybox sh
+#!/system/xbin/busybox sh
 
 # Fuel guage reset script
 # by UpInTheAir for SkyHigh kernels & Synapse
 # Modified by thehacker911 for SM-G920X/G925X
 
-BB=/sbin/busybox;
+BB=/system/xbin/busybox;
 P=/data/media/0/hackerkernel/values/cron_fg;
 FG_RESET=`cat $P`;
 

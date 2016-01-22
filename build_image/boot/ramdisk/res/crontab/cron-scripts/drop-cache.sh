@@ -1,10 +1,10 @@
-#!/sbin/busybox sh
+#!/system/xbin/busybox sh
 
 # Drop cache script
 # Original by dorimanx for ExTweaks
 # Modified by UpInTheAir for SkyHigh kernels & Synapse
 
-BB=/sbin/busybox;
+BB=/system/xbin/busybox;
 P=/data/media/0/hackerkernel/values/cron_drop_cache;
 DROP_CACHE=`cat $P`;
 
