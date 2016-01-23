@@ -29,6 +29,7 @@ cat << CTAG
 			`. /res/synapse/config.json.generate.network`
 			`. /res/synapse/config.json.generate.security`
 			`. /res/synapse/config.json.generate.dumping`
+			`. /res/synapse/config.json.generate.debloat`
 			`. /res/synapse/config.json.generate.logs`
 			`. /res/synapse/config.json.generate.reboot`
 			`. /res/synapse/config.json.generate.profile`

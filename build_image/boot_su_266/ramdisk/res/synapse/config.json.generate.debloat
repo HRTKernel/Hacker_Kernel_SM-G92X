@@ -1,20 +1,33 @@
 #!/system/bin/sh
+#
+# UNIVERSAL DEBLOAT
+# <config.json.generate.debloat>
+# Copyright (c) 2016 thehacker911 <maikdiebenkorn@gmail.com>
+#
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as
+# published by the Free Software Foundation.
+#
 
 cat << CTAG
-{
-    name:"Debloating",
-    elements:[
-	{ STitleBar:{
-		title:"Debloat Options"
-	}},
-	{ SDescription:{
-		description:""
-	}},
-	{ SButton:{
-		label:"Debloat System/APP",
-		action:"debloat system_app"
-	}},
-
-    ]
-}
+	{
+		name:DEBLOAT,
+		elements:[
+		{ SPane:{
+			title:"Make Ultra Debloat TWRP ZIP",
+			description:" Creates a Debloat TWRP ZIP. This may take several minutes. You found the zip under /sdcard/debloat.zip",
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ SButton:{
+			label:"Make Debloat TWRP Zip",
+			action:"debloat makezip"
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+		]
+	}
 CTAG
