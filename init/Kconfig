@@ -1224,7 +1224,14 @@ config WITH_CCACHE
 	help
 	  Enabling this option for building kernel with ccache.
 
-	  If unsure, say N.	  
+	  If unsure, say N.
+
+config WITH_GRAPHITE
+	bool "Built with graphite optimizations"
+	help
+	  Enabling this option for building kernel with cgraphite optimizations.
+
+	  If unsure, say N.
 	  
 config SYSCTL
 	bool

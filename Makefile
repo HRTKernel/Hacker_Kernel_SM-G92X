@@ -11,7 +11,9 @@ ifdef CONFIG_WITH_CCACHE
 ccache := ccache
 endif
 
+ifdef CONFIG_WITH_GRAPHITE
 GRAPHITE = -fgraphite-identity -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -floop-flatten -floop-nest-optimize -fgraphite
+endif
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
@@ -260,8 +262,13 @@ else
 HOSTCC       = gcc
 HOSTCXX      = g++
 endif
+ifdef CONFIG_WITH_GRAPHITE
 HOSTCFLAGS   = $(GRAPHITE) -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -fomit-frame-pointer -std=gnu89 -floop-nest-optimize
-HOSTCXXFLAGS = $(GRAPHITE) -Ofast 
+HOSTCXXFLAGS = $(GRAPHITE) -Ofast
+else
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -fomit-frame-pointer -std=gnu89 -floop-nest-optimize
+HOSTCXXFLAGS = -Ofast
+endif
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -346,11 +353,23 @@ include $(srctree)/scripts/Kbuild.include
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
 ifdef CONFIG_WITH_CCACHE
-CC		= $(CCACHE) $(GRAPHITE) $(CROSS_COMPILE)gcc
+	ifdef CONFIG_WITH_GRAPHITE
+		CC		= $(CCACHE) $(GRAPHITE) $(CROSS_COMPILE)gcc
+	else
+		CC		= $(CCACHE) $(CROSS_COMPILE)gcc	
+	endif
 else
-CC		= $(GRAPHITE) $(CROSS_COMPILE)gcc
+	ifdef CONFIG_WITH_GRAPHITE
+		CC		= $(GRAPHITE) $(CROSS_COMPILE)gcc
+	else
+		CC		= $(CROSS_COMPILE)gcc
+	endif
 endif
+ifdef CONFIG_WITH_GRAPHITE
 CPP		= $(GRAPHITE) $(CC) -E
+else
+CPP		= $(CC) -E
+endif
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
 STRIP		= $(CROSS_COMPILE)strip
@@ -375,11 +394,19 @@ endif
 
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
+ifdef CONFIG_WITH_GRAPHITE
 CFLAGS_MODULE   = $(GRAPHITE) -DMODULE -DNDEBUG
 AFLAGS_MODULE   = $(GRAPHITE) -DMODULE -DNDEBUG
 LDFLAGS_MODULE  = $(GRAPHITE) -DMODULE -DNDEBUG
 CFLAGS_KERNEL	= $(GRAPHITE) -DNDEBUG -fsingle-precision-constant
 AFLAGS_KERNEL	= $(GRAPHITE) -DNDEBUG
+else
+CFLAGS_MODULE   = -DMODULE -DNDEBUG
+AFLAGS_MODULE   = -DMODULE -DNDEBUG
+LDFLAGS_MODULE  = -DMODULE -DNDEBUG
+CFLAGS_KERNEL	= -DNDEBUG -fsingle-precision-constant
+AFLAGS_KERNEL	= -DNDEBUG
+endif
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 
@@ -402,6 +429,7 @@ LINUXINCLUDE    := \
 
 KBUILD_CPPFLAGS := -D__KERNEL__
 
+ifdef CONFIG_WITH_GRAPHITE
 KBUILD_CFLAGS   := -DNDEBUG $(GRAPHITE) -w -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -finline-functions -fno-common \
 		   -Werror-implicit-function-declaration -fno-pic \
@@ -414,7 +442,22 @@ KBUILD_CFLAGS   := -DNDEBUG $(GRAPHITE) -w -Wstrict-prototypes -Wno-trigraphs \
 		   -fbranch-target-load-optimize -fsingle-precision-constant \
 		   -Werror -Wno-error=unused-variable -Wno-error=unused-function \
 		   -std=gnu89 -Wno-discarded-array-qualifiers -Wno-logical-not-parentheses -Wno-array-bounds -Wno-switch -Wno-unused-variable \
-		   -march=armv8-a+crc -mtune=cortex-a57.cortex-a53 
+		   -march=armv8-a+crc -mtune=cortex-a57.cortex-a53
+else
+KBUILD_CFLAGS   := -DNDEBUG -w -Wstrict-prototypes -Wno-trigraphs \
+		   -fno-strict-aliasing -finline-functions -fno-common \
+		   -Werror-implicit-function-declaration -fno-pic \
+		   -Wno-format-security -ffast-math \
+		   -fno-delete-null-pointer-checks \
+		   -fdiagnostics-show-option \
+		   -pipe  -funswitch-loops -fpredictive-commoning -fgcse-after-reload \
+		   -ftree-loop-distribution -ftree-loop-if-convert -fivopts -fipa-pta -fira-hoist-pressure \
+		   -fmodulo-sched -fmodulo-sched-allow-regmoves \
+		   -fbranch-target-load-optimize -fsingle-precision-constant \
+		   -Werror -Wno-error=unused-variable -Wno-error=unused-function \
+		   -std=gnu89 -Wno-discarded-array-qualifiers -Wno-logical-not-parentheses -Wno-array-bounds -Wno-switch -Wno-unused-variable \
+		   -march=armv8-a+crc -mtune=cortex-a57.cortex-a53
+endif
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -612,9 +655,9 @@ endif # $(dot-config)
 all: vmlinux
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
-KBUILD_CFLAGS	+= $(GRAPHITE) -Os $(call cc-disable-warning,maybe-uninitialized,)
+KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
 else
-KBUILD_CFLAGS	+= $(GRAPHITE) -Ofast $(call cc-disable-warning,maybe-uninitialized,)
+KBUILD_CFLAGS	+= -Ofast $(call cc-disable-warning,maybe-uninitialized,)
 endif
 
 include $(srctree)/arch/$(SRCARCH)/Makefile
