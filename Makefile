@@ -11,6 +11,8 @@ ifdef CONFIG_WITH_CCACHE
 ccache := ccache
 endif
 
+GRAPHITE = -fgraphite-identity -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -floop-flatten -floop-nest-optimize -fgraphite
+
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
 # More info can be located in ./README
@@ -258,8 +260,8 @@ else
 HOSTCC       = gcc
 HOSTCXX      = g++
 endif
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -fomit-frame-pointer -std=gnu89 -floop-nest-optimize
-HOSTCXXFLAGS = -Ofast
+HOSTCFLAGS   = $(GRAPHITE) -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -fomit-frame-pointer -std=gnu89 -floop-nest-optimize
+HOSTCXXFLAGS = $(GRAPHITE) -Ofast 
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -344,11 +346,11 @@ include $(srctree)/scripts/Kbuild.include
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
 ifdef CONFIG_WITH_CCACHE
-CC		= $(CCACHE) $(CROSS_COMPILE)gcc
+CC		= $(CCACHE) $(GRAPHITE) $(CROSS_COMPILE)gcc
 else
-CC		= $(CROSS_COMPILE)gcc
+CC		= $(GRAPHITE) $(CROSS_COMPILE)gcc
 endif
-CPP		= $(CC) -E
+CPP		= $(GRAPHITE) $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
 STRIP		= $(CROSS_COMPILE)strip
@@ -373,7 +375,6 @@ endif
 
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
-GRAPHITE = -fgraphite-identity -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -floop-flatten -floop-nest-optimize
 CFLAGS_MODULE   = $(GRAPHITE) -DMODULE -DNDEBUG
 AFLAGS_MODULE   = $(GRAPHITE) -DMODULE -DNDEBUG
 LDFLAGS_MODULE  = $(GRAPHITE) -DMODULE -DNDEBUG
@@ -611,9 +612,9 @@ endif # $(dot-config)
 all: vmlinux
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
-KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
+KBUILD_CFLAGS	+= $(GRAPHITE) -Os $(call cc-disable-warning,maybe-uninitialized,)
 else
-KBUILD_CFLAGS	+= -Ofast $(call cc-disable-warning,maybe-uninitialized,)
+KBUILD_CFLAGS	+= $(GRAPHITE) -Ofast $(call cc-disable-warning,maybe-uninitialized,)
 endif
 
 include $(srctree)/arch/$(SRCARCH)/Makefile
