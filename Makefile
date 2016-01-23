@@ -4,8 +4,12 @@ SUBLEVEL = 94
 EXTRAVERSION =
 NAME = TOSSUG Baby Fish
 
-#TOOLCHAIN_DIR = $(CURDIR)/toolchain/aarch64-linux-gnu-5.3/bin/aarch64-
-TOOLCHAIN_DIR = /home/kerneldev/android/toolchains/aarch64-linux-gnu-5.3/bin/aarch64-
+#TOOLCHAIN_DIR = $(CURDIR)/toolchain/UBERTC-aarch64-linux-android-5.3/bin/aarch64-linux-android-
+TOOLCHAIN_DIR = /home/kerneldev/android/toolchains/UBERTC-aarch64-linux-android-5.3/bin/aarch64-linux-android-
+
+ifdef CONFIG_WITH_CCACHE
+ccache := ccache
+endif
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
@@ -197,7 +201,11 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 #ARCH		?= $(SUBARCH)
 #CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 ARCH		= arm64
+ifdef CONFIG_WITH_CCACHE
+CROSS_COMPILE = $(CCACHE) $(TOOLCHAIN_DIR)
+else
 CROSS_COMPILE = $(TOOLCHAIN_DIR)
+endif
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -243,8 +251,13 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else if [ -x /bin/bash ]; then echo /bin/bash; \
 	  else echo sh; fi ; fi)
 
+ifdef CONFIG_WITH_CCACHE
+HOSTCC       = $(CCACHE) gcc
+HOSTCXX      = $(CCACHE) g++
+else
 HOSTCC       = gcc
 HOSTCXX      = g++
+endif
 HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -fomit-frame-pointer -std=gnu89 -floop-nest-optimize
 HOSTCXXFLAGS = -Ofast
 
@@ -330,7 +343,11 @@ include $(srctree)/scripts/Kbuild.include
 
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
+ifdef CONFIG_WITH_CCACHE
+CC		= $(CCACHE) $(CROSS_COMPILE)gcc
+else
 CC		= $(CROSS_COMPILE)gcc
+endif
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm

@@ -9,7 +9,7 @@ hacker-kernel
 #Version
 -V11-WSM
 #Toolchain
-aarch64-linux-gnu-5.3/bin/aarch64-
+UBERTC-aarch64-linux-android-5.3/bin/aarch64-linux-android-
 #Su Version
 -su_266
 #Device
