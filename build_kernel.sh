@@ -41,9 +41,14 @@ BUILD_KERNEL()
 	echo "=============================================="
 	echo ""
 	
-
 	make clean
+	make distclean
+	make mrproper
 	find . -name "*.dtb" -exec rm {} \;
+	find . -type f -name "*~" -exec rm -f {} \;
+	find . -type f -name "*orig" -exec rm -f {} \;
+	find . -type f -name "*rej" -exec rm -f {} \;
+	ccache -C
 
 	echo ""
 	echo "=============================================="
