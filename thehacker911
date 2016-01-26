@@ -3,11 +3,11 @@ Hacker
 #Device
 -S6-Universal
 #Version
--V11
+-V12
 #Zip-Name
 hacker-kernel
 #Version
--V11-WSM
+-V12-WSM
 #Toolchain
 UBERTC-aarch64-linux-android-5.3/bin/aarch64-linux-android-
 #Su Version
