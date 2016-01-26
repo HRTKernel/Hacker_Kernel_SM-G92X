@@ -1,5 +1,12 @@
 # Change Log
 
+## [V12](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/tree/V12) (2016-01-26)
+[Full Changelog](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/compare/V11...V12)
+
+**Closed issues:**
+
+- CVE-2016-0728 [\#2](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/issues/2)
+
 ## [V11](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/tree/V11) (2016-01-14)
 [Full Changelog](https://github.com/HRTKernel/Hacker_Kernel_SM-G92X/compare/V10.1...V11)
 
