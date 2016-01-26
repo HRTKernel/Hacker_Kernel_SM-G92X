@@ -450,7 +450,7 @@ on boot
     chmod 6755 /system/bin/dmm_v2
 
 # SSWAP
-    write /proc/sys/vm/swappiness 130
+    write /proc/sys/vm/swappiness 200
 
     # FM Radio
     chmod 0640 /dev/fmradio
