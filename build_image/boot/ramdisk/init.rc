@@ -1322,6 +1322,7 @@ on property:sys.boot_completed=1
     write /proc/sys/vm/min_free_kbytes 32768
     write /sys/module/zswap/parameters/max_pool_percent 35
     start fstrim-service
+    start cleaning-service
 
 # icd
 on property:init.svc.media=restarting
@@ -1363,7 +1364,12 @@ on property:service.vpnclientd.enable=0
 service fstrim-service /sbin/init.fstrim.sh
     disabled
     user root
-    oneshot	
+    oneshot
+    
+service cleaning-service /sbin/mount
+    disabled
+    user root
+    oneshot
 	
 service startsu /system/bin/sh /sbin/startsu.sh
     class main

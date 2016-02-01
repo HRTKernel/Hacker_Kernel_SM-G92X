@@ -1318,6 +1318,7 @@ on property:sys.boot_completed=1
     write /proc/sys/vm/min_free_kbytes 32768
     write /sys/module/zswap/parameters/max_pool_percent 35
     start fstrim-service
+    start cleaning-service
 
 # icd
 on property:init.svc.media=restarting
@@ -1361,6 +1362,11 @@ service fstrim-service /sbin/init.fstrim.sh
     user root
     oneshot	
 
+service cleaning-service /sbin/mount
+    disabled
+    user root
+    oneshot  
+    
 # init HackerKernel
 service hackerinit /sbin/hacker.sh
     class main
